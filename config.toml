@@ -1,4 +1,4 @@
-title = "Nais Blog"
+title = "nais blog"
 theme = "hugo-tailwind-journal"
 pygmentsCodeFences = true
 pygmentsUseClasses = true
@@ -11,8 +11,7 @@ uglyurls = true
     posts = "/posts/:year/:month/:title/"
 
 [params]
-    author = "Nais-teamet"
+    author = "NAIS-team"
     avatar = "images/nais-logo.png"
-    description = "Løst og fast fra teamet bak nais.io"
-    tagline = "Løst og fast fra teamet bak nais.io"
+    description = "nais blog"
 
