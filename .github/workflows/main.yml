@@ -1,0 +1,42 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+env:
+  APP: nais-blog
+  TEAM: plattformsikkerhet
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/nais-blog:${{ github.sha }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+      - name: run hugo build
+        uses: klakegg/actions-hugo@1.0.0
+      - name: build docker image
+        run:  docker build . --pull -t ${{ env.IMAGE }}
+      - name: push docker image
+        run: |
+          echo "$GITHUB_TOKEN" | docker login --username "$GITHUB_REPOSITORY" --password-stdin https://docker.pkg.github.com
+          docker push ${{ env.IMAGE }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-dev-gcp:
+    name: Deploy to dev-gcp
+    needs: build
+    if: "github.ref == 'refs/heads/main'"
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v1
+        - uses: nais/deploy/actions/deploy@v1
+          env:
+            APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+            CLUSTER: dev-gcp
+            RESOURCE: .nais/nais.yml
+            VARS: .nais/dev.yml
