@@ -3,11 +3,38 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/tags/bacon.html</loc>
+    <lastmod>2020-09-10T21:17:28+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/</loc>
+    <lastmod>2020-09-10T21:17:28+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts.html</loc>
+    <lastmod>2020-09-10T21:17:28+02:00</lastmod>
   </url>
   
   <url>
     <loc>/tags.html</loc>
+    <lastmod>2020-09-10T21:17:28+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/2020/09/test-post.html</loc>
+    <lastmod>2020-09-10T21:17:28+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/testing.html</loc>
+    <lastmod>2020-09-10T21:17:28+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/yolo.html</loc>
+    <lastmod>2020-09-10T21:17:28+02:00</lastmod>
   </url>
   
 </urlset>
