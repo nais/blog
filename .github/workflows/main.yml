@@ -20,5 +20,6 @@ jobs:
         run: rm -rf docs/*
       - name: Run Hugo build to create new content
         uses: klakegg/actions-hugo@1.0.0
-        command: -d docs
+        with:
+          command: -d docs
 
