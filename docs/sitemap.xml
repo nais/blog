@@ -4,10 +4,37 @@
   
   <url>
     <loc>/</loc>
+    <lastmod>2020-09-10T20:55:53+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/oauth.html</loc>
+    <lastmod>2020-09-10T20:55:53+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/2020/09/oauth-del-1.html</loc>
+    <lastmod>2020-09-10T20:55:53+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/oidc.html</loc>
+    <lastmod>2020-09-10T20:55:53+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts.html</loc>
+    <lastmod>2020-09-10T20:55:53+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/sikkerhet.html</loc>
+    <lastmod>2020-09-10T20:55:53+02:00</lastmod>
   </url>
   
   <url>
     <loc>/tags.html</loc>
+    <lastmod>2020-09-10T20:55:53+02:00</lastmod>
   </url>
   
 </urlset>
