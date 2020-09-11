@@ -23,8 +23,10 @@ jobs:
           git config --local user.name "GitHub Action user"
           git add ./docs
           git commit -m "Add generated docs"
-      - name: Push changes # push the output folder to your repo
+      - name: Push changes
         uses: ad-m/github-push-action@master
         with:
+          branch: main
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
 

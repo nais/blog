@@ -5,9 +5,37 @@
     <link>/tags.html</link>
     <description>Recent content in Tags on nais blog</description>
     <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 10 Sep 2020 20:55:53 +0200</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>oauth</title>
+      <link>/tags/oauth.html</link>
+      <pubDate>Thu, 10 Sep 2020 20:55:53 +0200</pubDate>
+      
+      <guid>/tags/oauth.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>oidc</title>
+      <link>/tags/oidc.html</link>
+      <pubDate>Thu, 10 Sep 2020 20:55:53 +0200</pubDate>
+      
+      <guid>/tags/oidc.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sikkerhet</title>
+      <link>/tags/sikkerhet.html</link>
+      <pubDate>Thu, 10 Sep 2020 20:55:53 +0200</pubDate>
+      
+      <guid>/tags/sikkerhet.html</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>
