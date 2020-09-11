@@ -1,4 +1,5 @@
 title = "nais blog"
+baseURL = "https://nais.io/blog"
 theme = "hugo-tailwind-journal"
 pygmentsCodeFences = true
 pygmentsUseClasses = true
