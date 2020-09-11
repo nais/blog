@@ -139,7 +139,7 @@ Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å g
 <p>Det finnes som nevnt flere ulike flows for ulike situasjoner. Designet av disse er bl.a. formet av om klienten er “public” eller “confidential”. Confidential betyr at klienten kan holde på hemmeligheter. mens public betyr at den ikke kan det. Eksempler på public clients er “single page” webapps hvor alt skjer i JavaScript i resource owneren sin browser. De mest vanligste flytene (og de som vi vil gå inn på her) er <code>client credentials flow</code> og <code>authorization code flow</code></p>
 <h3 id="client-credentials-flow">Client credentials flow</h3>
 <p>Denne flyten brukes for maskin til maskin-kommunikasjon. Client og resource owner er da i praksis samme ting, og client er confidential.</p>
-<p><img src="/images/client_creds.png" alt="client credentials flow"></p>
+<p><img src="/blog/images/client_creds.png" alt="client credentials flow"></p>
 <ul>
 <li>Klienten sender <code>client_id</code> og <code>client_secret</code> til authorization server</li>
 <li>Serveren sender et access token i retur</li>
@@ -147,7 +147,7 @@ Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å g
 </ul>
 <h3 id="authorization-code-flow">Authorization code flow</h3>
 <p>Dette er den vanligste flyten, og benyttes for webapps som har en egen backend. Kalles av og til for “three-legged OAuth”.</p>
-<p><img src="/images/auth_code.png" alt="client credentials flow"></p>
+<p><img src="/blog/images/auth_code.png" alt="client credentials flow"></p>
 <ul>
 <li>Bruker initierer login.
 Klienten sender en autentiserings-request til id-provider med ønskede scopes og et <code>state</code>-parameter. Dette er en random verdi som bør være vanskelig å gjette. Verdien sendes tilbake til klienten og brukes til å forhindre <a href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">XSRF-angrep</a>.</li>
