@@ -2,7 +2,7 @@
 title: "OAuth del 1"
 description: "OAuth for dummies, del 1"
 date: 2020-09-10T20:55:53+02:00
-draft: true
+draft: false
 author: Jan-Kåre Solbakken
 tags: ["oauth", "oidc", "sikkerhet"]
 ---
