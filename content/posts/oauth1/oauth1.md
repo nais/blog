@@ -53,7 +53,7 @@ Denne flyten brukes for maskin til maskin-kommunikasjon. Client og resource owne
 
 Dette er den vanligste flyten, og benyttes for webapps som har en egen backend. Kalles av og til for “three-legged OAuth”.
 
-![client credentials flow](/blog/images/auth_code.png) 
+![authorization code flow](/blog/images/auth_code.png) 
 
 * Bruker initierer login.
 Klienten sender en autentiserings-request til id-provider med ønskede scopes og et `state`-parameter. Dette er en random verdi som bør være vanskelig å gjette. Verdien sendes tilbake til klienten og brukes til å forhindre [XSRF-angrep](https://en.wikipedia.org/wiki/Cross-site_request_forgery).
@@ -61,11 +61,11 @@ Klienten sender en autentiserings-request til id-provider med ønskede scopes og
 * id-provider redirecter til `redirect_uri` med en engangs `authorization code` og state som den fikk i pkt 2. For å unngå [open redirect-angrep](https://www.sans.org/blog/linkedin-oauth-open-redirect-disclosure/) bør man kun tillate redirect til forhåndsgodkjente URL-er.
 * Klienten veksler `authorization_code` og `client_secret` (eller et signert JWT) med et access token som så kan brukes (typisk som Bearer header) i videre kommunikasjon. Hvis man ba om scopes som gjør at id-token (ifm OIDC, mer om dette straks) også returneres vil tokenet inneholde nonce fra steg 2, dette for å lettere kunne forhindre [replay attacks](https://en.wikipedia.org/wiki/Replay_attack). Tokenets “issuer” og “audience” må også valideres (mer om disse i avsnittet om JWT litt senere).
 
-Siden både sluttbrukeren og klienten må identifisere seg til id-provideren øker sikkerheten i denne flyten dramatisk i forhold til de to foregående. For å kuppe flyten holder det ikke å bare være “man in the middle” eller å “eie” en av de involverte partene.
+Både sluttbrukeren (resource owner) og klienten må altså identifisere seg til id-provideren, og sluttbrukeren må eksplisitt godkjenne at den forespurte informasjonen kan utleveres. En uærlig tjenestetilbyder kan dermed ikke gjøre uautoriserte forespørsler på egen hånd.
 
 ## OIDC
 
-[OpenID Connect](https://openid.net/connect/) er identitetslag bygd oppå OAuth. Det tilbyr verifikasjon av identiteten til sluttbrukeren og grunnleggende profil-info. For å beskrive brukeren benyttes id-tokens i form av JSON Web Tokens. OIDC innførte også konseptet “discovery”, dvs at providerne publiserer metadata om tjenesten sin (URL-er til de ulike endepunktene, public keys mm) i et “well-known”-dokument på en standard URL sånn at man kan slå opp denne informasjonen automatisk. Slik ser f.eks. dokumentene til [Microsoft](https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration) og [Google](https://accounts.google.com/.well-known/openid-configuration) ut. Flyten er den samme som for OAuth, men hvis man ber om scope “openid” får man et id-token i retur. OIDC definerer også flere nye scopes som brukt i kombinasjon med “openid” bestemmer hvor mye informasjon id-tokenet skal inneholde. Disse er bl.a. family_name, given_name, profile og picture. Hvilke av disse som støttes av en gitt provider annonseres i well-known-dokumentet.
+[OpenID Connect](https://openid.net/connect/) er identitetslag bygd oppå OAuth. Det tilbyr verifikasjon av identiteten til sluttbrukeren og grunnleggende profil-info. For å beskrive brukeren benyttes id-tokens i form av JSON Web Tokens. OIDC innførte også konseptet “discovery”, dvs at providerne publiserer metadata om tjenesten sin (URL-er til de ulike endepunktene, public keys mm) i et “well-known”-dokument på en standard URL sånn at man kan slå opp denne informasjonen automatisk. Slik ser f.eks. dokumentene til [Microsoft](https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration) og [Google](https://accounts.google.com/.well-known/openid-configuration) ut. Flyten er den samme som for `authorization code flow`, men hvis man ber om scope “openid” får man et id-token i retur. OIDC definerer også flere nye scopes som brukt i kombinasjon med “openid” bestemmer hvor mye informasjon id-tokenet skal inneholde. Disse er bl.a. family_name, given_name, profile og picture. Hvilke av disse som støttes av en gitt provider annonseres i well-known-dokumentet.
 
 ## JWT
 
