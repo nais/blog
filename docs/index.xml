@@ -12,8 +12,8 @@
       <pubDate>Thu, 10 Sep 2020 20:55:53 +0200</pubDate>
       
       <guid>https://nais.io/blog/posts/2020/09/oauth-del-1.html</guid>
-      <description>OAuth, OIDC og de greian der Innledning Dette er del 1 av 2 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 kommer plutselig og tar for seg den nylig standardiserte on-behalf-of-flyten og hvordan vi har løst den med TokenX.
-Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig.</description>
+      <description>Innledning Dette er del 1 av 2 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX.
+Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig. Vi har stadig flere kontoer og identiteter rundt omkring, og det er ikke uvanlig å ha hundrevis av brukernavn/passord-komboer å holde styr på.</description>
     </item>
     
   </channel>
