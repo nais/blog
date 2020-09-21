@@ -7,11 +7,9 @@ author: Jan-Kåre Solbakken
 tags: ["oauth", "oidc", "sikkerhet"]
 ---
 
-# OAuth, OIDC og de greian der
-
 ## Innledning
 
-Dette er del 1 av 2 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 kommer plutselig og tar for seg den nylig standardiserte `on-behalf-of`-flyten og hvordan vi har løst den med [TokenX](https://doc.nais.io/addons/tokenx).
+Dette er del 1 av 2 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. [Del 2]((/blog/posts/2020/09/oauth-del-2.html)) tar for seg den nylig standardiserte `Token Exchange`-flyten og hvordan vi har løst den med [TokenX](https://doc.nais.io/addons/tokenx).
 
 ## Bakgrunn
 
@@ -115,7 +113,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4
 
 ## OAuth/OIDC i NAV
 
-I NAV har vi valgt å bruke [Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc) som provider for interne brukere og [ID-porten](https://difi.github.io/felleslosninger/oidc_guide_idporten.html) for sluttbrukerne ute på weben. Provisjonering av “clients” for din applikasjon skjer automatisk når du legger til de nødvendige besvergelser i din [Nais YAML](https://doc.nais.io/addons/oauth2-openidconnect), og nødvendige hemmeligheter tilgjengeliggjøres for appen din som miljøvariabler eller filer slik at mennesker aldri trenger å se dem. Hemmelighetene vil i tillegg roteres automatisk hver gang appen deployes. For de nyskjerrige som vil vite mer om hvordan dette gjøres i praksis kan de ta en titt på våre custom Kubernetes-ressurser [Azureator](https://github.com/nais/azurerator) og [Digdirator](https://github.com/nais/digdirator) (fordi IDPorten er et produkt fra Digitaliseringsdirektoratet).
+I NAV har vi valgt å bruke [Azure AD](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc) som provider for interne brukere og [ID-porten](https://difi.github.io/felleslosninger/oidc_guide_idporten.html) for sluttbrukerne ute på weben. Provisjonering av “clients” for din applikasjon skjer automatisk når du legger til de nødvendige besvergelser i din [Nais YAML](https://doc.nais.io/addons/oauth2-openidconnect), og nødvendige hemmeligheter tilgjengeliggjøres for appen din som miljøvariabler eller filer slik at mennesker aldri trenger å se dem. Hemmelighetene vil i tillegg roteres automatisk hver gang appen deployes. For de nyskjerrige som vil vite mer om hvordan dette gjøres i praksis kan de ta en titt på våre custom Kubernetes-operatorer [Azureator](https://github.com/nais/azurerator) og [Digdirator](https://github.com/nais/digdirator) (fordi IDPorten er et produkt fra Digitaliseringsdirektoratet).
 
 
 
