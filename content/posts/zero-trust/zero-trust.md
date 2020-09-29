@@ -49,7 +49,7 @@ cryptographically certain that both the sender and the receiver are who they cla
 cryptographic identity in form of a certificate to prove their identity. This gives us the ability to make policies and
 control service to service communication based on identity.
 
-## Impementation
+## Implementation
 ### Network policies
 _Kubernetes network policy lets us enforce which network traffic is allowed using rules. In essence creating a firewall around each workload_
 Kubernetes pods can be treated much like VMs or hosts (they all have unique IP addresses), and the containers within pods very much like processes running within a VM or host (they run in the same network namespace and share an IP address)
@@ -125,10 +125,10 @@ spec:
 
 ## Abstraction
 Admittedly, adding these features leads to added complexity which in turn demands that developers have an unnecessarily deep understanding of infrastructure functionality.
-What developers should really be concerned with, is which applications they want to communicat with, and which applications they want communicating with them. Not the minute details of how.
+What developers should really be concerned with, is which applications they want to communicate with, and which applications they want communicating with them. Not the minute details of how.
 Which is why we've implemented an abstraction in the [NAIS application manifest](https://doc.nais.io/nais-application/access-policy), that allows developers to do exactly that.
 
-The application spec for application `a` will generete a network policy allowing traffic from application `a` to application `b`
+The application spec for application `a` will generate a network policy allowing traffic from application `a` to application `b`
 
 ```
 apiVersion: "nais.io/v1alpha1"
