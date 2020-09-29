@@ -2,7 +2,7 @@
 title: "Zero-trust networking in GCP"
 description: "A brief introduction to zero-trust networking"
 date: 2020-09-29T11:37:43+02:00
-draft: true
+draft: false
 author: Frode Sundby
 tags: [sikkerhet, zero-trust]
 ---
