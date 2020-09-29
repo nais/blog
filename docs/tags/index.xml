@@ -5,7 +5,25 @@
     <link>https://nais.io/blog/tags.html</link>
     <description>Recent content in Tags on nais blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 16 Sep 2020 08:10:00 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 29 Sep 2020 11:37:43 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>sikkerhet</title>
+      <link>https://nais.io/blog/tags/sikkerhet.html</link>
+      <pubDate>Tue, 29 Sep 2020 11:37:43 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/tags/sikkerhet.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>zero-trust</title>
+      <link>https://nais.io/blog/tags/zero-trust.html</link>
+      <pubDate>Tue, 29 Sep 2020 11:37:43 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/tags/zero-trust.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>oauth</title>
       <link>https://nais.io/blog/tags/oauth.html</link>
@@ -21,15 +39,6 @@
       <pubDate>Wed, 16 Sep 2020 08:10:00 +0200</pubDate>
       
       <guid>https://nais.io/blog/tags/oidc.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sikkerhet</title>
-      <link>https://nais.io/blog/tags/sikkerhet.html</link>
-      <pubDate>Wed, 16 Sep 2020 08:10:00 +0200</pubDate>
-      
-      <guid>https://nais.io/blog/tags/sikkerhet.html</guid>
       <description></description>
     </item>
     
