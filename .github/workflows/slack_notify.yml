@@ -1,0 +1,19 @@
+name: New post notification to Slack
+on:
+   push:
+      branches:
+         - main
+      paths:
+         - "docs/**"
+runs-on: ubuntu-latest
+steps:
+   - uses: actions/checkout@v2
+   - name: Send Notification
+      uses: rtCamp/action-slack-notify@v2.1.0
+      env:
+         SLACK_CHANNEL: nais-utvikling
+         SLACK_COLOR: "#008000"
+         SLACK_MESSAGE: "Blog content has been added or edited :rocket:"
+         SLACK_TITLE: Behold!
+         SLACK_USERNAME: BlogBot
+         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
