@@ -5,7 +5,16 @@
     <link>https://nais.io/blog/tags.html</link>
     <description>Recent content in Tags on nais blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 29 Sep 2020 11:37:43 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Sep 2020 21:06:02 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>test</title>
+      <link>https://nais.io/blog/tags/test.html</link>
+      <pubDate>Wed, 30 Sep 2020 21:06:02 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/tags/test.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>sikkerhet</title>
       <link>https://nais.io/blog/tags/sikkerhet.html</link>
