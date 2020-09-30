@@ -21,7 +21,7 @@
       <pubDate>Wed, 16 Sep 2020 08:10:00 +0200</pubDate>
       
       <guid>https://nais.io/blog/posts/2020/09/oauth-del-2.html</guid>
-      <description>OAuth, OIDC og de greian der. Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.</description>
+      <description>Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.</description>
     </item>
     
     <item>

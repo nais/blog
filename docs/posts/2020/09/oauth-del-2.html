@@ -11,7 +11,7 @@
     
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="OAuth del 2 - nais blog">
-    <meta name="twitter:description" content="OAuth, OIDC og de greian der. Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.">
+    <meta name="twitter:description" content="Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.">
     <meta name="twitter:site" content="https://nais.io/blog">
     <meta name="twitter:creator" content="Jan-Kåre Solbakken">
     <meta name="twitter:image" content="https://nais.io/blog/images/nais-logo.png">
@@ -20,7 +20,7 @@
     <meta property="og:locale" content="">
     <meta property="og:type" content="article">
     <meta property="og:title" content="OAuth del 2 - nais blog">
-    <meta property="og:description" content="OAuth, OIDC og de greian der. Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.">
+    <meta property="og:description" content="Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.">
     <meta property="og:url" content="https://nais.io/blog/posts/2020/09/oauth-del-2.html">
     <meta property="og:site_name" content="nais blog">
     <meta property="og:image" content="https://nais.io/blog/images/nais-logo.png">
@@ -28,7 +28,7 @@
     <title>OAuth del 2 - nais blog</title>
 
     <meta name="author" content="NAIS-team">
-    <meta name="description" content="OAuth, OIDC og de greian der. Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.">
+    <meta name="description" content="Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.">
 
     
     
@@ -88,8 +88,7 @@
         
         
 <article class="mb-12">
-    <h1 id="oauth-oidc-og-de-greian-der">OAuth, OIDC og de greian der.</h1>
-<h2 id="bakgrunn">Bakgrunn</h2>
+    <h2 id="bakgrunn">Bakgrunn</h2>
 <p>I NAV er <a href="/blog/posts/2020/09/oauth-del-1.html">OAuth og OIDC</a> de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og <a href="https://doc.nais.io/appendix/zero-trust">zero trust</a> er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &ldquo;systembrukere&rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra. Man har hatt en eller flere <a href="https://en.wikipedia.org/wiki/Security_token_service">Security Token Services</a> som har vekslet systembrukerens brukernavn og passord inn i et access token som benyttes for videre kall. Dette har flere ulemper. Systembrukerene må ha ganske romslige rettigheter (som gjør det ekstra viktig at de ikke blir kompromittert), og informasjon om sluttbrukeren som initierte kallet blir borte med mindre man legger på hjemmesnekra hacks.</p>
 <h2 id="token-exchange-standarden">Token Exchange standarden</h2>
 <p><a href="https://www.rfc-editor.org/rfc/rfc8693.html">RFC 8693 - OAuth 2.0 Token Exchange</a> adresserer akkurat dette problemet, og har nå endelig blitt en &ldquo;proposed standard&rdquo;. Azure AD (som vi bruker som ID-provider for egne ansatte) har lenge tilbydd en <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-on-behalf-of-flow">on-behalf-of flyt</a> som er veldig lik den nye standarden, men for borgerne som logger på med ID-porten har vi ikke hatt noe tilsvarende.</p>
