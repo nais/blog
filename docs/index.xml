@@ -5,16 +5,7 @@
     <link>https://nais.io/blog/</link>
     <description>Recent content on nais blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 30 Sep 2020 21:06:02 +0200</lastBuildDate><atom:link href="https://nais.io/blog/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Test Post Please Ignore</title>
-      <link>https://nais.io/blog/posts/2020/09/test-post-please-ignore.html</link>
-      <pubDate>Wed, 30 Sep 2020 21:06:02 +0200</pubDate>
-      
-      <guid>https://nais.io/blog/posts/2020/09/test-post-please-ignore.html</guid>
-      <description>This is a test You should probably ignore it.</description>
-    </item>
-    
+    <lastBuildDate>Tue, 29 Sep 2020 11:37:43 +0200</lastBuildDate><atom:link href="https://nais.io/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Zero-trust networking in GCP</title>
       <link>https://nais.io/blog/posts/2020/09/zero-trust-networking-in-gcp.html</link>
