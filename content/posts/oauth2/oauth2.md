@@ -1,6 +1,6 @@
 ---
 title: "OAuth del 2"
-description: "OAuth for dummies, del 2 (on behalf of)"
+description: "OAuth for dummies, del 2 (token exchange)"
 date: 2020-09-16T08:10:00+02:00
 draft: false
 author: Jan-Kåre Solbakken

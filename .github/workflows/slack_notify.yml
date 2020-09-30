@@ -1,10 +1,6 @@
 name: New post notification to Slack
 on:
-   push:
-      branches:
-         - main
-      paths:
-         - "docs/**"
+   page_build
 
 jobs:
    notify:
