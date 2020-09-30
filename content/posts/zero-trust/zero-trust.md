@@ -71,7 +71,7 @@ spec:
   - to:
     - podSelector:
         matchLabels:
-          app: a
+          app: b
     ports:
       - port: 80
 ```
