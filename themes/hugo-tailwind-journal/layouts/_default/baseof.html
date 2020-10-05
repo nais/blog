@@ -7,7 +7,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}">
@@ -15,7 +15,7 @@
     <meta name="twitter:site" content="{{ .Site.BaseURL }}">
     <meta name="twitter:creator" content="{{ .Params.Author }}">
     <meta name="twitter:image" content="{{ .Site.Params.Avatar | absURL }}">
-    
+
     <!-- Open-Graph Data -->
     <meta property="og:locale" content="{{ .Site.Params.LanguageCode }}">
     <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
@@ -24,7 +24,7 @@
     <meta property="og:url" content="{{ .Permalink }}">
     <meta property="og:site_name" content="{{ .Site.Title }}">
     <meta property="og:image" content="{{ .Site.Params.Avatar | absURL }}">
-    
+
     <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
 
     <meta name="author" content="{{ .Site.Params.Author }}">
@@ -46,6 +46,19 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Arvo:400,700">
     <link rel="stylesheet" href="{{ "css/theme.css" | absURL }}">
     <link rel="stylesheet" href="{{ "css/chroma.dracula.css" | absURL }}">
+
+   <!-- Global site tag (gtag.js) - Google Analytics -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2TMPV1DG35"></script>
+   <script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+   gtag('config', 'G-2TMPV1DG35', {
+         'anonymize_ip': true,
+         'allow_google_signals': false,
+         'allow_ad_personalization_signals': false
+   });
+   </script>
 </head>
 <body class="font-serif bg-gray-200 border-t-4 border-blue-500 antialiased">
     <div class="w-full p-6 md:w-2/3 md:px-0 md:mx-auto xl:w-2/5">
@@ -76,7 +89,7 @@
 
         <footer>
             <p>
-                &copy; {{ now.Format "2006"}}. nais.io 
+                &copy; {{ now.Format "2006"}}. nais.io
             </p>
         </footer>
     </div>
