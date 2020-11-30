@@ -11,7 +11,15 @@ In terms of the [GCP resource hierarchy](https://cloud.google.com/resource-manag
 
 The team projects are automatically set up when a team is added to [teams.yaml](https://github.com/navikt/teams). These projects will be named *{teamname}-dev* and *{teamname}-prod*, and owner/administrator roles will be assigned based on the associated Azure AD group. In addition, the team is assigned its own namespace in the nais kubernetes clusters. The namespace is named the same as the team in teams.yaml. 
 
-There are three kubernetes clusters operated by nais on GCP: `prod-gcp` running in the *project* `nais-prod`,`dev_gcp` running in the *project* `nais-dev` and `labs-gcp` running in the *project* `nais-labs`. These clusters run in projects managed by the nais team. This means that team members of the product teams will not have privileges for the *project* the cluster runs in, nor the ability to manage the *resources* the cluster uses. However, the team is able to manage the *kubernetes resources in the team's namespace*.  
+There are three kubernetes clusters operated by nais on GCP:
+
+| cluster    | project     |
+| ---------- | ----------- |
+| `prod-gcp` | `nais-prod` |
+| `dev-gcp`  | `nais-dev`  |
+| `labs-gcp` | `nais-labs` |
+
+These clusters run in projects managed by the nais team. This means that team members of the product teams will not have privileges for the *project* the cluster runs in, nor the ability to manage the *resources* the cluster uses. However, the team is able to manage the *kubernetes resources in the team's namespace*.  
 
 Resources in the kubernetes clusters are provisioned through [nais.yaml](https://doc.nais.io/nais-application/nais.yaml/reference/). In addition, [bucket storage](https://doc.nais.io/persistence/buckets/) and [postgres databases](https://doc.nais.io/persistence/postgres/) should also be provisioned through nais.yaml, but these resources will be added to the team's own project(s). 
 
