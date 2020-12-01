@@ -5,7 +5,17 @@
     <link>https://nais.io/blog/</link>
     <description>Recent content on nais blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 29 Sep 2020 11:37:43 +0200</lastBuildDate><atom:link href="https://nais.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Dec 2020 11:21:27 +0100</lastBuildDate><atom:link href="https://nais.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Project Structure on GCP</title>
+      <link>https://nais.io/blog/posts/2020/12/project-structure-on-gcp.html</link>
+      <pubDate>Tue, 01 Dec 2020 11:21:27 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/2020/12/project-structure-on-gcp.html</guid>
+      <description>In terms of the GCP resource hierarchy, NAV is an Organization, each team is assigned two projects (one for dev and one for prod), and the teams can provision resources within these projects. In theory, these resources can be any of the services offered by Google Cloud Platform. In practice, some restrictions apply. More on this later.
+The team projects are automatically set up when a team is added to teams.</description>
+    </item>
+    
     <item>
       <title>Zero-trust networking in GCP</title>
       <link>https://nais.io/blog/posts/2020/09/zero-trust-networking-in-gcp.html</link>
