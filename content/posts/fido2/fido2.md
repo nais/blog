@@ -2,7 +2,7 @@
 title: "FIDO2"
 description: "Intro to FIDO2"
 date: 2021-01-11T23:58:03+01:00
-draft: true
+draft: false
 author: Jan-Kåre Solbakken
 tags: ["sikkerhet", "fido2", "webauthn"]
 ---
