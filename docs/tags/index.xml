@@ -5,7 +5,34 @@
     <link>https://nais.io/blog/tags.html</link>
     <description>Recent content in Tags on nais blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 01 Dec 2020 11:21:27 +0100</lastBuildDate><atom:link href="https://nais.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Jan 2021 23:58:03 +0100</lastBuildDate><atom:link href="https://nais.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>fido2</title>
+      <link>https://nais.io/blog/tags/fido2.html</link>
+      <pubDate>Mon, 11 Jan 2021 23:58:03 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/tags/fido2.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sikkerhet</title>
+      <link>https://nais.io/blog/tags/sikkerhet.html</link>
+      <pubDate>Mon, 11 Jan 2021 23:58:03 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/tags/sikkerhet.html</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>webauthn</title>
+      <link>https://nais.io/blog/tags/webauthn.html</link>
+      <pubDate>Mon, 11 Jan 2021 23:58:03 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/tags/webauthn.html</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>gcp</title>
       <link>https://nais.io/blog/tags/gcp.html</link>
@@ -21,15 +48,6 @@
       <pubDate>Tue, 01 Dec 2020 11:21:27 +0100</pubDate>
       
       <guid>https://nais.io/blog/tags/nais.html</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sikkerhet</title>
-      <link>https://nais.io/blog/tags/sikkerhet.html</link>
-      <pubDate>Tue, 29 Sep 2020 11:37:43 +0200</pubDate>
-      
-      <guid>https://nais.io/blog/tags/sikkerhet.html</guid>
       <description></description>
     </item>
     
