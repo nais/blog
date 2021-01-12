@@ -31,16 +31,16 @@ Two different actions (“ceremonies”) can be performed in a FIDO2 context: re
 
 1. Client requests registration
 2. Relying Party generates challenge
-   1. Prevents replay
+   - Prevents replay
 3. Client validates origin (using TLS) and sends info to authenticator
-   1. Prevents phishing
+   - Prevents phishing
 4. Authenticator checks user presence and consent before generating key pair and storing the private key
-   1. Prevents silent tracking
+   - Prevents silent tracking
 5. Authenticator verifies client data, creates key pair, stores the private key and sends back attestation object with the public key. This object is signed with the authenticator’s attestation key.
-   1- No secret is shared with the Relying Party
+   - No secret is shared with the Relying Party
 6. Relying Party verifies the attestation and stores the user handle and public key.
-   1. Prevents phishing
-   2. Proof that the private key is safe
+   - Prevents phishing
+   - Proof that the private key is safe
 
 The authentication flow is very similar, but the authenticator response is now signed with the private key generated during registration:
 
@@ -48,17 +48,17 @@ The authentication flow is very similar, but the authenticator response is now s
 
 1. Client requests authentication
 2. Relying Party generates challenge
-   1. Prevents replay
+   - Prevents replay
 3. Client validates origin (using TLS) and sends info to authenticator
-   1. Prevents phishing
+   - Prevents phishing
 4. Authenticator checks user presence and consent before retrieving the private key.
-   1. Prevents silent tracking and covert login
-   2. Credentials are restricted to one Relying Party
+   - Prevents silent tracking and covert login
+   - Credentials are restricted to one Relying Party
 5. Authenticator creates a response and signs it with the private key.
-   1. Secret is never shared with the client.
+   - Secret is never shared with the client.
 6. Relying Party verifies the response signature and contents before logging in the user.
-   1. Prevents phishing
-   2. Prevents man-in-the-middle
+   - Prevents phishing
+   - Prevents man-in-the-middle
 
 The authenticator may also maintain a counter that is increased and returned to the relying party every time an authentication is performed. This makes it easy to detect cloned credentials as the counters on the server and the authenticator will fall out of sync. 
 
@@ -69,8 +69,7 @@ The Relying Party server needs to generate and verify challenges as well as veri
 So, will FIDO2 lead to the death of passwords? Probably not, at least for the short term. Passwords are ubiquitous throughout the industry, and replacing super-widespread technologies can take decades regardless of how superior the replacement is. The FIDO2 initiative is widely backed by some of the biggest players in the industry though, so we will start to see more and more services offering support. Major players such as Microsoft and Gooogle already offer support throughout their lineup.
 
 ### Links/further reading
-Useful links:
-https://webauthn.io/ (playground for testing FIDO2)
-https://fidoalliance.org/specifications/ (the standard)
-https://www.yubico.com/authentication-standards/fido2/ (Yubico’s start page for FIDO2)
-https://www.do#ngleauth.info/ (a community driven list of sites and services supporting strong authentication)
+- https://webauthn.io/ (playground for testing FIDO2)
+- https://fidoalliance.org/specifications/ (the standard)
+- https://www.yubico.com/authentication-standards/fido2/ (Yubico’s start page for FIDO2)
+- https://www.dongleauth.info/ (a community driven list of sites and services supporting strong authentication)
