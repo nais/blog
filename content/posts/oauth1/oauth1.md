@@ -7,6 +7,8 @@ author: Jan-Kåre Solbakken
 tags: ["oauth", "oidc", "sikkerhet"]
 ---
 
+![OAuth2](/blog/images/oauth2.png) 
+
 ## Innledning
 
 Dette er del 1 av 3 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. [Del 2](/blog/posts/2020/09/oauth-del-2-token-exchange.html) tar for seg den nylig standardiserte `Token Exchange`-flyten og hvordan vi har løst den med [TokenX](https://doc.nais.io/security/auth/tokenx/). [Del 3](/blog/posts/2021/03/oauth-del-3-pkce.html) handler om "Proof Key for Code Exchange", a.k.a. PKCE.
