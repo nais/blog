@@ -1,5 +1,5 @@
 ---
-title: "OAuth del 2"
+title: "OAuth del 2 (Token Exchange)"
 description: "OAuth for dummies, del 2 (token exchange)"
 date: 2020-09-16T08:10:01+02:00
 draft: false
