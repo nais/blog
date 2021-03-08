@@ -37,7 +37,9 @@ Standarden definerer to ulike metoder å lage code challenges med: `plain` og `S
 base64UrlEncode(sha256(ascii(code_verifier)))
 ```
 
-Plain challenges har jo begrenset nytteverdi, så klientene er pålagt å bruke S256 med mindre særlige begrensninger i ressurser eller annet gjør at de ikke er i stand til det. 
+Plain challenges har jo begrenset nytteverdi, så klientene er pålagt å bruke S256 med mindre særlige begrensninger i ressurser eller annet gjør at de ikke er i stand til det. Siden sikkerheten er basert på at code verifieren ikke kan brute forces er det viktig at den er tilfeldig nok (standarden foreslår en entropi på minimum 256 bit). For å holde implementasjonen enkel (og fordi entropien er sterk i utgangspunktet) kreves det ikke salting.
+
+PKCE er støttet i flere biblioteker for flere språk, deriblant [Java/Kotlin](https://connect2id.com/products/nimbus-oauth-openid-connect-sdk/examples/oauth/pkce), [Go](https://github.com/ory/fosite) og [JavaScript](https://github.com/panva/node-openid-client).
 
 ## Videre lesning/fordypning
 - [RFC 7636](https://tools.ietf.org/html/rfc7636) (Proof Key for Code Exchange by OAuth Public Clients)
