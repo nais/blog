@@ -11,7 +11,9 @@ tags: ["oauth", "oidc", "sikkerhet"]
 
 ## Bakgrunn
 
-Dette er del 3 i serien om OAuth og OIDC. I [del 1](/blog/posts/2020/09/oauth-del-1.html) ble standarden og terminologien gjennomgått, ta en titt på den hvis du trenger en innføring eller oppfriskning. Den mest brukte OAuth-flyten, "Authorization Code flow", innebærer at `client` og `id provider` utveksler hemmeligheter. Klienten må derfor være i stand til å holde på hemmeligheter, i standarden omtales dette som `confidential clients`. For mobil-apps og "single page" webapplikasjoner har dette ikke vært gjennomførbart da hemmelighetene må distribueres helt ut til sluttbrukeren som en del av appen.
+Dette er del 3 i serien om OAuth og OIDC. Den mest brukte OAuth-flyten, "Authorization Code flow", innebærer at `client` og `id provider` utveksler hemmeligheter. Klienten må derfor være i stand til å holde på hemmelig informasjon på en trygg måte, i standarden omtales dette som `confidential clients`. For mobil-apps og "single page" webapplikasjoner har dette ikke vært gjennomførbart da hemmelighetene må distribueres helt ut til sluttbrukeren som en del av appen.
+
+I [del 1](/blog/posts/2020/09/oauth-del-1.html) ble standarden og terminologien gjennomgått, ta en titt på den hvis du trenger en innføring eller oppfriskning.
 
 Authorization Code flow har også en svakhet som kalles "authorization code injection". Et slikt angrep er komplisert å gjennomføre og krever at mange ting skal klaffe samtidig, men er ingen umulighet. Dersom noen som har stjålet din `client_id` og `client_secret` klarer å fange opp en authorization code kan de gjøre et token-kall på dine vegne, og dermed utgi seg for den aktuelle sluttbrukeren. Hvordan klarer man så å fange opp en authorization code? Callbacks gjøres jo kun til (forhåpentligvis) forhåndsgodkjente URLer over HTTPS? Vel, ikke alltid. En måte er å utnytte custom "URL schemes" på telefoner. En telefon-app vil typisk registrere callback URLs av type `myapp://something`, dette gjør at kallene rutes til denne appen. Hvis en angriper får deg til å installere en app som registrerer seg som lytter på myapp-URLs vil denne appen også få tilsendt callbackene som inneholder koden.
 
@@ -29,6 +31,17 @@ PKCE legger på følgende tillegg:
  - Klienten sender `authorization_code` som vanlig med i `/token`-kallet, men legger i tillegg på den samme `code_verifier` som ble generert i punkt 1.
  - Id-provider bruker `code_verifier` til å generere en `code_challenge` på samme måte som klienten gjorde. Hvis de to code challengene ikke er like avvises forespørselen.
 
+ Et auth-kall vi da kunne se ut som følger: 
+ ```bash
+ GET /auth
+      ?response_type=code
+      &client_id=myclient
+      &redirect_url=myapp://callback
+      &scope=whatever
+      &state=123
+      &code_challenge=abcd1234xyz
+ ```
+
 Angripere som kjenner din `client_id` og `client_secret` vil dermed ikke kunne gjøre token-kall fordi de ikke kjenner verifieren som ble generert og brukt i punkt 1. Selv om de er i stand til å observere både requesten til og responsen fra `/auth`-endepunktet vil de ikke være i stand til å rekonstruere code challengen.
 
 Standarden definerer to ulike metoder å lage code challenges med: `plain` og `S256`. Plain vil si at code_verifier og code_challenge er samme verdi. For S256 lages code_challenge etter følgende oppskrift: 
@@ -44,3 +57,4 @@ PKCE er støttet i flere biblioteker for flere språk, deriblant [Java/Kotlin](h
 ## Videre lesning/fordypning
 - [RFC 7636](https://tools.ietf.org/html/rfc7636) (Proof Key for Code Exchange by OAuth Public Clients)
 - OAuth-delen av [PortSwigger Web Security Academy](https://portswigger.net/web-security/oauth)
+- [Eksempel](https://www.youtube.com/watch?v=1ot45WwQWJE) på code injection-angrep
