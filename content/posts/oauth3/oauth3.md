@@ -33,13 +33,13 @@ PKCE legger på følgende tillegg:
 
  Et auth-kall vi da kunne se ut som følger: 
  ```bash
- GET /auth
-      ?response_type=code
-      &client_id=myclient
-      &redirect_url=myapp://callback
-      &scope=whatever
-      &state=123
-      &code_challenge=abcd1234xyz
+ GET /auth?
+      response_type=code&
+      client_id=myclient&
+      redirect_url=myapp://callback&
+      scope=whatever&
+      state=123&
+      code_challenge=elUXu5zy4QT2f92GRaUq23autAeNDf4DQPaycR0ek_o
  ```
 
 Angripere som kjenner din `client_id` og `client_secret` vil dermed ikke kunne gjøre token-kall fordi de ikke kjenner verifieren som ble generert og brukt i punkt 1. Selv om de er i stand til å observere både requesten til og responsen fra `/auth`-endepunktet vil de ikke være i stand til å rekonstruere code challengen.
