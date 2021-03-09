@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="generator" content="Hugo 0.81.0" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,8 +11,8 @@
     
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="OAuth del 1 - nais blog">
-    <meta name="twitter:description" content="Innledning Dette er del 1 av 2 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX.
-Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig. Vi har stadig flere kontoer og identiteter rundt omkring, og det er ikke uvanlig å ha hundrevis av brukernavn/passord-komboer å holde styr på.">
+    <meta name="twitter:description" content="Innledning Dette er del 1 av 3 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX. Del 3 handler om &amp;ldquo;Proof Key for Code Exchange&amp;rdquo;, a.k.a. PKCE.
+Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig.">
     <meta name="twitter:site" content="https://nais.io/blog">
     <meta name="twitter:creator" content="Jan-Kåre Solbakken">
     <meta name="twitter:image" content="https://nais.io/blog/images/nais-logo.png">
@@ -21,8 +21,8 @@ Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å g
     <meta property="og:locale" content="">
     <meta property="og:type" content="article">
     <meta property="og:title" content="OAuth del 1 - nais blog">
-    <meta property="og:description" content="Innledning Dette er del 1 av 2 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX.
-Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig. Vi har stadig flere kontoer og identiteter rundt omkring, og det er ikke uvanlig å ha hundrevis av brukernavn/passord-komboer å holde styr på.">
+    <meta property="og:description" content="Innledning Dette er del 1 av 3 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX. Del 3 handler om &amp;ldquo;Proof Key for Code Exchange&amp;rdquo;, a.k.a. PKCE.
+Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig.">
     <meta property="og:url" content="https://nais.io/blog/posts/2020/09/oauth-del-1.html">
     <meta property="og:site_name" content="nais blog">
     <meta property="og:image" content="https://nais.io/blog/images/nais-logo.png">
@@ -30,8 +30,8 @@ Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å g
     <title>OAuth del 1 - nais blog</title>
 
     <meta name="author" content="NAIS-team">
-    <meta name="description" content="Innledning Dette er del 1 av 2 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX.
-Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig. Vi har stadig flere kontoer og identiteter rundt omkring, og det er ikke uvanlig å ha hundrevis av brukernavn/passord-komboer å holde styr på.">
+    <meta name="description" content="Innledning Dette er del 1 av 3 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX. Del 3 handler om &amp;ldquo;Proof Key for Code Exchange&amp;rdquo;, a.k.a. PKCE.
+Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig.">
 
     
     
@@ -104,8 +104,9 @@ Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å g
         
         
 <article class="mb-12">
-    <h2 id="innledning">Innledning</h2>
-<p>Dette er del 1 av 2 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. <a href="/blog/posts/2020/09/oauth-del-2.html">Del 2</a> tar for seg den nylig standardiserte <code>Token Exchange</code>-flyten og hvordan vi har løst den med <a href="https://doc.nais.io/addons/tokenx">TokenX</a>.</p>
+    <p><img src="/blog/images/oauth2.png" alt="OAuth2"></p>
+<h2 id="innledning">Innledning</h2>
+<p>Dette er del 1 av 3 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. <a href="/blog/posts/2020/09/oauth-del-2-token-exchange.html">Del 2</a> tar for seg den nylig standardiserte <code>Token Exchange</code>-flyten og hvordan vi har løst den med <a href="https://doc.nais.io/security/auth/tokenx/">TokenX</a>. <a href="/blog/posts/2021/03/oauth-del-3-pkce.html">Del 3</a> handler om &ldquo;Proof Key for Code Exchange&rdquo;, a.k.a. PKCE.</p>
 <h2 id="bakgrunn">Bakgrunn</h2>
 <p>Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig. Vi har stadig flere kontoer og identiteter rundt omkring, og det er ikke uvanlig å ha hundrevis av brukernavn/passord-komboer å holde styr på. For å lette på dette problemet trenger man “single sign on” og føderering av identiteter, både på internett og internt i organisasjoner. Etterhvert som man benytter flere tjenester rundt omkring oppstår det også et behov for å kunne dele data mellom dem på en trygg måte. Kanskje du vil dele Google-kalenderen med bilen sånn at navigasjonssystemet kan rute deg automatisk til riktig sted basert på dato og klokkeslett? Eller kanskje du ønsker å gi Snyk tilgang til dine private repositories på GitHub sånn at de kan scannes for sårbarheter? Tidligere var den eneste måten å få til slik datadeling på at man delte passordene sine mellom tjenestene sånn at de kunne logge seg inn på dine vegne. Det er ikke en spesielt bra løsning. Man kan ikke begrense hva de ulike tjenestene skal få lov til å gjøre på dine vegne, og du har ingen kontroll på at de tar vare på passordene dine på en forsvarlig måte.</p>
 <h2 id="hva-er-oauth">Hva er OAuth?</h2>
