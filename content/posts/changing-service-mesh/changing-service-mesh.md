@@ -1,6 +1,6 @@
 ---
 title: "Changing Service Mesh"
-description: "How we swapped Istio with Linkerd"
+description: "How we swapped Istio with Linkerd" #j ...in-flight? zero downtime?
 date: 2021-05-04T20:37:13+02:00
 draft: true
 author: Frode Sundby
@@ -10,18 +10,21 @@ tags: [istio, linkerd, LoadBalancing]
 # Zero downtime service-mesh change
 
 ## Why change?
-With an ambition of making our environments as secure as possible, we jumped on the service-mesh band wagon in 2018 with Istio 0.7 and have stuck with it since.
+With an ambition of making our environments as secure as possible, we jumped on the service-mesh band wagon in 2018 with Istio 0.7 and have stuck with it since. #j bandwagon
 
 Istio is a large and feature rich system that brings capabilities in heaps and bounds.
 Although there are a plethora of nifty and useful things you can do, our main use case was mTLS and authorization policies.
-However, the added capabilities brings added complexities; both when configuring, maintaining and troubleshooting.
-And since we don’t use (nor have the need for) more than a smidgeon of the capabilities, we would prefer to opt out of the added complexity.
+However, the added capabilities brings added complexities; both when configuring, maintaining and troubleshooting.  #j capabilities comes with a cost, namely complexity...
+And since we don’t use (nor have the need for) more than a smidgeon of the capabilities, we would prefer to opt out of the added complexity. #j Since we don't make use of ... we want to simplify where we can.
 
-## Original architecture:
-The first thing an end user encounters, is our Google LoadBalancer. (This LoadBalancer was created and configured by an Istio Operator in each cluster.)
+#j føler det mangler noeTM her, evt bare en annen overgang. 
+#j f.eks. ta med leseren på en reise der vi fant ut at "hm, kanskje vi skulle sett på noe annet", til kjapp analyse, til kjapp poc til bæng vi gønner på med linkerd. Deretter, "la oss ta en titt på hvordan arkitekturen så ut... <original architecture>
+
+## Original architecture: 
+The first thing an end user encounters, is our Google LoadBalancer. (This LoadBalancer was created and configured by an Istio Operator in each cluster.) #j load balancer. Kanskje vurdere om det som står i parentes er viktig for leser her, eller mer forvirrende
 The traffic is then shipped to the Istio Ingressgateway. (Istio Ingressgateway is configured by a VirtualService and a Gateway.)
 Istio Ingressgateway then establish an mTLS connection to the Istio sidecar injected to the application's pod. (mTLS is authorized by an AuthorizationPolicy)
-In order for the Ingressgateway to reach the destination, a NetworkPolies for both Istio Ingressgateway and the application needs to allow the traffic
+In order for the Ingressgateway to reach the destination, a NetworkPolies for both Istio Ingressgateway and the application needs to allow the traffic #j .
 Both AuthorizationPolicies and VirtualServices are created by an [operator](https://github.com/nais/naiserator) during application deploy.
 
 ![changing-service-mesh](/blog/images/changing-service-mesh-1.png)
@@ -97,6 +100,8 @@ spec:
   ...
 ```
 Now we could change the DNS records for *.<domain> to point to the new rig and no one would notice a thing.
+
+#j *.sub.domain.tld i eksempel kanskje
 
 
 workloads to linkerd.
