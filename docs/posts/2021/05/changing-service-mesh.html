@@ -187,7 +187,7 @@ To avoid downtime, we created an interim ingress that forwarded all traffic to t
 With this ingress in place, we could reach all the existing VirtualServices exposed by the Istio Ingressgateway via the new Loadbalancers and Nginx.
 And we could point our DNS records to the new rig without anyone noticing a thing.</p>
 <h3 id="migrating-workloads-from-istio-to-linkerd">Migrating workloads from Istio to Linkerd</h3>
-<p>Once loadbalancing and ingress traffic were closed chapters, we changed our attention to migrating workloads from Istio to Linkerd.
+<p>Once LoadBalancing  and ingress traffic were closed chapters, we changed our attention to migrating workloads from Istio to Linkerd.
 When moving a workload to a new service-mesh, there&rsquo;s a bit more to it than swapping out the sidecar with a new namespace annotation.
 Our primary concerns were:</p>
 <ul>
@@ -209,7 +209,7 @@ And within a couple of hours, all workloads were migrated and we had ourselves a
 And then they all lived happily ever after&hellip;</p>
 <p>Except that we had to clean up Istio&rsquo;s mess.</p>
 <h3 id="cleaning-up">Cleaning up</h3>
-<p>What was left after the party, was a fully operational Istio control plane, a whole bunch of Istio CRD&rsquo;s and a completely unused set of load balancers. In addition we had to clean up everything related to Istio in a whole lot of pipelines and components</p>
+<p>What was left after the party was a fully operational Istio control plane, a whole bunch of Istio CRD&rsquo;s and a completely unused set of LoadBalancers. In addition we had to clean up everything related to Istio in a whole lot of pipelines and components</p>
 <p><img src="/blog/images/changing-service-mesh-5.png" alt="changing-service-mesh">
 <img src="/blog/images/changing-service-mesh-6.png" alt="changing-service-mesh"></p>
 <p>It has to be said - there is a certain satisfaction in cleaning up after a party that has been going on for too long.</p>
