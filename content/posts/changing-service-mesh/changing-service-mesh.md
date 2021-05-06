@@ -109,7 +109,7 @@ With this ingress in place, we could reach all the existing VirtualServices expo
 And we could point our DNS records to the new rig without anyone noticing a thing.
 
 ### Migrating workloads from Istio to Linkerd
-Once loadbalancing and ingress traffic were closed chapters, we changed our attention to migrating workloads from Istio to Linkerd.
+Once LoadBalancing  and ingress traffic were closed chapters, we changed our attention to migrating workloads from Istio to Linkerd.
 When moving a workload to a new service-mesh, there's a bit more to it than swapping out the sidecar with a new namespace annotation.
 Our primary concerns were:
 - The new sidecar would require NetworkPolicies to allow traffic to and from linkerd. 
@@ -134,7 +134,7 @@ And then they all lived happily ever after...
 Except that we had to clean up Istio's mess.
 
 ### Cleaning up
-What was left after the party, was a fully operational Istio control plane, a whole bunch of Istio CRD's and a completely unused set of load balancers. In addition we had to clean up everything related to Istio in a whole lot of pipelines and components
+What was left after the party was a fully operational Istio control plane, a whole bunch of Istio CRD's and a completely unused set of LoadBalancers. In addition we had to clean up everything related to Istio in a whole lot of pipelines and components
 
 
 ![changing-service-mesh](/blog/images/changing-service-mesh-5.png)
