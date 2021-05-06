@@ -2,7 +2,7 @@
 title: "Changing Service Mesh"
 description: "How we swapped Istio with Linkerd with hardly any downtime"
 date: 2021-05-04T20:37:13+02:00
-draft: true
+draft: false
 author: Frode Sundby
 tags: [istio, linkerd, LoadBalancing]
 ---
@@ -11,13 +11,13 @@ tags: [istio, linkerd, LoadBalancing]
 ## Why change?
 With an ambition of making our environments as secure as possible, we jumped on the service-mesh bandwagon in 2018 with Istio 0.7 and have stuck with it since.
 
-Istio is a large and feature rich system that brings capabilities in heaps and bounds.
+Istio is a large and feature rich system that brings capabilities aplenty.
 Although there are a plethora of nifty and useful things we could do with Istio, we've primarily used it for mTLS and authorization policies.
 
-One might think that having lots of features available but not using them, couldn't possibly be a problem.
+One might think that having lots of features available but not using them couldn't possibly be a problem.
 However, all these extra capabilities comes with a cost - namely complexity; and we've felt encumbered by this complexity every time when configuring, maintaining or troubleshooting in our clusters.
 Our suspicions were that since we hardly used any of the capabilities, we could probably make do with a much simpler alternative.
-So, and after yet another "Oh... This problem was caused by Istio!"-moment, we decided the time was ripe to consider the alternatives out there.
+So, and after yet another _"Oh... This problem was caused by Istio!"_-moment, we decided the time was ripe to consider the alternatives out there.
 
 We looked to the grand ol' Internet for alternatives and fixed our gaze on the rising star Linkerd 2.
 Having honed in on our preferred candidate, we decided to take it for a quick spin in a cluster and found our suspicions to be accurate.
@@ -31,14 +31,12 @@ Even though we'd invested a lot of time and built in quite a bit of Istio into o
 ### Original architecture: 
 Let's first have a quick look at what we were dealing with:
 
-The first thing an end user encountered, was our Google LoadBalancer configured by an IstioOperator.
+The first thing an end user encountered was our Google LoadBalancer configured by an IstioOperator.
 The traffic was then forwarded to the Istio Ingressgateway, who in turn sent it along via an mTLS connection to the application.
 Before the Ingressgateway could reach the application, both NetworkPolicies and AuthorizationPolicies were required to allow the traffic.
 We used an [operator](https://github.com/nais/naiserator) to configure these policies when an application was deployed.
 
 ![changing-service-mesh](/blog/images/changing-service-mesh-1.png)
-
-
 
 ### New LoadBalancers and ingress controllers
 Since our LoadBalancers were configured by (and sent traffic to) Istio, we had to change the way we configured them.
