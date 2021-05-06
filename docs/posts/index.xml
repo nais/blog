@@ -18,6 +18,15 @@ One might think that having lots of features available but not using them couldn
     </item>
     
     <item>
+      <title>OAuth del 3 (PKCE)</title>
+      <link>https://nais.io/blog/posts/2021/03/oauth-del-3-pkce.html</link>
+      <pubDate>Sun, 07 Mar 2021 12:49:37 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/2021/03/oauth-del-3-pkce.html</guid>
+      <description>Bakgrunn Dette er del 3 i serien om OAuth og OIDC. Den mest brukte OAuth-flyten, &amp;ldquo;Authorization Code flow&amp;rdquo;, innebærer at client og id provider utveksler hemmeligheter. Klienten må derfor være i stand til å holde på hemmelig informasjon på en trygg måte, i standarden omtales dette som confidential clients. For mobil-apps og &amp;ldquo;single page&amp;rdquo; webapplikasjoner har dette ikke vært gjennomførbart da hemmelighetene må distribueres helt ut til sluttbrukeren som en del av appen.</description>
+    </item>
+    
+    <item>
       <title>FIDO2</title>
       <link>https://nais.io/blog/posts/2021/01/fido2.html</link>
       <pubDate>Mon, 11 Jan 2021 23:58:03 +0100</pubDate>
