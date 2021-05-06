@@ -5,7 +5,18 @@
     <link>https://nais.io/blog/</link>
     <description>Recent content on nais blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 11 Jan 2021 23:58:03 +0100</lastBuildDate><atom:link href="https://nais.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 04 May 2021 20:37:13 +0200</lastBuildDate><atom:link href="https://nais.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Changing Service Mesh</title>
+      <link>https://nais.io/blog/posts/2021/05/changing-service-mesh.html</link>
+      <pubDate>Tue, 04 May 2021 20:37:13 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/2021/05/changing-service-mesh.html</guid>
+      <description>Why change? With an ambition of making our environments as secure as possible, we jumped on the service-mesh bandwagon in 2018 with Istio 0.7 and have stuck with it since.
+Istio is a large and feature rich system that brings capabilities aplenty. Although there are a plethora of nifty and useful things we could do with Istio, we&amp;rsquo;ve primarily used it for mTLS and authorization policies.
+One might think that having lots of features available but not using them couldn&amp;rsquo;t possibly be a problem.</description>
+    </item>
+    
     <item>
       <title>FIDO2</title>
       <link>https://nais.io/blog/posts/2021/01/fido2.html</link>
