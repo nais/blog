@@ -13,6 +13,7 @@ With an ambition of making our environments as secure as possible, we jumped on 
 
 Istio is a large and feature rich system that brings capabilities in heaps and bounds.
 Although there are a plethora of nifty and useful things we could do with Istio, we've primarily used it for mTLS and authorization policies.
+
 One might think that having lots of features available but not using them, couldn't possibly be a problem.
 However, all these extra capabilities comes with a cost - namely complexity; and we've felt encumbered by this complexity every time when configuring, maintaining or troubleshooting in our clusters.
 Our suspicions were that since we hardly used any of the capabilities, we could probably make do with a much simpler alternative.
@@ -137,6 +138,8 @@ Except that we had to clean up Istio's mess.
 ### Cleaning up
 What was left after the party, was a fully operational Istio control plane, a whole bunch of Istio CRD's and a completely unused set of load balancers. In addition we had to clean up everything related to Istio in a whole lot of pipelines and components
 
+
 ![changing-service-mesh](/blog/images/changing-service-mesh-5.png)
+![changing-service-mesh](/blog/images/changing-service-mesh-6.png)
 
 It has to be said - there is a certain satisfaction in cleaning up after a party that has been going on for too long.
