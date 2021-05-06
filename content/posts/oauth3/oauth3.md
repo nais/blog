@@ -2,7 +2,7 @@
 title: "OAuth del 3 (PKCE)"
 description: "OAuth Proof Key for Code Exchange (PKCE)"
 date: 2021-03-07T12:49:37+01:00
-draft: true
+draft: false
 author: Jan-Kåre Solbakken
 tags: ["oauth", "oidc", "sikkerhet"]
 ---
