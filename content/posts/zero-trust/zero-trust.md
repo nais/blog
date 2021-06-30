@@ -57,7 +57,7 @@ In a team's namespace, the underlying [network infrastructure](https://www.proje
 Given an example architechture where application `a` needs to communicate with application `b`,  both appliations  will have to apply network policies to allow this traffic:
 
 #### A allows utgoing traffic to B
-```
+```yaml
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -76,7 +76,7 @@ spec:
       - port: 80
 ```
 #### B allows incoming traffic from A
-```
+```yaml
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
@@ -102,7 +102,7 @@ In the same way that network policies by default denies traffic on the IP layer,
 There are no outbound authorization policies, so only application `b` will have to apply an authorization policy to allow traffic from application `a`.
 Note, though, that application `a` will still validate the certificate presented by application `b` before establishing the connection.
 
-```
+```yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
@@ -130,7 +130,7 @@ Which is why we've implemented an abstraction in the [NAIS application manifest]
 
 The application spec for application `a` will generate a network policy allowing traffic from application `a` to application `b`
 
-```
+```yaml
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
@@ -145,7 +145,7 @@ spec:
 ```
 
 While the related application spec for application `b` will create both a network policy allowing inbound traffic from `a`, and an authorization policy that authorize applicaiton `a`
-```
+```yaml
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
