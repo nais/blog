@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.82.1" />
+    <meta name="generator" content="Hugo 0.84.3" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -135,92 +135,92 @@ Kubernetes pods can be treated much like VMs or hosts (they all have unique IP a
 In a team&rsquo;s namespace, the underlying <a href="https://www.projectcalico.org/">network infrastructure</a> will deny all traffic both to and from all pods unless explicit network policies have been applied.
 Given an example architechture where application <code>a</code> needs to communicate with application <code>b</code>,  both appliations  will have to apply network policies to allow this traffic:</p>
 <h4 id="a-allows-utgoing-traffic-to-b">A allows utgoing traffic to B</h4>
-<pre><code>kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: allow-app-a-to-b
-  namespace: default
-spec:
-  podSelector:
-    matchLabels:
-      app: a
-  egress:
-  - to:
-    - podSelector:
-        matchLabels:
-          app: b
-    ports:
-      - port: 80
-</code></pre><h4 id="b-allows-incoming-traffic-from-a">B allows incoming traffic from A</h4>
-<pre><code>kind: NetworkPolicy
-apiVersion: networking.k8s.io/v1
-metadata:
-  name: allow-app-a-to-b
-  namespace: default
-spec:
-  podSelector:
-    matchLabels:
-      app: b
-  ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          app: a
-    ports:
-      - port: 80
-
-</code></pre><h3 id="istio-authorization-policy">Istio Authorization Policy</h3>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">NetworkPolicy</span><span class="w">
+</span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.k8s.io/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">allow-app-a-to-b</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">a</span><span class="w">
+</span><span class="w">  </span><span class="nt">egress</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">to</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">podSelector</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">b</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span></code></pre></div><h4 id="b-allows-incoming-traffic-from-a">B allows incoming traffic from A</h4>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">NetworkPolicy</span><span class="w">
+</span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.k8s.io/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">allow-app-a-to-b</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">podSelector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">b</span><span class="w">
+</span><span class="w">  </span><span class="nt">ingress</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">from</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">podSelector</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">a</span><span class="w">
+</span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">
+</span></code></pre></div><h3 id="istio-authorization-policy">Istio Authorization Policy</h3>
 <p><em>Istio Authorization Policy enables access control on workloads in the mesh and ensures traffic is encrypted using mTLS.</em>
 In the same way that network policies by default denies traffic on the IP layer, authorization policies will deny traffic on the transport layer by default.
 There are no outbound authorization policies, so only application <code>b</code> will have to apply an authorization policy to allow traffic from application <code>a</code>.
 Note, though, that application <code>a</code> will still validate the certificate presented by application <code>b</code> before establishing the connection.</p>
-<pre><code>apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
-metadata:
-  name: allow-traffic-from-a
-  namespace: default
-spec:
-  rules:
-  - from:
-    - source:
-        principals:
-        - cluster.local/ns/istio-system/sa/a-service-account
-    to:
-    - operation:
-        paths:
-        - '*'
-  selector:
-    matchLabels:
-      app: b
-</code></pre><h2 id="abstraction">Abstraction</h2>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">security.istio.io/v1beta1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">AuthorizationPolicy</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">allow-traffic-from-a</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">default</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">from</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">source</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">principals</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="l">cluster.local/ns/istio-system/sa/a-service-account</span><span class="w">
+</span><span class="w">    </span><span class="nt">to</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">operation</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span><span class="nt">paths</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="s1">&#39;*&#39;</span><span class="w">
+</span><span class="w">  </span><span class="nt">selector</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">b</span><span class="w">
+</span></code></pre></div><h2 id="abstraction">Abstraction</h2>
 <p>Admittedly, adding these features leads to added complexity which in turn demands that developers have an unnecessarily deep understanding of infrastructure functionality.
 What developers should really be concerned with, is which applications they want to communicate with, and which applications they want communicating with them. Not the minute details of how.
 Which is why we&rsquo;ve implemented an abstraction in the <a href="https://doc.nais.io/nais-application/access-policy">NAIS application manifest</a>, that allows developers to do exactly that.</p>
 <p>The application spec for application <code>a</code> will generate a network policy allowing traffic from application <code>a</code> to application <code>b</code></p>
-<pre><code>apiVersion: &quot;nais.io/v1alpha1&quot;
-kind: &quot;Application&quot;
-metadata:
-  name: a
-...
-spec:
-  ...
-  accessPolicy:
-    outbound:
-      rules:
-        - app: b
-</code></pre><p>While the related application spec for application <code>b</code> will create both a network policy allowing inbound traffic from <code>a</code>, and an authorization policy that authorize applicaiton <code>a</code></p>
-<pre><code>apiVersion: &quot;nais.io/v1alpha1&quot;
-kind: &quot;Application&quot;
-metadata:
-  name: b
-...
-spec:
-  ...
-  accessPolicy:
-    inbound:
-      rules:
-        - app: a
-</code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;nais.io/v1alpha1&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Application&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">a</span><span class="w">
+</span><span class="w"></span><span class="nn">...</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="l">...</span><span class="w">
+</span><span class="w">  </span><span class="nt">accessPolicy</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">outbound</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">b</span><span class="w">
+</span></code></pre></div><p>While the related application spec for application <code>b</code> will create both a network policy allowing inbound traffic from <code>a</code>, and an authorization policy that authorize applicaiton <code>a</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;nais.io/v1alpha1&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Application&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">b</span><span class="w">
+</span><span class="w"></span><span class="nn">...</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="l">...</span><span class="w">
+</span><span class="w">  </span><span class="nt">accessPolicy</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">inbound</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">        </span>- <span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">a</span><span class="w">
+</span></code></pre></div>
 </article>
 
 
