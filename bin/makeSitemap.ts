@@ -32,7 +32,7 @@ const urlForPost = (metadataJSON: string, baseUrl: string) => {
 
 const makeSitemap = async () => {
   // FIXME: Not sure how to do this transparently
-  const baseUrl = `https://nais.io/blog-rewrite`;
+  const baseUrl = `https://nais.io/blog`;
 
   const staticPages = fs
     .readdirSync("pages")

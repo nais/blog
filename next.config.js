@@ -1,4 +1,4 @@
-const basePath = "/blog-rewrite";
+const basePath = "/blog";
 const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
 module.exports = (phase, { defaultConfig }) => ({

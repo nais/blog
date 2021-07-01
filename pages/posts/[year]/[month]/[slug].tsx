@@ -23,7 +23,7 @@ const transformImageURI = (
   alt: string,
   title: string | null
 ): string => {
-  return uriTransformer(src.replace(/blog/, "blog-rewrite"));
+  return uriTransformer(src.replace(/blog/, "blog"));
 };
 
 const components = {
