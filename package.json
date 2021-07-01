@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build && next export -o docs/ && yarn buildSitemap",
     "start": "next start",
-    "buildSitemap": "tsc --esModuleInterop bin/makeSitemap.ts && node bin/makeSitemap.js",
+    "buildSitemap": "tsc --esModuleInterop bin/makeSitemap.ts && node bin/makeSitemap.js && rm bin/makeSitemap.js",
     "prepare": "husky install",
     "test": "echo pretending to test"
   },
