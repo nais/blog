@@ -4,9 +4,10 @@ Blog for the [platform](https://nais.io) team @ [NAV](https://nav.no)
 
 ## 🛠 Add content
 
-Make sure you have [Hugo](https://gohugo.io) installed.
-* Run `hugo new posts/my-awesome-post/my-awesome-post.md` (or one of the other supported [formats](https://gohugo.io/content-management/formats/))
-* Edit your content , inspecting it as you go by running the live-reloading server `hugo server -D`. The `-D` parameter tells Hugo to also include drafts, all new content is marked as a draft by default.
+Make sure you have a recent-ish version of node installed.
+* Run `yarn install` to haul dependencies, and `yarn run` to run a development server.
+* Create `content/posts/my-awesome-post/my-awesome-post.md`.
+* Edit your content, inspecting it as you go. Drafts are only visible when running in development mode.
 * When finished editing, mark the content as ready by setting the `draft` parameter to false in the front matter (the comment-like metadata section at the top).
 * Create a pull request in this repository. The content is automatically published when the pull request is merged.
 

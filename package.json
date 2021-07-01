@@ -1,0 +1,41 @@
+{
+  "name": "nais-blog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export -o docs/ && yarn buildSitemap",
+    "start": "next start",
+    "buildSitemap": "tsc --esModuleInterop bin/makeSitemap.ts && node bin/makeSitemap.js",
+    "prepare": "husky install",
+    "test": "echo pretending to test"
+  },
+  "dependencies": {
+    "directory-tree": "^2.2.9",
+    "error": "10.4.0",
+    "gray-matter": "^4.0.3",
+    "htmr": "^1.0.0",
+    "next": "11.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-markdown": "^6.0.2",
+    "react-syntax-highlighter": "^15.4.3",
+    "remark": "^13.0.0",
+    "remark-gfm": "^1.0.0",
+    "remark-html": "^13.0.1",
+    "remark-prism": "^1.3.6",
+    "sass": "^1.35.1",
+    "zod": "^3.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.5",
+    "@types/react": "^17.0.11",
+    "@types/react-syntax-highlighter": "^13.5.1",
+    "eslint": "^7.29.0",
+    "eslint-config-next": "^11.0.1",
+    "husky": "^6.0.0",
+    "prettier": "^2.3.2",
+    "pretty-quick": "^3.1.1",
+    "typescript": "^4.3.4"
+  }
+}

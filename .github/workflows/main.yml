@@ -10,23 +10,29 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout code
-        uses: actions/checkout@v1
-      - name: Clear old content
-        run: rm -rf docs/*
-      - name: Run Hugo build to create new content
-        uses: klakegg/actions-hugo@1.0.0
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          command: -d docs
+          node-version: "16"
+      - name: Clear old content
+        run: rm -rf docs
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action user"
-          git add ./docs
+          mkdir -p ./docs
+          sudo touch ./docs/.nojekyll # to avoid github masking '_next/'
+          git add -f ./docs
           git commit -m "Add generated docs"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: main
+          branch: export
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
-
