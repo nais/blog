@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.84.3" />
+    <meta name="generator" content="Hugo 0.87.0" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -176,13 +176,13 @@ Klienten sender en autentiserings-request til id-provider med ønskede scopes og
 <p><a href="https://openid.net/connect/">OpenID Connect</a> er identitetslag bygd oppå OAuth. Det tilbyr verifikasjon av identiteten til sluttbrukeren og grunnleggende profil-info. For å beskrive brukeren benyttes id-tokens i form av JSON Web Tokens. OIDC innførte også konseptet “discovery”, dvs at providerne publiserer metadata om tjenesten sin (URL-er til de ulike endepunktene, public keys mm) i et “well-known”-dokument på en standard URL sånn at man kan slå opp denne informasjonen automatisk. Slik ser f.eks. dokumentene til <a href="https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration">Microsoft</a> og <a href="https://accounts.google.com/.well-known/openid-configuration">Google</a> ut. Flyten er den samme som for <code>authorization code flow</code>, men hvis man ber om scope “openid” får man et id-token i retur. OIDC definerer også flere nye scopes som brukt i kombinasjon med “openid” bestemmer hvor mye informasjon id-tokenet skal inneholde. Disse er bl.a. family_name, given_name, profile og picture. Hvilke av disse som støttes av en gitt provider annonseres i well-known-dokumentet.</p>
 <h2 id="jwt">JWT</h2>
 <p>Et JSON Web Token består av 3 deler, en header, en payload og en signatur. Standarden definerer et sett med <a href="https://tools.ietf.org/html/rfc7519#section-4.1">felter</a> som kan brukes i header og payload, men man kan også legge på sine egne. Følgende er et eksempel på en header:</p>
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
   <span class="err">“</span><span class="nx">alg</span><span class="err">”</span><span class="o">:</span> <span class="err">“</span><span class="nx">HS256</span><span class="err">”</span><span class="p">,</span>
   <span class="err">“</span><span class="nx">typ</span><span class="err">”</span><span class="o">:</span> <span class="err">“</span><span class="nx">JWT</span><span class="err">”</span>
 <span class="p">}</span>
 </code></pre></div><p><code>alg</code> sier hvilken algoritme som er brukt for å generere signaturen, i dette tilfellet HMAC med SHA256. Standarden definerer <a href="https://tools.ietf.org/html/rfc7518#section-3">et sett med algoritmer</a> som kan benyttes.</p>
 <p>Payloaden inneholder <code>claims</code>. Et eksempel på en payload:</p>
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
   <span class="err">“</span><span class="nx">iss</span><span class="err">”</span><span class="o">:</span> <span class="err">“</span><span class="nx">Evil</span> <span class="nx">Corp</span><span class="err">”</span><span class="p">,</span>
   <span class="err">“</span><span class="nx">sub</span><span class="err">”</span><span class="o">:</span> <span class="err">“</span><span class="mi">12345678910</span><span class="err">”</span>
   <span class="err">“</span><span class="nx">aud</span><span class="err">”</span><span class="o">:</span> <span class="err">“</span><span class="nx">my_api</span><span class="err">”</span><span class="p">,</span>
@@ -219,7 +219,7 @@ Klienten sender en autentiserings-request til id-provider med ønskede scopes og
 <p><code>&lt;Base64 encoded header&gt;.&lt;Base64 encoded claims&gt;.&lt;Base64 encoded signatur&gt;</code></p>
 <p>Hver del base64-encodes altså hver for seg og settes deretter sammen med punktum mellom.</p>
 <p>Nedenfor er et eksempel, for å dekode det kan det limes inn på f.eks. <a href="https://jwt.io">jwt.io</a>.</p>
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span><span class="p">.</span><span class="nx">eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ</span><span class="p">.</span><span class="nx">SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</span><span class="p">.</span><span class="nx">eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ</span><span class="p">.</span><span class="nx">SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span>
 </code></pre></div><h2 id="oauthoidc-i-nav">OAuth/OIDC i NAV</h2>
 <p>I NAV har vi valgt å bruke <a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-protocols-oidc">Azure AD</a> som provider for interne brukere og <a href="https://difi.github.io/felleslosninger/oidc_guide_idporten.html">ID-porten</a> for sluttbrukerne ute på weben. Provisjonering av “clients” for din applikasjon skjer automatisk når du legger til de nødvendige besvergelser i din <a href="https://doc.nais.io/addons/oauth2-openidconnect">Nais YAML</a>, og nødvendige hemmeligheter tilgjengeliggjøres for appen din som miljøvariabler eller filer slik at mennesker aldri trenger å se dem. Hemmelighetene vil i tillegg roteres automatisk hver gang appen deployes. For de nyskjerrige som vil vite mer om hvordan dette gjøres i praksis kan de ta en titt på våre custom Kubernetes-operatorer <a href="https://github.com/nais/azurerator">Azureator</a> og <a href="https://github.com/nais/digdirator">Digdirator</a> (fordi IDPorten er et produkt fra Digitaliseringsdirektoratet).</p>
 

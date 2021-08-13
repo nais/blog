@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.84.3" />
+    <meta name="generator" content="Hugo 0.87.0" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -118,7 +118,7 @@
 <li>Id-provider bruker <code>code_verifier</code> til å generere en <code>code_challenge</code> på samme måte som klienten gjorde. Hvis de to code challengene ikke er like avvises forespørselen.</li>
 </ul>
 <p>Et auth-kall vi da kunne se ut som følger:</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">GET /auth?
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">GET /auth?
      <span class="nv">response_type</span><span class="o">=</span>code<span class="p">&amp;</span>
      <span class="nv">client_id</span><span class="o">=</span>myclient<span class="p">&amp;</span>
      <span class="nv">redirect_url</span><span class="o">=</span>myapp://callback<span class="p">&amp;</span>
@@ -127,7 +127,7 @@
      <span class="nv">code_challenge</span><span class="o">=</span>elUXu5zy4QT2f92GRaUq23autAeNDf4DQPaycR0ek_o
 </code></pre></div><p>Angripere som kjenner din <code>client_id</code> og <code>client_secret</code> vil dermed ikke kunne gjøre token-kall fordi de ikke kjenner verifieren som ble generert og brukt i punkt 1. Selv om de er i stand til å observere både requesten til og responsen fra <code>/auth</code>-endepunktet vil de ikke være i stand til å rekonstruere code challengen.</p>
 <p>Standarden definerer to ulike metoder å lage code challenges med: <code>plain</code> og <code>S256</code>. Plain vil si at code_verifier og code_challenge er samme verdi. For S256 lages code_challenge etter følgende oppskrift:</p>
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">sha256</span><span class="p">(</span><span class="nx">ascii</span><span class="p">(</span><span class="nx">code_verifier</span><span class="p">)))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">base64UrlEncode</span><span class="p">(</span><span class="nx">sha256</span><span class="p">(</span><span class="nx">ascii</span><span class="p">(</span><span class="nx">code_verifier</span><span class="p">)))</span>
 </code></pre></div><p>Plain challenges har jo begrenset nytteverdi, så klientene er pålagt å bruke S256 med mindre særlige begrensninger i ressurser eller annet gjør at de ikke er i stand til det. Siden sikkerheten er basert på at code verifieren ikke kan brute forces er det viktig at den er tilfeldig nok (standarden foreslår en entropi på minimum 256 bit). For å holde implementasjonen enkel (og fordi entropien er sterk i utgangspunktet) kreves det ikke salting.</p>
 <p>PKCE er støttet i flere biblioteker for flere språk, deriblant <a href="https://connect2id.com/products/nimbus-oauth-openid-connect-sdk/examples/oauth/pkce">Java/Kotlin</a>, <a href="https://github.com/ory/fosite">Go</a> og <a href="https://github.com/panva/node-openid-client">JavaScript</a>.</p>
 <h2 id="videre-lesningfordypning">Videre lesning/fordypning</h2>

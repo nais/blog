@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.84.3" />
+    <meta name="generator" content="Hugo 0.87.0" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -135,7 +135,7 @@ Kubernetes pods can be treated much like VMs or hosts (they all have unique IP a
 In a team&rsquo;s namespace, the underlying <a href="https://www.projectcalico.org/">network infrastructure</a> will deny all traffic both to and from all pods unless explicit network policies have been applied.
 Given an example architechture where application <code>a</code> needs to communicate with application <code>b</code>,  both appliations  will have to apply network policies to allow this traffic:</p>
 <h4 id="a-allows-utgoing-traffic-to-b">A allows utgoing traffic to B</h4>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">NetworkPolicy</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">NetworkPolicy</span><span class="w">
 </span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.k8s.io/v1</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">allow-app-a-to-b</span><span class="w">
@@ -152,7 +152,7 @@ Given an example architechture where application <code>a</code> needs to communi
 </span><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
 </span><span class="w">      </span>- <span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
 </span></code></pre></div><h4 id="b-allows-incoming-traffic-from-a">B allows incoming traffic from A</h4>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">NetworkPolicy</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">NetworkPolicy</span><span class="w">
 </span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.k8s.io/v1</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">allow-app-a-to-b</span><span class="w">
@@ -174,7 +174,7 @@ Given an example architechture where application <code>a</code> needs to communi
 In the same way that network policies by default denies traffic on the IP layer, authorization policies will deny traffic on the transport layer by default.
 There are no outbound authorization policies, so only application <code>b</code> will have to apply an authorization policy to allow traffic from application <code>a</code>.
 Note, though, that application <code>a</code> will still validate the certificate presented by application <code>b</code> before establishing the connection.</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">security.istio.io/v1beta1</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">security.istio.io/v1beta1</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">AuthorizationPolicy</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">allow-traffic-from-a</span><span class="w">
@@ -197,7 +197,7 @@ Note, though, that application <code>a</code> will still validate the certificat
 What developers should really be concerned with, is which applications they want to communicate with, and which applications they want communicating with them. Not the minute details of how.
 Which is why we&rsquo;ve implemented an abstraction in the <a href="https://doc.nais.io/nais-application/access-policy">NAIS application manifest</a>, that allows developers to do exactly that.</p>
 <p>The application spec for application <code>a</code> will generate a network policy allowing traffic from application <code>a</code> to application <code>b</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;nais.io/v1alpha1&#34;</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;nais.io/v1alpha1&#34;</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Application&#34;</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">a</span><span class="w">
@@ -209,7 +209,7 @@ Which is why we&rsquo;ve implemented an abstraction in the <a href="https://doc.
 </span><span class="w">      </span><span class="nt">rules</span><span class="p">:</span><span class="w">
 </span><span class="w">        </span>- <span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l">b</span><span class="w">
 </span></code></pre></div><p>While the related application spec for application <code>b</code> will create both a network policy allowing inbound traffic from <code>a</code>, and an authorization policy that authorize applicaiton <code>a</code></p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;nais.io/v1alpha1&#34;</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;nais.io/v1alpha1&#34;</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Application&#34;</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">b</span><span class="w">

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.84.3" />
+    <meta name="generator" content="Hugo 0.87.0" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -134,7 +134,7 @@ Separating LoadBalancing from mesh is a healthy separation of concern that will 
 We also had to swap out Istio Ingressgateway with an Ingress Controller - we opted for NGINX.</p>
 <p>We started by creating IP-addresses and Cloud Armor security policies for our new LoadBalancers with <a href="https://www.terraform.io/">Terraform</a>.</p>
 <p>The loadbalancers themselves were created by an Ingress object:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.k8s.io/v1beta1</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.k8s.io/v1beta1</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Ingress</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
@@ -150,7 +150,7 @@ We also had to swap out Istio Ingressgateway with an Ingress Controller - we opt
 </span><span class="w">  </span><span class="nt">tls</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span>- <span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l">&lt;kubernetes-secret-with-certificates&gt;</span><span class="w">
 </span></code></pre></div><p>We tied the Cloud Armor security policy to the Loadbalancer with a <code>BackendConfig</code> on the Ingress Controller&rsquo;s service:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Service</span><span class="w">
 </span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
@@ -171,7 +171,7 @@ We also had to swap out Istio Ingressgateway with an Ingress Controller - we opt
 <img src="/blog/images/changing-service-mesh-2.png" alt="changing-service-mesh"></p>
 <p>However - if we&rsquo;d started shipping traffic to the new components at this stage, things would start breaking as there were no ingresses in the cluster - only VirtualServices.
 To avoid downtime, we created an interim ingress that forwarded all traffic to the Istio IngressGateway:</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.k8s.io/v1beta1</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">networking.k8s.io/v1beta1</span><span class="w">
 </span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Ingress</span><span class="w">
 </span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span><span class="nt">rules</span><span class="p">:</span><span class="w">

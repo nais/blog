@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.84.3" />
+    <meta name="generator" content="Hugo 0.87.0" />
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -117,7 +117,7 @@
 <li><code>API 2</code> validerer access tokenet og returnerer de forespurte dataene.</li>
 </ul>
 <p>Token exchange-forespørselen kan se ut som følger:</p>
-<div class="highlight"><pre class="chroma"><code class="language-shell" data-lang="shell">POST /token HTTP/1.1
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">POST /token HTTP/1.1
 Host: tokenxchange-server
 Content-Type: application/x-www-form-urlencoded
 
@@ -131,7 +131,7 @@ Content-Type: application/x-www-form-urlencoded
 <p><code>subject_token</code> inneholder tokenet som skal veksles og identifiserer sluttbrukeren (tokenet hen fikk fra id-provideren).</p>
 <p><code>audience</code> inneholder identifikatoren til appen som skal motta tokenet du nå ber om</p>
 <p><code>client_assertion</code> identifiserer appen mot exhangeren (i dette eksemplet <code>App 1</code>). En client_assertion er en Base 64-kodet JWT som appen genererer og signerer vha sin private nøkkel. JWT-en inneholder følgende claims:</p>
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span>
   <span class="s1">&#39;sub&#39;</span><span class="o">:</span> <span class="sb">`api1`</span><span class="p">,</span>
   <span class="s1">&#39;aud&#39;</span><span class="o">:</span> <span class="s1">&#39;http://tokenxchange-server/token&#39;</span><span class="p">,</span>
   <span class="s1">&#39;iss&#39;</span><span class="o">:</span> <span class="s1">&#39;api1&#39;</span><span class="p">,</span>
