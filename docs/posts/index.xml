@@ -5,7 +5,16 @@
     <link>https://nais.io/blog/posts.html</link>
     <description>Recent content in Posts on nais blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 04 May 2021 20:37:13 +0200</lastBuildDate><atom:link href="https://nais.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 13 Aug 2021 09:27:57 +0200</lastBuildDate><atom:link href="https://nais.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Do we need an internal technology platform?</title>
+      <link>https://nais.io/blog/posts/2021/08/do-we-need-an-internal-technology-platform.html</link>
+      <pubDate>Fri, 13 Aug 2021 09:27:57 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/2021/08/do-we-need-an-internal-technology-platform.html</guid>
+      <description>Not too long ago, one of the major pain points in running a digital operation was infrastructure. The waiting time to get a new server, the e-commerce sites on Black Friday crashing, and the headache of estimating your hardware and license needs for the next 3 years. These issues have diminished with the emergence of hyperscale cloud vendors offering an ever evolving portfolio of managed technical infrastructure and services. The products have amazing breadth, depth and quality, and at the same time, the pricing model is fair as you only pay for what you use.</description>
+    </item>
+    
     <item>
       <title>Changing Service Mesh</title>
       <link>https://nais.io/blog/posts/2021/05/changing-service-mesh.html</link>
