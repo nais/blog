@@ -57,7 +57,7 @@ There are several major benefits to providing a technology platform in an organi
 
 ## To conclude:
 
-As you probably have guessed, NAV has great benefits from our internal technology platforms. However, I do not believe that it is the right solution for everyone. A start-up or scale-up with 5 or less digital product teams are likely fully capable of sharing practices and learnings between each other without standardisation of platforms. You should only consider a common platform when you start feeling the pain of everyone having to use a significant amount of their mental capacity on lower-lever stuff. Then, you should start small and keep high attention to the user, and avoid falling in love with the technology buzz word of the month. That, of course, is the rule of thumb in all product development.
+As you probably have guessed, NAV has great benefits from our internal technology platforms. However, I do not believe that it is the right solution for everyone. A start-up or scale-up with 5 or less digital product teams are likely fully capable of sharing practices and learnings between each other without standardisation of platforms. You should only consider a common platform when you start feeling the pain of everyone having to use a significant amount of their mental capacity on lower-level stuff. Then, you should start small and keep high attention to the user, and avoid falling in love with the technology buzz word of the month. That, of course, is the rule of thumb in all product development.
 
 
 On a final note, I wish to share some of our main sources of inspiration:
