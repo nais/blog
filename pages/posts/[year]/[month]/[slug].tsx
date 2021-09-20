@@ -113,7 +113,7 @@ export const PostDetail = ({
           <header>
             <h1 className={"postTitle"}>{metadata.title}</h1>
             <h2>{metadata.description}</h2>
-            <p>
+            <div>
               Published{" "}
               <time dateTime={metadata.date.toISOString()}>
                 {metadata.date.toLocaleDateString("en-US", {
@@ -131,7 +131,7 @@ export const PostDetail = ({
                   ))}
                 </ul>
               </div>
-            </p>
+            </div>
           </header>
           <div className={"content"}>
             {metadata.draft && (
