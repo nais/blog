@@ -1,6 +1,6 @@
 ---
 title: "Do we need an internal technology platform?"
-description: ""
+description: "The case for platforms at NAV"
 date: 2021-08-13T09:27:57+02:00
 draft: false
 author: Bente Lønnquist Busch
