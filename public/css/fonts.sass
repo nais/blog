@@ -162,13 +162,10 @@ article
             color: white
 
         ul
-            line-height: 2
-            list-style: none
-            li::before
-                content: "•"
+            li::marker
+                content: "• "
                 line-height: .4em
                 font-size: 20pt
-                padding-right: 8px
                 color: #750786
         table, tr, td, th
             border: 1px solid black
@@ -246,9 +243,6 @@ article
 #index-heading
     font-weight: 500
     font-size: 30pt
-
-ol
-    list-style: none
 
 *
     font-feature-settings: "kern" 1
