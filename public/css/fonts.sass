@@ -71,7 +71,7 @@ main
 #__next>header
     white-space: nowrap // KLUDGE
     padding: 0 15vw
-    background: url('https://nais.io/blog-rewrite/header-bg.png') repeat-x
+    background: url('https://nais.io/blog/header-bg.png') repeat-x
     min-width: 100%
     margin-top: 2em
     height: 70px
@@ -172,7 +172,9 @@ article
             border-collapse: collapse
         table
             font-size: 18px
-            width: 100%
+            width: 90%
+            @media screen and (max-width: $breakpoint)
+               width: 100%
         tr, td, th
             padding: .5em
             word-wrap: break-word
