@@ -8,7 +8,9 @@ tags: []
 ---
 
 
-Not too long ago, one of the major pain points in running a digital operation was infrastructure. The waiting time to get a new server, the e-commerce sites on Black Friday crashing, and the headache of estimating your hardware and license needs for the next 3 years. These issues have diminished with the emergence of hyperscale cloud vendors offering an ever evolving portfolio of managed technical infrastructure and services. The products have amazing breadth, depth and quality, and at the same time, the pricing model is fair as you only pay for what you use. The prices are even steadily declining without you having to negotiate. No wonder public cloud has become the preferred choice for everyone, from the smallest start-up to large enterprises. The question is, with these new possibilities - infrastructure, runtime environments, databases and even pre-trained machine learning models - only a mouse click away, do we still need an internal technology platform? Aren't internal infrastructure teams something of the past?
+Not too long ago, one of the major pain points in running a digital operation was infrastructure. The waiting time to get a new server, the e-commerce sites on Black Friday crashing, and the headache of estimating your hardware and license needs for the next 3 years. These issues have diminished with the emergence of hyperscale cloud vendors offering an ever evolving portfolio of managed technical infrastructure and services. The products have amazing breadth, depth and quality, and at the same time, the pricing model is fair as you only pay for what you use.
+
+The prices are even steadily declining without you having to negotiate. No wonder public cloud has become the preferred choice for everyone, from the smallest start-up to large enterprises. The question is, with these new possibilities - infrastructure, runtime environments, databases and even pre-trained machine learning models - only a mouse click away, do we still need an internal technology platform? Aren't internal infrastructure teams something of the past?
 
 ## What is NAV and what does our digital operation look like?
 
