@@ -10,7 +10,7 @@ export const Custom404 = () => (
          <article>
             <header>
                <h1>404</h1>
-               <h2>We're sorry,</h2>
+               <h2>We&apos;re sorry,</h2>
                <p>
                   the URL you have reached has been disconnected or it is no
                   longer in service.
