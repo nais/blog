@@ -1,5 +1,12 @@
-### Empowering product teams to share valuable data for developing the world`s best welfare system
-…is a bold mission we at the Norwegian Welfare and Labour Administration (NAV) have.
+---
+title: "Enable data teams to deliver high-quality data products"
+description: "How data governance adds value in a data mesh"
+date: 2022-05-11T09:27:57+02:00
+draft: false
+author: Louis Dieffenthaler
+tags: []
+---
+Using data to develop the world`s best welfare system is a bold mission we at the Norwegian Welfare and Labour Administration (NAV) have.
 Being able to estimate the impact of measures on youth unemployment to avoid social exclusion.
 Gaining more insight on how we can adjust our communication to different user groups so that we are more certain that the citizens get their benefits.
 To see how a new feature affects the click-through rate.
