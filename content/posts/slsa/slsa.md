@@ -2,7 +2,7 @@
 title: "SLSA"
 description: "Spice up your supply chain"
 date: 2022-06-20T22:10:00+02:00
-draft: true
+draft: false
 author: Jan-Kåre Solbakken
 tags: [slsa,sikkerhet,supplychain]
 ---
