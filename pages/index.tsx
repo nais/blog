@@ -5,8 +5,12 @@ import { Post, getPosts } from "../components/posts";
 import { PostList } from "../components/postListByYear";
 import Link from "next/link";
 
+import generateRSS from "../lib/generateRSS";
+
 export const getStaticProps: GetStaticProps = async (context) => {
   const posts: Post[] = await getPosts();
+
+  await generateRSS();
 
   return {
     props: {
@@ -33,6 +37,7 @@ export const PostIndex = ({
         </article>
         <PostList posts={posts} />
       </main>
+
     </>
   );
 };

@@ -52,6 +52,7 @@ const GlobalMetaTags = () => (
     <meta name="theme-color" content="#66cbec" />
     <meta property="og:image" content={URL_PREFIX + "/og-image.png"} />
     <meta property="og:type" content="website" />
+    <link rel="alternate" hreflang="en" type="application/rss+xml" title="RSS" href="/blog/index.xml"></link>
   </Head>
 );
 
