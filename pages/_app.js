@@ -57,7 +57,7 @@ const GlobalMetaTags = () => (
 
 const Footer = () => (
   <footer>
-    © 2021 <a href={"https://nais.io"}>nais.io</a>
+    © {new Date().getFullYear()} <a href={"https://nais.io"}>nais.io</a>
   </footer>
 );
 
