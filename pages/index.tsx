@@ -5,12 +5,12 @@ import { Post, getPosts } from "../components/posts";
 import { PostList } from "../components/postListByYear";
 import Link from "next/link";
 
-import generateRSS from "../lib/generateRSS";
+import generateRSS from "../rss/generateRSS";
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const posts: Post[] = await getPosts();
 
-  await generateRSS();
+  await generateRSS(posts);
 
   return {
     props: {

@@ -1,9 +1,11 @@
 import { writeFileSync } from "fs";
-import { getAllPosts } from "../components/posts";
+import { Post } from "../components/posts";
 import RSS from "rss";
-export default async function getRSS() {
+
+const { getAbsoluteURLComponents } = require("../components/posts");
+
+export default async function makeRSS(posts: Post[]) {
   const siteURL = "https://nais.io/blog";
-  const allBlogs = await getAllPosts();
 
   const feed = new RSS({
     title: "nais.io",
@@ -15,11 +17,12 @@ export default async function getRSS() {
     copyright: `All rights reserved ${new Date().getFullYear()}, the nais team`,
   });
 
-  allBlogs.map((post) => {
-   const metadata = JSON.parse(post.metadataJSON)
+  posts.map((post) => {
+   const metadata = JSON.parse(post.metadataJSON);
+   metadata.date = new Date(metadata.date)
     feed.item({
       title: metadata.title,
-      url: `${post.filePath}`,
+      url: urlForPost(metadata, siteURL),
       date: metadata.date,
       description: metadata.description,
     });
@@ -27,4 +30,9 @@ export default async function getRSS() {
 
   writeFileSync("./public/index.xml", feed.xml({ indent: true }));
 }
+
+const urlForPost = (metadata: Post, baseUrl: string) => {
+   const { year, month, slug } = getAbsoluteURLComponents(metadata);
+   return `${baseUrl}/posts/${year}/${month}/${slug}`;
+ };
 
