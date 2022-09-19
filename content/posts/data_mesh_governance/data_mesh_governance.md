@@ -44,7 +44,7 @@ In other words, data governance should enable teams to a) produce data matching 
 The data mesh-paradigm describes a federated model of data governance.
 The actors on the platform need to collaborate on developing policies that provide value and are feasible.
 The data producers are supported by the data platform in performing the data management.
-At NAV, we have approached this by setting up a “playing rule forum”.
+At NAV, we have approached this by setting up a “ground rules forum”.
 The principles underlying the group`s work are:
 1.	The responsibility of producing data as a product should be placed as close to the origin as possible
 2.	Policies that move responsibility away from the data producers should be justified by value either in the form of analytical use or compliance
