@@ -1,4 +1,7 @@
-baseURL: http://example.org/
-languageCode: en-us
+baseURL: https://nais.io/blog
+languageCode: no-NO
 title: nais blog
 theme: naisblog
+
+taxonomies:
+- tag: tags

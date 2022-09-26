@@ -16,7 +16,7 @@ The prices are even steadily declining without you having to negotiate. No wonde
 
 NAV (Norwegian Labour and Welfare Administration) is the largest public agency in Norway. Our mission is to assist people into work, and we provide a series of benefits related to pensions, disease, unemployment, and others.
 
-![Bone fracture foot and leg on male patient with splint cast and crutches during surgery rehabilitation and orthopaedic recovery staying at home](/blog/images/GettyImages-1159293076.jpg)
+![Bone fracture foot and leg on male patient with splint cast and crutches during surgery rehabilitation and orthopaedic recovery staying at home](/images/GettyImages-1159293076.jpg)
 
 Our digital operation consists of over a hundred teams which are responsible for something technology related, big or small. At the time of writing, around half of them are cross-functional product teams, and this number is steadily increasing. We seek to group teams together in product areas which have high cohesion, and aim for little coordination and low coupling between product areas. We give teams and product areas the autonomy to figure out how to best meet the needs of their defined user group and particular life situation.
 
@@ -48,7 +48,7 @@ There are several major benefits to providing a technology platform in an organi
 
 * **Supporting speed, adaptability and learning:** As many other organisations, we are striving for high speed in our digital operation. The ability to learn and adapt faster is necessary in this ever faster changing environment. One proxy to measure this is the number of deployments made to production, since our ability to push code to production indicates how long it will take to fix a mistake, and will in turn increase our willingness to test and experiment. This graph shows how NAV has evolved from 6 big releases every year in 2012, to 1,250 deployments per week so far in 2021:
 
-![Graph of number of deployments to production per week in NAV](/blog/images/deployments-per-week.png)
+![Graph of number of deployments to production per week in NAV](/images/deployments-per-week.png)
 
 * **Cognitive load:** The platform products allow our product teams to use their mental capacity on the end-user, and not spend time on under-the-hood stuff like infrastructure or choosing an accessible colour palette.
 
