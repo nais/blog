@@ -1,14 +1,18 @@
-{{ partial "header.html" }}
+<!DOCTYPE html>
+<html>
+    {{- partial "head.html" . -}}
+    <body>
+        {{- partial "header.html" . -}}
+        <h1>{{ .Title }}</h1>
 
-<h1>{{ .Title }}</h1>
-
-{{ $title := .Site.Title }}
-{{ $baseurl := .Site.BaseURL }}
-   {{ range .Params.tags }}
-     <li> <a href="{{ $baseurl }}/tags/{{ . | urlize }}">{{ . }}</a></li>
-{{ end }}
+        {{ $title := .Site.Title }}
+        {{ $baseurl := .Site.BaseURL }}
+        {{ range .Params.tags }}
+           <li> <a href="{{ $baseurl }}/tags/{{ . | urlize }}">{{ . }}</a></li>
+        {{ end }}
 
 
-<p>{{ .Content }}</p>
-
-{{ partial "footer.html" }}
+    <p>{{ .Content }}</p>
+        {{- partial "footer.html" . -}}
+    </body>
+</html>

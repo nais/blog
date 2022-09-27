@@ -1,0 +1,42 @@
+body {
+   margin: 0;
+   padding: 0;
+}
+
+header {
+   background: url(/blog/images/header-bg.png) repeat-x;
+   background-size: contain;
+   height: 70px;
+   align-items: baseline;
+   padding:0 15vw;
+   margin-top: 5vh;
+   font-family: Poppins;
+   font-size: 61px;
+   font-weight: 500;
+}
+
+header > img {
+   height: 100%;
+}
+
+section.post {
+   display: flex;
+   margin-top: 2vh;
+}
+
+section.post > time {
+   width: 7em;
+}
+
+main {
+   display: flex;
+   justify-content: center;
+}
+
+.welcome {
+   margin-top: 3vh;
+}
+
+footer {
+   margin-left: 20em;
+}

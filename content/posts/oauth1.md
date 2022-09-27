@@ -7,7 +7,7 @@ author: Jan-Kåre Solbakken
 tags: ["oauth", "oidc", "sikkerhet"]
 ---
 
-![OAuth2](/images/oauth2.png) 
+![OAuth2](/blog/images/oauth2.png) 
 
 ## Innledning
 
@@ -43,7 +43,7 @@ Det finnes som nevnt flere ulike flows for ulike situasjoner. Designet av disse 
 
 Denne flyten brukes for maskin til maskin-kommunikasjon. Client og resource owner er da i praksis samme ting, og client er confidential.
 
-![client credentials flow](/images/client_creds.png) 
+![client credentials flow](/blog/images/client_creds.png) 
 
 * Klienten sender `client_id` og `client_secret` til authorization server
 * Serveren sender et access token i retur
@@ -53,7 +53,7 @@ Denne flyten brukes for maskin til maskin-kommunikasjon. Client og resource owne
 
 Dette er den vanligste flyten, og benyttes for webapps som har en egen backend. Kalles av og til for “three-legged OAuth”.
 
-![authorization code flow](/images/auth_code.png) 
+![authorization code flow](/blog/images/auth_code.png) 
 
 * Bruker initierer login.
 Klienten sender en autentiserings-request til id-provider med ønskede scopes og et `state`-parameter. Dette er en random verdi som bør være vanskelig å gjette. Verdien sendes tilbake til klienten og brukes til å forhindre [XSRF-angrep](https://en.wikipedia.org/wiki/Cross-site_request_forgery).

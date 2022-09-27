@@ -23,7 +23,7 @@ These clusters run in projects managed by the nais team. This means that team me
 
 Resources in the kubernetes clusters are provisioned through [nais.yaml](https://doc.nais.io/nais-application/nais.yaml/reference/). In addition, [bucket storage](https://doc.nais.io/persistence/buckets/) and [postgres databases](https://doc.nais.io/persistence/postgres/) should also be provisioned through nais.yaml, but these resources will be added to the team's own project(s). 
 
-![teams.yaml automatically provision team projects and namespaces](/images/team_projects.png)
+![teams.yaml automatically provision team projects and namespaces](/blog/images/team_projects.png)
 
 (Note: the team can also provision [Kafka topics through topic.yaml](https://doc.nais.io/addons/kafka/) and [Elastic Search through an IaC repo](https://doc.nais.io/persistence/elastic-search/). However, while these resources also reside on GCP, they are operated as SaaS-solutions by the vendor Aiven and run in the Aiven *organization*. As such, they cannot be directly managed by neither the product team nor the nais team through the Cloud Console.)
 
