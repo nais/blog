@@ -9,7 +9,7 @@ tags: [elm,frontend]
 
 ## Preamble
 
-At the NAIS feature team, our tasks usually entails writing abstractions for
+In the NAIS feature team, our tasks usually involve writing abstractions for
 developers.  These abstractions usually emerge in the form of API backends,
 Kubernetes operators or sidecars, command-line tools, and the like.  And,
 rarely, we dawdle in web frontend development, which is largely an unknown
@@ -18,23 +18,23 @@ application development, at least at NAV.  And, to use React, the application
 must be written in Javascript or Typescript.
 
 Javascript has some really nice features that makes it easy to mess up your
-application and create bugs.  Many articles has been written on this, there is
+application and create bugs.  Many articles have been written on this, there is
 no point writing another one.  There are some extensions such as Typescript
-that addresses some of these issues at the cost of flexibility.  But then
+which addresses some of these issues at the cost of flexibility.  But then
 again, we still have null exceptions. We have the option of ignoring error
 handling.  There is the ambiguous "truthy" or "falsy" equality checks, which
-can be mitigated by using the triple equality sign, but one simple slip-up and
-your application may seem to work fine, until one day it trips over itself and
-becomes a bug.
+can be mitigated by using the triple equality sign. However, one simple slip-up
+and your application may seem to work fine, until one day it trips over itself
+and becomes a bug.
 
 The Javascript ecosystem is a huge pain point. Even a small boilerplate React
 application pulls down hundreds dependencies by default, which is not only a
 security concern, but also uses a huge amount of network traffic and hard drive
 space.
 
-So far, our team has avoided doing frontend work because of these reasons. But
-we still want to create some frontends.  Fortunately, there is a solution that
-addresses all of these problems.
+Our team has avoided doing frontend work because of these reasons. But we still
+need to create some frontends.  Fortunately, there is a solution that addresses
+all of these problems.
 
 
 ## A short introduction to Elm
@@ -47,10 +47,10 @@ have a brief look at.
 
 ### Type system
 
-First of all, the type system is amazingly good. It enables you to make
-impossible states impossible. What does this mean?  With Elm's union types, you
-can create a data model that simply does not allow for ambiguous state.
-Consider the following data model:
+First of all, the type system is amazing. It enables you to make impossible
+states impossible. What does this mean?  With Elm's union types, you can create
+a data model that simply does not allow for ambiguous state.  Consider the
+following data model:
 
 ```
 type alias UserData = { id: Int, name: String }
@@ -63,7 +63,7 @@ type User
 Either the user is anonymous, or we have an authenticated user with some
 associated data. We can have as many associated values as we want.  It is
 impossible to access the ID and name fields of an anonymous user. We can
-already see that this gives some pretty powerful guarantees.
+already see that this pattern gives some pretty powerful guarantees.
 
 ```
 type Msg
@@ -105,8 +105,8 @@ function.
 ### Compiler driven development
 
 Refactoring an Elm application is quite comfortable. You change your type to
-match the real-world model, follow the compiler errors through to the other
-end, and when you're done, you most probably have working application code
+match the real-world model, and follow the compiler errors through to the other
+end. When you're done, you most probably still have a working application
 again.  It sounds too good, but in our experience we find this to be true most
 of the time.
 
@@ -120,7 +120,7 @@ time, so I was quite motivated to introduce it to our technology stack.
 Not everyone on our team shared my opinion, and one of our team's pillars is
 that important technical decisions should be made by a
 [quorum](https://en.wikipedia.org/wiki/Quorum).  That meant addressing our
-team's concerns, evaluating each one and finally aligning our opinions to form
+team's concerns, evaluating each one, and finally aligning our opinions to form
 a decision.
 
 Before starting on the concerns, it should be duly noted that one team member
@@ -159,8 +159,10 @@ Was this going to be a risk to our project?
 ### Small community and lack of Elm jobs
 
 At NAV, we have plenty of React developers, and a small handful of Elm
-developers.  In the professional world at large, things aren't much better.  A
-quick search on FINN.no revealed not a single Elm oriented job in Norway.  If
+developers.  In the professional world at large, things aren't a whole lot
+better.  The Norwegian train company [Vy uses Elm for large parts of their
+frontend](https://blogg.bekk.no/using-elm-at-vy-e028b11179eb). Barring that, a
+quick search on FINN.no didn't reveal a single Elm oriented job in Norway.  If
 we adopt Elm, what are the chances of finding competent people should the need
 arise?  What happens to maintainability if our Elm programmers leave the team
 or quit?  Will the rest of us need to either learn a technology they aren't
@@ -214,9 +216,9 @@ the work group present means that we can make decisions quickly.
 
 ## Implementation
 
-The project we want to implement is a frontend for [NAIS console](https://github.com/nais/console).
-Console is a access control software used for set up external services for our
-software development teams.
+The project we want to implement is a frontend for [NAIS
+console](https://github.com/nais/console).  Console is an access control
+software used to set up external services for our software development teams.
 
 Our initial requirements for the frontend were:
 - Be able to log in and out using OAuth2
@@ -230,16 +232,16 @@ Our initial requirements for the frontend were:
 ### GraphQL
 
 Our backend exposes a [GraphQL](https://graphql.org) endpoint.  GraphQL is a
-bit more complex than REST. Instead of getting fixed data from multiple
+bit more complex than REST—instead of getting fixed data from multiple
 endpoints as with REST, GraphQL lets you fetch data from multiple sources in a
 single query, with strongly typed output using a schema.  There is more parsing
 involved with GraphQL, but the benefits are great.
 
 Fortunately, there is a very nice [Elm GraphQL
 library](https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/)
-that makes it easy to work with these endpoints in Elm.
+which makes it easy to work with these endpoints in Elm.
 
-We can generate all the types, queries and mutations that the API requires.
+We can generate all the types, queries, and mutations that the API requires.
 The only thing we need to do is start the API server, and run:
 
 ```
@@ -255,7 +257,7 @@ run dev` and `npm run build`.  We can make a change in one of our Elm source
 files, and the code gets automatically reloaded in the browser, keeping the
 existing state of the application.
 
-For production builds, we compile the Elm code bundle it together with our
+For production builds, we compile the Elm code and bundle it together with our
 static files in a Docker container based on NGINX.  All the compiled Elm code
 runs directly in the browser, so there is no need for a proxy layer in between.
 Server side rendering is not needed, as the code is already extremely fast.
