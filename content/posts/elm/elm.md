@@ -40,10 +40,10 @@ all of these problems.
 ## A short introduction to Elm
 
 [Elm](https://elm-lang.org/) is a pure functional programming language created
-in 2012 by Evan Czaplicki.  Elm compiles to JavaScript and is excellent for
-websites and web apps. It has a strong emphasis on simplicity and quality
-tooling.  This language has many interesting properties, some of which we'll
-have a brief look at.
+in 2012 by [Evan Czaplicki](https://twitter.com/evancz).  Elm compiles to
+JavaScript and is excellent for websites and web apps. It has a strong emphasis
+on simplicity and quality tooling.  This language has many interesting
+properties, some of which we'll have a brief look at.
 
 ### Type system
 
