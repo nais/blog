@@ -1,42 +1,66 @@
 body {
-   margin: 0;
-   padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-   background: url(/blog/images/header-bg.png) repeat-x;
-   background-size: contain;
-   height: 70px;
-   align-items: baseline;
-   padding:0 15vw;
-   margin-top: 5vh;
-   font-family: Poppins;
-   font-size: 61px;
-   font-weight: 500;
+    background: url(/blog/images/header-bg.png) repeat-x;
+    background-size: contain;
+    height: 70px;
+    align-items: baseline;
+    padding:0 15vw;
+    margin-top: 5vh;
+    font-family: Poppins,sans-serif;
 }
 
-header > img {
-   height: 100%;
+header a {
+    display: content;
+    text-decoration: none;
+}
+
+header img {
+    height: 100%;
+    max-height: 100%;
+}
+
+header h1 {
+    display: inline;
+    height: 100%;
+    max-height: 100%;
+    margin: 0 0 0 2rem;
+    letter-spacing: -.02em;
+    position: relative;
+    bottom: .5px;
+    font-size: 61px;
+    font-weight: 700;
+    text-decoration: none;
 }
 
 section.post {
-   display: flex;
-   margin-top: 2vh;
+    display: flex;
+    margin-top: 2vh;
 }
 
 section.post > time {
-   width: 7em;
+    width: 7em;
 }
 
 main {
-   display: flex;
-   justify-content: center;
+    display: flex;
+    justify-content: center;
+    flex: 1 1;
+    padding: 0 15vw;
+    min-width: 100%;
 }
 
 .welcome {
-   margin-top: 3vh;
+    margin-top: 3vh;
 }
 
 footer {
-   margin-left: 20em;
+    margin-left: 20em;
+}
+
+a {
+    color: rgb(46, 52, 54);
 }

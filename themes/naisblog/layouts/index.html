@@ -7,10 +7,10 @@
    <main>
       <article class="posts">
          <section class="welcome">
-            👋 Welcome to the informal technical journal of the team behind <a href="https://nais.io">nais.io</a>
+            👋 Welcome to the informal technical journal of the team behind <a href="https://nais.io">nais.io</a>.
          </section>
          {{ range .Site.RegularPages }}
-         <section class="post"><div><time class="date">{{ .Date.Format "Jan 2" }}</time><time class="year">{{ .Date.Format "2006" }}</time></div><a href="{{ .Permalink }}">{{ .Title }}</a>
+         <section class="post"><div><time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "Jan 2, 2006" }}</time></div><a href="{{ .Permalink }}">{{ .Title }}</a>
             -- {{ .Description }}</section>
          {{ end }}
       </article>
