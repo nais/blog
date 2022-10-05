@@ -1,8 +1,8 @@
 ---
 title: "Introducing Elm as a frontend contender"
 description: "Replacing React with Elm as our frontend programming language brings risks, rewards, and lots of developer happiness."
-date: 2022-10-04T13:20:00+02:00
-draft: true
+date: 2022-10-05T13:40:00+02:00
+draft: false
 author: Kim Tore Jensen
 tags: [elm,frontend]
 ---
@@ -28,7 +28,7 @@ and your application may seem to work fine, until one day it trips over itself
 and reveals a bug.
 
 The Javascript ecosystem is a huge pain point. Even a small boilerplate React
-application pulls down hundreds dependencies by default, which is not only a
+application pulls down hundreds of dependencies by default, which is not only a
 security concern, but also uses a huge amount of network traffic and hard drive
 space.
 
