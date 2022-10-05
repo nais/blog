@@ -298,9 +298,12 @@ less network traffic, but also less parsing and evaluation of code.
 
 ## Conclusion
 
+Working with Elm definitely has its benefits.  The type system really makes it
+easy to accurately model the real-world data and avoid certain kinds of bugs.
+
 Even though none of us had worked in a functional programming language before,
 we found it easy to get started.  The syntax was a bit obscure in the
-beginning, but quickly becomes natural.  I've worked with
+beginning, but quickly became natural. Anectodally, I've worked with
 [Golang](https://golang.org) professionally for around five years.  The
 simplicity of working with data in Elm really makes me lament how terse Go is.
 Iteration is not really a thing in Elm, we use _map_ and _reduce_ instead. It
@@ -308,10 +311,12 @@ is very refreshing not having to write `for` loops to transform data, and
 similarly, error checking can usually be done in a single statement instead of
 having to work through it like some checklist.
 
-Working with Elm definitely has its benefits.  The type system really makes it
-easy to accurately model the real-world data and avoid certain kinds of bugs.
+We are quite happy with the outcome of our Elm endeavour. Our plan forward is
+to throw away the old React code for this particular project, and keep our Elm
+code running in production. When the time comes to revamp our NAIS deploy
+frontend, we will definitely consider doing it in Elm.
+
 We hope that this blog post will encourage more users to try Elm for their
 frontend projects, to enjoy the benefits of increased developer satisfaction,
-smaller assets, and less bugs.
-
-Thanks for reading; best regards from the NAIS feature team.
+smaller assets, and less bugs.  Thanks for reading; best regards from the NAIS
+feature team.
