@@ -52,7 +52,7 @@ states impossible. What does this mean?  With Elm's union types, you can create
 a data model that simply does not allow for ambiguous state.  Consider the
 following data model:
 
-```
+```elm
 type alias UserData = { id: Int, name: String }
 
 type User
@@ -65,7 +65,7 @@ associated data. We can have as many associated values as we want.  It is
 impossible to access the ID and name fields of an anonymous user. We can
 already see that this pattern gives some pretty powerful guarantees.
 
-```
+```elm
 type Msg
     = GotUserResponse (Result Http.Error UserData)
 ```
@@ -75,7 +75,7 @@ also has associated data, which contains either `Ok UserData` or `Err
 Http.Error`, and only that.  Again, it is impossible to access the user data if
 an error occurs, and vice versa.
 
-```
+```elm
 userFromResponse: Msg -> User
 userFromResponse msg = 
     case msg of
@@ -92,6 +92,14 @@ create a User, which in turn _must_ hold that object.  Any error ensures that
 we cannot access any such object. The compiler makes impossible states
 impossible.  This simple yet elegant design choice eliminates many possible
 bugs. So good!
+
+Check out the following talks by [Richard Feldman](https://twitter.com/rtfeldman)
+for an in-depth introduction to Elm types.
+
+- [From Rails to Elm and Haskell](https://www.youtube.com/watch?v=5CYeZ2kEiOI)
+- [Make data structures](https://www.youtube.com/watch?v=x1FU3e0sT1I)
+- [Making Impossible States Impossible](https://www.youtube.com/watch?v=IcgmSRJHu_8)
+
 
 ### Pure functional
 
@@ -141,9 +149,6 @@ gives?
 Most blog posts and talks I found on the topic reveals that people experienced
 in Elm usually speaks quite warmly of it.  They praise the type system and joy
 of development, and lament using other languages after befriending Elm.
-
-[From Rails to Elm and Haskell - Richard Feldman](https://www.youtube.com/watch?v=5CYeZ2kEiOI)
-["Make data structures" by Richard Feldman](https://www.youtube.com/watch?v=x1FU3e0sT1I)
 
 However, with the release of Elm 0.19 in 2019, some language features that people depended on
 [was removed entirely](https://discourse.elm-lang.org/t/native-code-in-0-19/826).
@@ -241,7 +246,7 @@ which makes it easy to work with these endpoints in Elm.
 We can generate all the types, queries, and mutations that the API requires.
 The only thing we need to do is start the API server, and run:
 
-```
+```sh
 elm-graphql http://localhost:3000/query --base Backend --output src
 ```
 
@@ -274,7 +279,7 @@ Furthermore, we know that functions cannot have side effects on our state, so
 even though we didn't write any tests for this application, we feel confident that it works as expected.
 
 Application speed is blazing fast, and the footprint is quite small.
-```
+```sh
 % npm run build
 [...]
 dist/index.html                  0.54 KiB
@@ -313,8 +318,10 @@ having to work through it like some checklist.
 
 We are quite happy with the outcome of our Elm endeavour. Our plan forward is
 to throw away the old React code for this particular project, and keep our Elm
-code running in production. When the time comes to revamp our NAIS deploy
-frontend, we will definitely consider doing it in Elm.
+code running in production. When the time comes to revamp our
+[NAIS deploy](https://github.com/nais/deploy)
+[frontend](https://github.com/nais/deploy-frontend), we will definitely
+consider doing it in Elm.
 
 We hope that this blog post will encourage more users to try Elm for their
 frontend projects, to enjoy the benefits of increased developer satisfaction,
