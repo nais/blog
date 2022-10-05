@@ -289,11 +289,11 @@ dist/assets/index.92dff5fa.js    69.62 KiB / gzip: 22.81 KiB
 
 ### Comparison with React
 
-|            | Dependencies | Dependency size | Compiled code size |
-|------------|--------------|-----------------|--------------------|
-| React      | 796          | 637 MB          | 618 KB             |
-| Elm        | 111          | 75 MB           | 70 KB              |
-| Efficiency | 717%         | 849%            | 882%               |
+|                | Dependencies | Dependency size | Compiled code size |
+|----------------|--------------|-----------------|--------------------|
+| **React**      | 796          | 637 MB          | 618 KB             |
+| **Elm**        | 111          | 75 MB           | 70 KB              |
+| **Efficiency** | **717%**     | **849%**        | **882%**           |
 
 It is really disturbing to see the differences. For our use case, React is
 quite bloated in comparison to Elm. These numbers translate to
@@ -308,7 +308,7 @@ easy to accurately model the real-world data and avoid certain kinds of bugs.
 
 Even though none of us had worked in a functional programming language before,
 we found it easy to get started.  The syntax was a bit obscure in the
-beginning, but quickly became natural. Anectodally, I've worked with
+beginning, but quickly became natural. Anecdotally, I've worked with
 [Golang](https://golang.org) professionally for around five years.  The
 simplicity of working with data in Elm really makes me lament how terse Go is.
 Iteration is not really a thing in Elm, we use _map_ and _reduce_ instead. It
