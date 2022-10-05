@@ -25,7 +25,7 @@ again, we still have null exceptions. We have the option of ignoring error
 handling.  There is the ambiguous "truthy" or "falsy" equality checks, which
 can be mitigated by using the triple equality sign. However, one simple slip-up
 and your application may seem to work fine, until one day it trips over itself
-and becomes a bug.
+and reveals a bug.
 
 The Javascript ecosystem is a huge pain point. Even a small boilerplate React
 application pulls down hundreds dependencies by default, which is not only a
@@ -190,7 +190,7 @@ buttons, tables, colors, styles, etc.
 
 These come in the form of React components and are not directly compatible with Elm.
 
-### Conclusion
+### Making a team decision
 
 After thinking about these challenges, I spoke with each team member
 individually, sharing the information I'd gathered, and listening to their
@@ -206,13 +206,10 @@ deploying it to production.
 
 The scope of the project was known already because we had implemented it in
 React earlier.  We established the work group and decided to start on the next
-week.
+week.  As a work methodology, we chose pair programming, which is useful when
+learning new languages and concepts.  Also, having all members of the work
+group present means that we can make decisions quickly.
 
-## Work process
-
-Pair programming is useful when we want to learn new languages and concepts,
-so we decided to implement our project this way.  Also, having all members of
-the work group present means that we can make decisions quickly.
 
 ## Implementation
 
