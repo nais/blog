@@ -3,7 +3,7 @@ name: main
 on:
   push:
     branches:
-      - backtohugo
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +28,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: test-export
+          branch: export
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
