@@ -56,18 +56,15 @@ header h1 {
     }
 }
 
+@media (max-width: 47rem) {
+    article {
+        padding: 0 1rem;
+    }
+}
+
 footer {
     margin: 3em auto;
     text-align: center;
-}
-
-section.post {
-    display: flex;
-    margin-top: 2vh;
-}
-
-section.post > time {
-    width: 7em;
 }
 
 main {
@@ -76,21 +73,47 @@ main {
     padding: 0;
 }
 
+article.posts {
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+    align-items: center;
+}
+
+section.post {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    gap: 1em;
+}
+
+section.post time {
+    width: 4em;
+}
+
+section.post div {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 1000;
+}
+
 .welcome {
     display: flex;
     align-items: center;
     margin-top: 3rem;
     margin-bottom: 3rem;
     font-size: 22px;
+    align-items: center;
+    gap: 1em;
 }
 
 .welcome div {
-    flex-grow: 0;
-    flex-shrink: 0;
-    flex-basis: calc(5.5rem);
-    text-align: center;
     font-size: 2em;
-    padding-right: 20px;
+}
+
+.welcome p {
+    margin: 0;
 }
 
 a {
@@ -121,10 +144,6 @@ nav.tags ul {
 
 nav.tags li {
     display: inline;
-}
-
-article {
-    max-width: 93%;
 }
 
 article h1 {
