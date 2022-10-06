@@ -1,7 +1,7 @@
 ---
 title: "Introducing Elm as a frontend contender"
 description: "Replacing React with Elm as our frontend programming language brings risks, rewards, and lots of developer happiness."
-date: 2022-10-06T12:00:00+02:00
+date: 2022-10-06T11:00:00+02:00
 draft: false
 author: Kim Tore Jensen
 tags: [elm,frontend]
@@ -218,11 +218,11 @@ group present means that we can make decisions quickly.
 
 ## Implementation
 
-The project we want to implement is a frontend for [NAIS
+The project we wanted to implement was the frontend for [NAIS
 console](https://github.com/nais/console).  Console is an access control
 software used to set up external services for our software development teams.
 
-Our initial requirements for the frontend were:
+Requirements for the frontend were:
 - Be able to log in and out using OAuth2
 - Add and remove teams from the database
 - Add and remove members from teams
@@ -230,6 +230,9 @@ Our initial requirements for the frontend were:
 - Show a team's information and members
 - Show the list of teams
 - View audit logs
+
+Our goal was to re-implement everything in Elm, attaining feature parity with
+the already existing React application.
 
 ### GraphQL
 
@@ -289,17 +292,20 @@ dist/assets/index.92dff5fa.js    69.62 KiB / gzip: 22.81 KiB
 
 ### Comparison with React
 
+As we had already implemented this frontend in React earlier, I did a quick
+side by side comparison of the two versions, focusing on the dependency count
+and asset sizes—and found the results quite disturbing.
+
 |                | Dependencies | Dependency size | Compiled code size |
 |----------------|--------------|-----------------|--------------------|
 | **React**      | 796          | 637 MB          | 618 KB             |
 | **Elm**        | 111          | 75 MB           | 70 KB              |
 | **Efficiency** | **717%**     | **849%**        | **882%**           |
 
-It is really disturbing to see the differences. For our use case, React is
-quite bloated in comparison to Elm. These numbers translate to
-less bugs, less network traffic, less disk usage, and shorter build time.
-Last, but not least: loading time in the browser decreases, not just due to
-less network traffic, but also less parsing and evaluation of code.
+For our use case, React is quite bloated in comparison to Elm. These numbers
+translate to less bugs, less network traffic, less disk usage, and shorter
+build time.  Last, but not least: loading time in the browser decreases, not
+just due to less network traffic, but also less parsing and evaluation of code.
 
 ## Conclusion
 
