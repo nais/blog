@@ -175,7 +175,7 @@ error messages.  However, their stack consisted of many frontend applications,
 and there was a fair bit of context switching between languages, in addition to
 some duplicate work in order to support some shared functionality.
 
-That team ultimately had differing opinions on Elm, so the the project was
+That team ultimately had differing opinions on Elm, so the project was
 abandoned after those two developers were relocated to a different team.
 
 The conclusion from one of those Elm developers was that they would recommend
