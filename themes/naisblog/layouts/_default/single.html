@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    {{- partial "head.html" . -}}
+    <body>
+        {{- partial "header.html" . -}}
+
+        <main>
+            <article>
+                <h1>{{ .Title }}</h1>
+
+                <em>{{ .Description }}</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "Jan 2, 2006" }}</time>
+                    by {{ $.Param "author" }}
+                    </p>
+                    <nav class="tags">
+                        <ul>
+                            {{ $baseurl := .Site.BaseURL }}
+                            {{ range .Params.tags }}
+                            <li><a href="{{ $baseurl }}/tags/{{ . | urlize }}">#{{ . }}</a></li>
+                            {{ end }}
+                        </ul>
+                    </nav>
+                </section>
+
+                {{ .Content }}
+
+            </article>
+        </main>
+
+        {{- partial "footer.html" . -}}
+    </body>
+</html>
