@@ -148,6 +148,7 @@ nav.tags li {
 
 article h1 {
     font-size: 2rem;
+    margin-top: 1.5em !important;
 }
 
 article h1,
