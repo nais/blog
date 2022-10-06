@@ -1,7 +1,7 @@
 ---
 title: "Introducing Elm as a frontend contender"
 description: "Replacing React with Elm as our frontend programming language brings risks, rewards, and lots of developer happiness."
-date: 2022-10-05T13:40:00+02:00
+date: 2022-10-06T12:00:00+02:00
 draft: false
 author: Kim Tore Jensen
 tags: [elm,frontend]
