@@ -60,6 +60,10 @@ header h1 {
     article {
         padding: 0 1rem;
     }
+
+    main, footer, header > div {
+        max-width: auto;
+    }
 }
 
 footer {
