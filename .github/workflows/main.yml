@@ -3,7 +3,7 @@ name: main
 on:
   push:
     branches:
-      - main
+      - backtohugo
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -11,28 +11,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
         with:
-          node-version: "16"
-      - name: Clear old content
-        run: rm -rf docs
-      - uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: install
-      - uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: build
+          hugo-version: '0.104.2'
+          extended: true
+      - name: Build
+        run: hugo
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action user"
-          mkdir -p ./docs
-          sudo touch ./docs/.nojekyll # to avoid github masking '_next/'
-          git add -f ./docs
-          git commit -m "Add generated docs"
+          mv public docs
+          git add -f docs
+          git commit -m "Add generated content"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          branch: export
+          branch: test-export
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
