@@ -22,7 +22,7 @@ application and create bugs.  Many articles have been written on this, there is
 no point writing another one.  There are some extensions such as Typescript
 which addresses some of these issues at the cost of flexibility.  But then
 again, we still have null exceptions. We have the option of ignoring error
-handling.  There is the ambiguous "truthy" or "falsy" equality checks, which
+handling.  There are the ambiguous "truthy" or "falsy" equality checks, which
 can be mitigated by using the triple equality sign. However, one simple slip-up
 and your application may seem to work fine, until one day it trips over itself
 and reveals a bug.
