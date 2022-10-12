@@ -1,18 +1,25 @@
-{{ define "main" }}
+<!DOCTYPE html>
+<html>
+{{- partial "head.html" . -}}
 
-{{ $truncate := default true .Site.Params.truncate }}
-{{ range .Paginator.Pages }}
-{{ if $truncate }}
-{{ .Render "summary" }}
-{{ else }}
-{{ .Render "content" }}
-{{ end }}
-{{ end }}
+<body>
+   {{- partial "header.html" . -}}
+   <main>
+      <article>
+         <h2>Tags</h2>
+         {{ range $.Site.Taxonomies.tags.ByCount }}
+            <h4 class="tagheader">{{ .Name }} ({{ .Count }})</h4>
+            {{ $currentTag := .Name }}
+            {{ range .Pages }}
+               <ul class="taggedpages">
+                  <li class="taggedpage"><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+               </ul>
+            {{ end }}
+         {{ end }}
+      </article>
+   </main>
 
-{{ if or (.Paginator.HasPrev) (.Paginator.HasNext) }}
-{{ partial "pagination.html" . }}
-{{ end }}
+   {{- partial "footer.html" . -}}
+</body>
 
-{{ end }}
-
-{{- /* vim: set ts=2 sw=2 et: */}}
+</html>

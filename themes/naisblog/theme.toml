@@ -14,4 +14,7 @@ min_version = "0.41.0"
   name = "The really nais team"
   homepage = "https://nais.io"
 
+[taxonomies]
+  tag = "tags"
+
 

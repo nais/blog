@@ -216,3 +216,15 @@ article pre {
     transform: translate(-50%, -50%);
     width: 300px;
 }
+
+.tagheader {
+   text-decoration: underline dotted;
+}
+
+.taggedpages {
+   list-style-type: none;
+}
+
+.taggedpage {
+   padding-left: 2em;
+}
