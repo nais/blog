@@ -54,4 +54,6 @@ amplitude.getInstance().init("16d1ee2fd894ca2562eeebb5095dbcf0", undefined, conf
 
 amplitude.getInstance().logEvent("sidevisning", {
    sidetittel: window.location.pathname,
+   domene: window.location.host,
+   tjeneste: 'nais-blog',
 })
