@@ -2,7 +2,7 @@
 title: "Being NAIS at a distance"
 description: "How we work in a hybrid world"
 date: 2022-10-31T18:42:03+01:00
-draft: true
+draft: false
 author: Jan-Kåre Solbakken
 tags: ["remote", "hybrid"]
 ---
