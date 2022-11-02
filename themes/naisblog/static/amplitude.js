@@ -40,7 +40,7 @@
 })(window, document)
 
 const config = {
-   apiEndpoint: "api.eu.amplitude.com",
+   apiEndpoint: "amplitude.nav.no/collect",
    saveEvents: false,
    includeUtm: true,
    includeReferrer: true,
