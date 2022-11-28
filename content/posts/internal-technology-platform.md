@@ -26,11 +26,11 @@ Over the past 3ish years, we have developed platform products which support our 
 
 ## We currently have 3 groups of platform products:
 
-1. The application platform, [NAIS](http://nais.io) (NAVs Application Infrastructure Service) delivers everything our digital teams need to develop and run an application. It provides an effective deployment pipeline (CI/CD), a Kubernetes container environment, logging and monitoring, and security stuff like authentication and secrets handling. The main user group is software developers.
+1. The application platform, [NAIS](https://nais.io) (NAVs Application Infrastructure Service) delivers everything our digital teams need to develop and run an application. It provides an effective deployment pipeline (CI/CD), a Kubernetes container environment, logging and monitoring, and security stuff like authentication and secrets handling. The main user group is software developers.
 
-2. The [data platform](https://dataplattform.gitbook.io/nada/) offers data handling and analytical capabilities for storage, processing and visualization, as well as supporting services like data catalogues for data discovery and governance. The main user groups are developers who want to share data and analysts who want to use data.
+2. The data platform, [NADA]([https://docs.knada.io/) offers data handling and analytical capabilities for storage, processing and visualization, as well as supporting services like data catalogues for data discovery and governance. The main user groups are developers who want to share data and analysts who want to use data.
 
-3. The [design system](https://design.nav.no/) is a library of design components, guidelines and good practices. The main user groups are designers and front end developers.
+3. The design system, [Aksel](https://aksel.nav.no/) is a library of design components, guidelines and good practices. The main user groups are designers and front end developers.
 
 Services supporting the actual platform products are documentation, support, procurement and vendor relations, and technical security and risk evaluations. The platform products are in continuous evolution. For example, in addition to these three, we see the potential of providing platform products more specifically towards front end development, and will start exploring this during the fall.
 
