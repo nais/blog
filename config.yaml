@@ -2,4 +2,7 @@ baseURL: https://nais.io/blog
 languageCode: no-NO
 title: nais blog
 theme: naisblog
+markup:
+  highlight:
+    style: dracula
 
