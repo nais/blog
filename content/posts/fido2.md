@@ -68,7 +68,7 @@ The Relying Party server needs to generate and verify challenges as well as veri
 
 So, will FIDO2 lead to the death of passwords? Probably not, at least for the short term. Passwords are ubiquitous throughout the industry, and replacing super-widespread technologies can take decades regardless of how superior the replacement is. The FIDO2 initiative is widely backed by some of the biggest players in the industry though, so we will start to see more and more services offering support. Major players such as Microsoft and Gooogle already offer support throughout their lineup.
 
-### Links/further reading
+## Links/further reading
 - https://webauthn.io/ (playground for testing FIDO2)
 - https://fidoalliance.org/specifications/ (the standard)
 - https://www.yubico.com/authentication-standards/fido2/ (Yubico’s start page for FIDO2)
