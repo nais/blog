@@ -6,9 +6,9 @@
    {{- partial "header.html" . -}}
    <main>
       <article>
-         <h2>Tags</h2>
+         <h1>Tags</h1>
          {{ range $.Site.Taxonomies.tags.ByCount }}
-            <h4 class="tagheader">{{ .Name }} ({{ .Count }})</h4>
+            <h2 class="tagheader">{{ .Name }} ({{ .Count }})</h2>
             {{ $currentTag := .Name }}
             {{ range .Pages }}
                <ul class="taggedpages">
