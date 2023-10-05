@@ -10,7 +10,7 @@ draft: true
 ![hacker](/blog/images/hacker.jpg) 
 
 Transparency has always been at the core of our mindset in the nais team. 
-We [open source](https://github.com/nais) just about all of our code, and use every oppurtunity to share our thoughts and processes through mediums such as this blog (although the rate of publishing lately doesn't impress anyone...), conference talks and various collaboration forums. 
+We [open source](https://github.com/nais) just about all of our code, and use every opportunity to share our thoughts and processes through mediums such as this blog (although the rate of publishing lately doesn't impress anyone...), conference talks and various collaboration forums. 
 
 Traditionally, penetration tests have been shrouded in a fog of mystery. 
 It is not common practice to be open about the results of such tests, and they often end up in a distant fileshare somewhere never to be seen again. 
