@@ -16,7 +16,7 @@ Traditionally, penetration tests have been shrouded in a fog of mystery.
 It is not common practice to be open about the results of such tests, and they often end up in a distant fileshare somewhere never to be seen again. 
 This is a shame since the findings in these reports are great learning opportunities for the developer community.
 No matter how hard you try, the number of findings in such tests are never zero. 
-So, going forward we plan to publish all of our reports as long as they don't contain serious vulnerabilities that are not yet fixed. 
+So, going forward we plan to publish all of our reports (responsibly, of course). 
 Kudos to Scott Helme and [Report URI](https://scotthelme.co.uk/report-uri-penetration-test-2022/) for the inspiration and to [mnemonic](https://www.mnemonic.io/) for their cooperation.
 
 The first one out is [Teams](https://github.com/nais/teams-backend) (no, not that one), our self service solution for provosioning and maintaining members and resources for our teams in NAV. 
