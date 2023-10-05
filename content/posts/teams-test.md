@@ -19,7 +19,7 @@ No matter how hard you try, the number of findings in such tests are never zero.
 So, going forward we plan to publish all of our reports (responsibly, of course). 
 Kudos to Scott Helme and [Report URI](https://scotthelme.co.uk/report-uri-penetration-test-2022/) for the inspiration and to [mnemonic](https://www.mnemonic.io/) for their cooperation.
 
-The first one out is [Teams](https://github.com/nais/teams-backend) (no, not that one), our self service solution for provosioning and maintaining members and resources for our teams in NAV. 
+The first one out is [Teams](https://github.com/nais/teams-backend) (no, not that one), our self service solution for provisioning and maintaining members and resources for our teams in NAV. 
 These resources include stuff like projects and groups in Google Cloud, GitHub and Azure. 
 Maintaining these manually for hundreds of teams would have been extremely error prone as well as being a major pain. 
 
