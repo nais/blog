@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>slsa on nais blog</title>
+    <link>https://nais.io/blog/tags/slsa/</link>
+    <description>Recent content in slsa on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Mon, 20 Jun 2022 22:10:00 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/slsa/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SLSA</title>
+      <link>https://nais.io/blog/posts/slsa/</link>
+      <pubDate>Mon, 20 Jun 2022 22:10:00 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/slsa/</guid>
+      <description>&amp;ldquo;Software supply chain&amp;rdquo; is a term describing everything that happens to code from the time it leaves the developers fingers until it runs in production. The code needs to be compiled, tested, packaged and deployed, and these steps take place in a variety of systems and use lots of complex third party solutions. Our apps also depend on an increasing number of third party libraries and frameworks that we often know next to nothing about.</description>
+    </item>
+    
+  </channel>
+</rss>

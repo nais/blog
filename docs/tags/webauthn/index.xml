@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>webauthn on nais blog</title>
+    <link>https://nais.io/blog/tags/webauthn/</link>
+    <description>Recent content in webauthn on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Mon, 11 Jan 2021 23:58:03 +0100</lastBuildDate><atom:link href="https://nais.io/blog/tags/webauthn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FIDO2</title>
+      <link>https://nais.io/blog/posts/fido2/</link>
+      <pubDate>Mon, 11 Jan 2021 23:58:03 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/fido2/</guid>
+      <description>According to the Verizon 2017 Data Breach Investigations Report more than 80% of all data breaches can be attributed to weak and/or stolen passwords. Despite all of their weaknesses passwords are still the de facto way to authenticate users because no one has come up with a viable alternative. Now, however, there is a new(-ish) kid in town. FIDO2 (more commonly known as WebAuthentication or WebAuthn) is a standard developed by the FIDO (Fast IDentity Online) alliance.</description>
+    </item>
+    
+  </channel>
+</rss>

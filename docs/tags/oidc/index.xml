@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>oidc on nais blog</title>
+    <link>https://nais.io/blog/tags/oidc/</link>
+    <description>Recent content in oidc on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Sun, 07 Mar 2021 12:49:37 +0100</lastBuildDate><atom:link href="https://nais.io/blog/tags/oidc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OAuth del 3 (PKCE)</title>
+      <link>https://nais.io/blog/posts/oauth-del3-pkce/</link>
+      <pubDate>Sun, 07 Mar 2021 12:49:37 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/oauth-del3-pkce/</guid>
+      <description>Bakgrunn Dette er del 3 i serien om OAuth og OIDC. Den mest brukte OAuth-flyten, &amp;ldquo;Authorization Code flow&amp;rdquo;, innebærer at client og id provider utveksler hemmeligheter. Klienten må derfor være i stand til å holde på hemmelig informasjon på en trygg måte, i standarden omtales dette som confidential clients. For mobil-apps og &amp;ldquo;single page&amp;rdquo; webapplikasjoner har dette ikke vært gjennomførbart da hemmelighetene må distribueres helt ut til sluttbrukeren som en del av appen.</description>
+    </item>
+    
+    <item>
+      <title>OAuth del 2 (Token Exchange)</title>
+      <link>https://nais.io/blog/posts/oauth2/</link>
+      <pubDate>Wed, 16 Sep 2020 08:10:01 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/oauth2/</guid>
+      <description>Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.</description>
+    </item>
+    
+    <item>
+      <title>OAuth del 1</title>
+      <link>https://nais.io/blog/posts/oauth1/</link>
+      <pubDate>Thu, 10 Sep 2020 20:55:53 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/oauth1/</guid>
+      <description>Innledning Dette er del 1 av 3 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX. Del 3 handler om &amp;ldquo;Proof Key for Code Exchange&amp;rdquo;, a.k.a. PKCE.
+Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig.</description>
+    </item>
+    
+  </channel>
+</rss>
