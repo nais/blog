@@ -13,7 +13,7 @@ tags: ["oauth", "oidc", "sikkerhet"]
 
 Dette er del 3 i serien om OAuth og OIDC. Den mest brukte OAuth-flyten, "Authorization Code flow", innebærer at `client` og `id provider` utveksler hemmeligheter. Klienten må derfor være i stand til å holde på hemmelig informasjon på en trygg måte, i standarden omtales dette som `confidential clients`. For mobil-apps og "single page" webapplikasjoner har dette ikke vært gjennomførbart da hemmelighetene må distribueres helt ut til sluttbrukeren som en del av appen.
 
-I [del 1](/posts/oauth1) ble standarden og terminologien gjennomgått, ta en titt på den hvis du trenger en innføring eller oppfriskning.
+I [del 1](/blog/posts/oauth1) ble standarden og terminologien gjennomgått, ta en titt på den hvis du trenger en innføring eller oppfriskning.
 
 Authorization Code flow har også en svakhet som kalles "authorization code injection". Et slikt angrep er komplisert å gjennomføre og krever at mange ting skal klaffe samtidig, men er ingen umulighet. Dersom noen som har stjålet din `client_id` og `client_secret` klarer å fange opp en authorization code kan de gjøre et token-kall på dine vegne, og dermed utgi seg for den aktuelle sluttbrukeren. Hvordan klarer man så å fange opp en authorization code? Callbacks gjøres jo kun til (forhåpentligvis) forhåndsgodkjente URLer over HTTPS? Vel, ikke alltid. En måte er å utnytte custom "URL schemes" på telefoner. En telefon-app vil typisk registrere callback URLs av type `myapp://something`, dette gjør at kallene rutes til denne appen. Hvis en angriper får deg til å installere en app som registrerer seg som lytter på myapp-URLs vil denne appen også få tilsendt callbackene som inneholder koden.
 
@@ -21,7 +21,7 @@ Authorization Code flow har også en svakhet som kalles "authorization code inje
 
 For å bøte på disse svakhetene har det blitt laget et tillegg til OAuth-standarden. Tillegget beskriver teknikken "Proof Key for Code Exchange" som forkortes "PKCE" og uttales "pixie".
 
-Authorization Code flow ser ut som vist i figuren (se [del 1][del 1](/posts/oauth1) for detaljer).
+Authorization Code flow ser ut som vist i figuren (se [del 1][del 1](/blog/posts/oauth1) for detaljer).
 
 ![authorization code flow](/blog/images/auth_code.png) 
 
