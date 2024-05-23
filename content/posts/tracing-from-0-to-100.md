@@ -13,7 +13,7 @@ This is the story of how we adopted [OpenTelemetry][otel] at the Norwegian Labou
 
 At NAV, we have a microservices architecture with thousands of services running in our Kubernetes clusters. We have been teaching our teams to adopt Prometheus metrics and Grafana, but to a large degree they still rely on digging through application log using Elastic and Kibana.
 
-Without proper request tracing, it is hard to get a good overview of how requests flow through the system. This makes it hard to troubleshoot errors in complex value chains and optimize slow requests. It is like trying to navigate a city without a map.
+Without proper request tracing, it is hard to get a good overview of how requests flow through the system. This makes it hard to troubleshoot errors in complex value chains and optimize slow requests, this was particularly challenging for our teams that have adopted an event-driven architecture with Kafka. It is like trying to navigate a city without a map.
 
 There has been several attempts to shoehorn some form of request tracing using HTTP headers over the years. I have found `Nav-Callid`, `nav-call-id`, `callId`, `X-Correlation-ID`, `x_correlationId`, `correlationId`, `x_correlation-id`, and even `x_korrelasjonsId` (Norwegian for correlationId). There are probably more variations out there that I haven't found yet.
 
@@ -55,7 +55,9 @@ From the very beginning, we knew that the key to success was to make the develop
 
 With most of our backend services written in Kotlin and Java, we started by testing the [OpenTelemetry Java Agent][otel-java-agent]. A java agent is a small piece of software that runs alongside your application and can modify the bytecode as it is loaded into the JVM. This allows it to automatically instrument your application without any changes to the source code.
 
-To our pleasant surprise, the agent worked out of the box with most of our applications. It was able to correctly correlate incoming and outgoing requests, understand the different frameworks we use, and even capture database queries and async calls to message queues like Kafka. In fact the OpenTelemetry Java agent supports over 100 different libraries and frameworks out of the box!
+To our pleasant surprise, the agent worked out of the box with most of our applications. It was able to correctly correlate incoming and outgoing requests, understand the different frameworks we use, and even capture database queries and async calls to message queues like Kafka. In fact the OpenTelemetry Java agent [supports over 100 different libraries and frameworks][otel-java-agent-support] out of the box!
+
+[otel-java-agent-support]: https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/docs/supported-libraries.md
 
 Previously we have been able to install such agents in the node, but with the move to Kubernetes, we had to find a way to get the agent onto the container as there are no shared jvm runtime. In the past we have made pre-built Docker images with the agent installed, but this had a high maintenance cost as we had to keep the images up to date with the latest version of the agent across different base images and major versions.
 
@@ -111,18 +113,57 @@ We got a lot of positive feedback from the developers when we launched the auto-
 
 But as time went on, we noticed that the adoption rate some times dropped. Some teams disabled tracing because it consumed more resources, others disabled it because they didn't see the value in it. We also saw that some teams had trouble understanding the traces and how to use them effectively.
 
-### Challenges
+## The road to success is paved with challenges
 
-We have embraced an event-driven architecture with Kafka as the backbone for many of our services. Some have even adopted the [Rapids, Rivers and Ponds][rrp] pattern by Fred George where all services will subscribe to all events and filter out the ones they are interested in. This makes it hard to trace a request through the system since it can go through a seemingly endless number of services.
+While we have made great progress towards getting OpenTelemetry adopted by our applications and developers, there have been bumps along the road.
+
+### Noisy trace spans
+
+Almost immediately after we enabled tracing in our ingress controller, we started getting reports from developers that the traces overviews in Grafana were filled with noise. All requests to the application were traced, including health checks, readiness checks, and metrics scraping. This made it hard to find the traces that were interesting and relevant.
+
+The solution was to filter out the noise. We added a filter to the OpenTelemetry Collector that would drop traces for certain paths or status codes. This reduced the noise significantly and made it easier to find the traces that were relevant.
+
+![Noisy traces](../images/opentelemetry-noisy-spans.png)
+
+This is a common problem as indicated by the comments in [opentelemetry-java-instrumentation#1060](https://github.com/open-telemetry/opentelemetry-java-instrumentation/issues/1060#issuecomment-1948302640) where multiple users have requested the ability to filter out certain spans.
+
+While there are more advanced ways to filter out noise, like using tail sampling, we found that a simple filter was enough for our needs. The only downside is that it might leave some orphaned spans that are not part of a trace.
+
+The filter is defined in the common OpenTelemetry Collector and we do recognize that it might not be a scalable solution in the log run. We are looking into ways to make it easier for the developers to define their own filters in the future.
+
+```yaml
+filter/drop_noisy_trace_urls:
+  error_mode: ignore
+  traces:
+    span:
+      - |
+        (attributes["http.method"] == "GET" or attributes["http.request.method"] == "GET") and (
+          attributes["http.route"] == "/favicon.ico" or attributes["http.target"] == "/favicon.ico" or attributes["url.path"] == "/favicon.ico"
+          or IsMatch(attributes["http.route"], ".*[iI]s_?[rR]eady")    or IsMatch(attributes["http.target"], ".*[iI]s_?[rR]eady")       or IsMatch(attributes["url.path"], ".*[iI]s[rR]eady")
+          or IsMatch(attributes["http.route"], ".*[iI]s_?[aA]live")    or IsMatch(attributes["http.target"], ".*[iI]s_?[aA]live")       or IsMatch(attributes["url.path"], ".*[iI]s[aA]live")
+          or IsMatch(attributes["http.route"], ".*prometheus")         or IsMatch(attributes["http.target"], ".*prometheus")          or IsMatch(attributes["url.path"], ".*prometheus")
+          or IsMatch(attributes["http.route"], ".*metrics")            or IsMatch(attributes["http.target"], ".*metrics")             or IsMatch(attributes["url.path"], ".*metrics")
+          or IsMatch(attributes["http.route"], ".*actuator.*")         or IsMatch(attributes["http.target"], ".*actuator.*")          or IsMatch(attributes["url.path"], ".*actuator.*")
+          or IsMatch(attributes["http.route"], ".*internal/health.*")  or IsMatch(attributes["http.target"], ".*internal/health.*")   or IsMatch(attributes["url.path"], ".*internal/health.*")
+          or IsMatch(attributes["http.route"], ".*internal/status.*")  or IsMatch(attributes["http.target"], ".*internal/status.*")   or IsMatch(attributes["url.path"], ".*internal/status.*")
+        )
+```
+
+It is also worth mentioning that we do believe that the long term solution is to educate the developers on how to use the TraceQL query language effectively to find the traces they are interested in instead of playing whack-a-mole with noisy spans.
+
+### Rapid and Rivers
+
+We have embraced an event-driven architecture with Kafka as the backbone for many of our services. Some have even adopted the [Rapids, Rivers and Ponds][rrp] pattern by Fred George where all services will subscribe to all events and filter out the ones they are interested. This makes it hard to trace a request through the system since it can go through a seemingly endless number of services.
 
 ![Rapids and Rivers](../images/opentelemetry-rappids-and-rivers.png)
 
+The main challenge that we have faced is that the default span trace limit in Grafana Tempo of how large a single trace can be and we have had to increase it to 40 MB to be able to see the full trace for some of our requests (and even then it is sometimes not enough). This is a problem that we are still working on solving, but it is not an easy one.
+
+By talking with the OpenTelmetry community one possible solution might to use [span links][otel-span-links] but we are unsure how well this will work in practice and if it is possible to visualize them in Grafana Tempo in a meaningful way ref. [grafana/tempo#63531](https://github.com/grafana/grafana/issues/63531).
+
 [rrp]: https://fredgeorge.com/2016/09/16/rapid-rivers-and-ponds/
+[otel-span-links]: https://opentelemetry.io/docs/concepts/signals/traces/#span-links
 
-
-### Challenges
-
-* Rapid and Rivers / max span trace limit
 * Memory / garbage collection
 * Logging
 * Node.js fetch
