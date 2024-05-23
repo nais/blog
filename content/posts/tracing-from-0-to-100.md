@@ -51,7 +51,7 @@ The hard part was getting the developers to instrument their applications...
 
 ## Instrumenting the applications
 
-From the very beginning, we knew that the key to success was to make it as easy as possible for the developers to instrument their applications. With one 1.600 applications in production, we couldn't afford to spend weeks or months on each one. A solution that *required* manual configuration for each application was a non-starter.
+From the very beginning, we knew that the key to success was to make the developers understand the value and benefit of good observability and make it as easy as possible for the developers to instrument their applications. With over 1.600 applications in production, we couldn't afford to spend weeks or months on each one. A solution that *required* manual configuration for each application was a non-starter.
 
 With most of our backend services written in Kotlin and Java, we started by testing the [OpenTelemetry Java Agent][otel-java-agent]. A java agent is a small piece of software that runs alongside your application and can modify the bytecode as it is loaded into the JVM. This allows it to automatically instrument your application without any changes to the source code.
 
