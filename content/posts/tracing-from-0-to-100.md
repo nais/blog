@@ -35,11 +35,13 @@ Doesn't sound too hard, right? Let's start with the storage backend.
 OpenTelemetry is a vendor-neutral project, so you can choose any storage backend you like. The most popular choices are Jaeger, Zipkin, and Tempo. We chose [Grafana Tempo][grafana-tempo] because it is a scalable, cost-effective, and open source solution that integrates seamlessly with Grafana that we already use for metrics and dashboards.
 
 [grafana-tempo]: https://grafana.com/oss/tempo/
-![Grafana Tempo](../images/opentelemetry-tempo.png)
+![Grafana Tempo](../images/otel-tempo.png)
 
 We have written extensively about how to get started with Grafana Tempo in our [documentation][nav-tempo] as well as a reference guide for the query language used in Tempo called [TraceQL][nav-traceql].
 
 You can send OpenTelemetry data directly to Tempo, but the recommended way is to use an [OpenTelemetry Collector][otel-collector]. The Collector can receive data from multiple sources, process it, and send it to multiple destinations. This makes it easy to add new sources or destinations without changing your application configuration.
+
+![OpenTelemetry Collector](../images/otel-collector.svg)
 
 Installing things like this in a Kubernetes cluster is something the NAIS team have done for the better part of ten years, so we had no problem setting up the Collector and connecting it to Tempo in our clusters, we run one Tempo instance for each environment (dev and prod) accessible from a global Grafana instance.
 
@@ -98,7 +100,7 @@ When naiserator sees this field, it sets the required OpenTelemetry Operator ann
 
 For many of our applications, this was all that was needed to get traces flowing. Developers can still add additional spans and attributes to their traces using the OpenTelemetry SDKs directly, or they can choose to disable auto-instrumentation and instrument their applications manually.
 
-We also enabled tracing in our ingress controller so that we could see the full request path from the client to the backend service. Since we are using **the** Ingress Nginx controller, this was just a matter of enabling the [OpenTelemetry configuration][ingress-nginx-otel] in the Helm chart to get traces for all incoming requests.
+We also enabled tracing in our ingress controller so that we could see the full request path from the client to the backend service. Since we are using the Ingress Nginx controller, this was just a matter of enabling the [OpenTelemetry configuration][ingress-nginx-otel] in the Helm chart to get traces for all incoming requests.
 
 [nais]: https://nais.io
 [nais-manifest]: https://doc.nais.io/reference/application-example
@@ -109,7 +111,7 @@ We also enabled tracing in our ingress controller so that we could see the full 
 
 We got a lot of positive feedback from the developers when we launched the auto-instrumentation feature. They were happy to see traces in Grafana and Tempo, and they could finally get a good overview of how requests flowed through their applications. We even saw a few teams that started using traces to troubleshoot errors and optimize slow requests.
 
-![Adoption](../images/opentelemetry-adoption.png)
+![Adoption](../images/otel-adoption.png)
 
 But as time went on, we noticed that the adoption rate some times dropped. Some teams disabled tracing because it consumed more resources, others disabled it because they didn't see the value in it. We also saw that some teams had trouble understanding the traces and how to use them effectively.
 
@@ -123,7 +125,7 @@ Almost immediately after we enabled tracing in our ingress controller, we starte
 
 The solution was to filter out the noise. We added a filter to the OpenTelemetry Collector that would drop traces for certain paths or status codes. This reduced the noise significantly and made it easier to find the traces that were relevant.
 
-![Noisy traces](../images/opentelemetry-noisy-spans.png)
+![Noisy traces](../images/otel-noisy-spans.png)
 
 This is a common problem as indicated by the comments in [opentelemetry-java-instrumentation#1060](https://github.com/open-telemetry/opentelemetry-java-instrumentation/issues/1060#issuecomment-1948302640) where multiple users have requested the ability to filter out certain spans.
 
@@ -155,7 +157,7 @@ It is also worth mentioning that we do believe that the long term solution is to
 
 We have embraced an event-driven architecture with Kafka as the backbone for many of our services. Some have even adopted the [Rapids, Rivers and Ponds][rrp] pattern by Fred George where all services will subscribe to all events and filter out the ones they are interested. This makes it hard to trace a request through the system since it can go through a seemingly endless number of services.
 
-![Rapids and Rivers](../images/opentelemetry-rappids-and-rivers.png)
+![Rapids and Rivers](../images/otel-rappids-and-rivers.png)
 
 The main challenge that we have faced is that the default span trace limit in Grafana Tempo of how large a single trace can be and we have had to increase it to 40 MB to be able to see the full trace for some of our requests (and even then it is sometimes not enough). This is a problem that we are still working on solving, but it is not an easy one.
 
@@ -210,4 +212,4 @@ We have engaged with the OpenTelemetry community to see if there is a way to onl
 * Dashboards
 * Span metrics
 
-![Span Rate](../images/opentelemetry-span-rate.png)
+![Span Rate](../images/otel-span-rate.png)
