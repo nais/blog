@@ -66,7 +66,7 @@ This is where the [OpenTelemetry Operator][otel-operator] comes in. The Operator
 
 ## Putting it all together
 
-In case you are new to NAV, we have a open source application platform called [nais][nais] that provides everything our application teams need to develop, run and operate their applications. It's main component is a Kubernetes Operator and the [`nais.yaml`][nais-manifest] that defines how an application should run in our Kubernetes clusters.
+In case you are new to NAV, we have a open source application platform called [nais][nais] that provides everything our application teams need to develop, run and operate their applications. It's main component is [naiserator][naiserator] (a Kubernetes Operator) and the [`nais.yaml`][nais-manifest] that defines how an application should run in our Kubernetes clusters.
 
 It looks something like this:
 
@@ -92,11 +92,11 @@ This is a very powerful abstraction that have allowed us to add new features to 
       runtime: "java"
 ```
 
-When [naiserator][naiserator] sees this field, it sets the required OpenTelemetry Operator annotations to get the correct OpenTelemetry configuration and agent according to the runtime. We currently support auto-instrumenting `java`, `nodejs` and `python`. This way, the developers don't have to worry about how to set up tracing in their applications, they just have to enable it in the manifest. This is a huge win for us! :rocket:
+When naiserator sees this field, it sets the required OpenTelemetry Operator annotations to get the correct OpenTelemetry configuration and agent according to the runtime. We currently support auto-instrumenting `java`, `nodejs` and `python`. This way, the developers don't have to worry about how to set up tracing in their applications, they just have to enable it in the manifest. This is a huge win for us! :rocket:
 
 For many of our applications, this was all that was needed to get traces flowing. Developers can still add additional spans and attributes to their traces using the OpenTelemetry SDKs directly, or they can choose to disable auto-instrumentation and instrument their applications manually.
 
-We also enabled tracing in our ingress controller so that we could see the full request path from the client to the backend service. Since we are using the Ingress Nginx controller, this was just a matter of enabling the [OpenTelemetry configuration][ingress-nginx-otel] in the Helm chart to get traces for all incoming requests.
+We also enabled tracing in our ingress controller so that we could see the full request path from the client to the backend service. Since we are using **the** Ingress Nginx controller, this was just a matter of enabling the [OpenTelemetry configuration][ingress-nginx-otel] in the Helm chart to get traces for all incoming requests.
 
 [nais]: https://nais.io
 [nais-manifest]: https://doc.nais.io/reference/application-example
@@ -115,7 +115,7 @@ But as time went on, we noticed that the adoption rate some times dropped. Some 
 
 We have embraced an event-driven architecture with Kafka as the backbone for many of our services. Some have even adopted the [Rapids, Rivers and Ponds][rrp] pattern by Fred George where all services will subscribe to all events and filter out the ones they are interested in. This makes it hard to trace a request through the system since it can go through a seemingly endless number of services.
 
-![Rappids and Rivers](../images/opentelemetry-rappids-and-rivers.png)
+![Rapids and Rivers](../images/opentelemetry-rappids-and-rivers.png)
 
 [rrp]: https://fredgeorge.com/2016/09/16/rapid-rivers-and-ponds/
 
