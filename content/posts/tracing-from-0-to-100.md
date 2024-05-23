@@ -159,14 +159,55 @@ We have embraced an event-driven architecture with Kafka as the backbone for man
 
 The main challenge that we have faced is that the default span trace limit in Grafana Tempo of how large a single trace can be and we have had to increase it to 40 MB to be able to see the full trace for some of our requests (and even then it is sometimes not enough). This is a problem that we are still working on solving, but it is not an easy one.
 
-By talking with the OpenTelmetry community one possible solution might to use [span links][otel-span-links] but we are unsure how well this will work in practice and if it is possible to visualize them in Grafana Tempo in a meaningful way ref. [grafana/tempo#63531](https://github.com/grafana/grafana/issues/63531).
+From talking with the OpenTelmetry community one possible solution might to use [span links][otel-span-links], but we are unsure how well this will work in practice, and if will be able to visualize them in Grafana Tempo in a meaningful way (ref. [grafana/tempo#63531](https://github.com/grafana/grafana/issues/63531)).
 
 [rrp]: https://fredgeorge.com/2016/09/16/rapid-rivers-and-ponds/
 [otel-span-links]: https://opentelemetry.io/docs/concepts/signals/traces/#span-links
 
-* Memory / garbage collection
-* Logging
-* Node.js fetch
+### Node.js applications
+
+While NAV is mainly a Java and Kotlin shop, we do have a few Node.js applications in production, mostly Next.js and Express.
+
+First out, while Next.js is supposed to have OpenTelemetry support out of the box, we found that it does not appear to be working in standalone mode (ref. [vercel/next.js#49897](https://github.com/vercel/next.js/issues/49897)).
+
+So we had to turn to auto-instrumentation here as well. However,due to the way we lock down our containers in Kubernetes, we got some strange errors instrumenting the application due to different ownership of the files in the container. This had to be fixed before we could continue (ref. [opentelemetry-operator#2655](https://github.com/open-telemetry/opentelemetry-operator/issues/2655))
+
+Finally we got the Node.js applications up and running with OpenTelemetry, only to find out that some outgoing requests from Node.js applications were not being traced as the `traceparent` header was not being propagated. As a workaround we had to add the `traceparent` header manually to the outgoing requests like this:
+
+```javascript
+const response = await fetch(someUrl, {
+  headers: {
+    get traceparent() {
+      return getTraceparentHeader();
+    },
+    'Content-Type': 'application/json'
+  },
+  ...
+});
+```
+
+ Support for Node.js fetch was added in [auto-instrumentations-node-v0.45.0](https://github.com/open-telemetry/opentelemetry-js-contrib/releases/tag/auto-instrumentations-node-v0.46.0) with the introduction of the `@opentelemetry/instrumentation-undici` package.
+
+### Unwanted log sinks
+
+One of the main advantages with the agent is correlated logs and traces. The agent understands various logging libraries such as log4j, logback, and slf4j and can automatically add trace information and send them to Grafana Loki.
+
+We turned this feature on for all applications, unaware that the agent would intercept all log sinks, not only those targeted for stdout/stderr as some applications were logging sensitive information like social security numbers and personal information to a specific log file.
+
+Applications must now opt-in to the log interception feature by adding the following environment variable to their deployment:
+
+```yaml
+spec:
+  env:
+    - name: OTEL_LOGS_EXPORTER
+      value: otlp
+```
+
+We have engaged with the OpenTelemetry community to see if there is a way to only intercept logs that are targeted for stdout/stderr, but as of now, this is the only way to disable the log interception feature.
+
+## The future of OpenTelemetry at NAV
+
+* Dashboards
 * Span metrics
 
 ![Span Rate](../images/opentelemetry-span-rate.png)
