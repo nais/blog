@@ -115,6 +115,8 @@ We got a lot of positive feedback from the developers when we launched the auto-
 
 But as time went on, we noticed that the adoption rate some times dropped. Some teams disabled tracing because it consumed more resources, others disabled it because they didn't see the value in it. We also saw that some teams had trouble understanding the traces and how to use them effectively.
 
+It is clear that we need to do more to educate the developers on how to use traces effectively, but more on that later.
+
 ## The road to success is paved with challenges
 
 While we have made great progress towards getting OpenTelemetry adopted by our applications and developers, there have been bumps along the road.
@@ -209,7 +211,33 @@ We have engaged with the OpenTelemetry community to see if there is a way to onl
 
 ## The future of OpenTelemetry at NAV
 
-* Dashboards
-* Span metrics
+We have come a long way in a short time with, but there is still a lot of work to be done. It is clear that OpenTelemetry is a powerful tool, but it is no silver bullet. It requires a lot of effort to get right, and it will take time to educate the developers on how to use it effectively.
 
+Going forward, we have a few things on our roadmap:
+
+### Dashboards and Panels
+
+A few teams have started creating custom dashboards and panels in Grafana to visualize their traces, metrics and logs. We want to make it easier for all teams to create their own dashboards and panels, and we are looking into ways to provide templates and examples that teams can use to get started and customize to their needs.
+
+### Span Metrics
+
+[Span Metrics][tempo-span-metrics] is a feature of Grafana Tempo that allows you to generates metrics from ingested tracing data, including request, error, and duration (RED) metrics.
+
+We believe that span metrics may lower the entry barrier for using [exemplars][grafana-examplars]. An exemplar is a specific trace representative of measurement taken in a given time interval.
+
+Before we can enable span metrics, we need to make sure our Prometheus instance is able to handle the additional load. Maybe [Grafana Mimir][grafna-mimir] can help us with that?
+
+[tempo-span-metrics]: https://grafana.com/docs/tempo/latest/metrics-generator/span_metrics/
+[grafana-examplars]: https://grafana.com/docs/grafana/latest/basics/exemplars/
+[grafna-mimir]: https://grafana.com/docs/mimir/latest/
+
+### Training and Workshops
+
+We have started hosting training sessions and workshops for the developers to teach them how to use OpenTelemetry effectively. We have also created a [documentation site][nav-otel] with guides, tutorials, and examples that developers can use to learn more about OpenTelemetry.
+
+Later this year we will host the first ever Public Sector Observability Day where we will invite developers from all over the Norwegian public sector to learn more about observability and how to use OpenTelemetry effectively.
+
+We are super excited about the future of OpenTelemetry at NAV, and we can't wait to see what the developers will build with it!
+
+[nav-otel]: https://docs.nais.io/observability/tracing/
 ![Span Rate](../images/otel-span-rate.png)
