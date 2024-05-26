@@ -111,7 +111,13 @@ We also enabled tracing in our ingress controller so that we could see the full 
 
 We got a lot of positive feedback from the developers when we launched the auto-instrumentation feature. They were happy to see traces in Grafana and Tempo, and they could finally get a good overview of how requests flowed through their applications. We even saw a few teams that started using traces to troubleshoot errors and optimize slow requests.
 
-![Adoption](../images/otel-adoption.png)
+![Adoption of OpenTelemetry in NAV](../images/otel-adoption.png)
+
+It is absolutely amazing to see the full request path from the client to the backend service in Grafana Tempo using the [Grafana Faro Web SDK][grafana-faro-web-sdk]. This is insight that we have never had before, and it is a game changer for our developers, especially those working with frontend development.
+
+[grafana-faro-web-sdk]: https://github.com/grafana/faro-web-sdk/
+
+![Client to Backend Tracing](../images/otel-client-to-backend.png)
 
 But as time went on, we noticed that the adoption rate some times dropped. Some teams disabled tracing because it consumed more resources, others disabled it because they didn't see the value in it. We also saw that some teams had trouble understanding the traces and how to use them effectively.
 
@@ -215,9 +221,13 @@ We have come a long way in a short time with, but there is still a lot of work t
 
 Going forward, we have a few things on our roadmap:
 
-### Dashboards and Panels
+### Default Dashboards and Panels
 
-A few teams have started creating custom dashboards and panels in Grafana to visualize their traces, metrics and logs. We want to make it easier for all teams to create their own dashboards and panels, and we are looking into ways to provide templates and examples that teams can use to get started and customize to their needs.
+A few teams have started creating custom dashboards and panels in Grafana to visualize their OpenTelemetry data, but not too many. We need to make it easier for all teams to have good quality dashboards, and we are looking into ways to provide templates and examples that teams can use to get started and customize to their needs.
+
+Maybe [Library Panels in Grafana][grafana-library-panels] can help us with that?
+
+[grafana-library-panels]: https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/manage-library-panels/
 
 ### Span Metrics
 
@@ -231,13 +241,19 @@ Before we can enable span metrics, we need to make sure our Prometheus instance 
 [grafana-examplars]: https://grafana.com/docs/grafana/latest/basics/exemplars/
 [grafna-mimir]: https://grafana.com/docs/mimir/latest/
 
+### Correlation with logs and metrics
+
+We have seen some of the potential of correlating logs and traces, but this is not something that has been widely adopted yet. Logs is collected as stdout/stderr and metrics are scraped by Prometheus which makes it hard to correlate logs and metrics with traces since they are treated independently.
+
+Rather, sending traces, logs, and metrics through the OpenTelemetry SDKs and the OpenTelemetry Collector would automatically correlate them and get the full benefit of what OpenTelemetry has to offer.
+
 ### Training and Workshops
 
-We have started hosting training sessions and workshops for the developers to teach them how to use OpenTelemetry effectively. We have also created a [documentation site][nav-otel] with guides, tutorials, and examples that developers can use to learn more about OpenTelemetry.
+We have started planning training sessions and workshops for the developers to teach them how to use OpenTelemetry effectively. We have also created a [documentation site][nav-otel] with guides, tutorials, and examples that developers can use to learn more about OpenTelemetry.
 
 Later this year we will host the first ever Public Sector Observability Day where we will invite developers from all over the Norwegian public sector to learn more about observability and how to use OpenTelemetry effectively.
 
-We are super excited about the future of OpenTelemetry at NAV, and we can't wait to see what the developers will build with it!
+We are super excited about the future of OpenTelemetry at NAV, and we can't wait to see what use cases the developers will solve using this data! :rocket: As you can see from the graph below, we are generating more traces week by week, and we are confident that this is just the beginning.
 
 [nav-otel]: https://docs.nais.io/observability/tracing/
 ![Span Rate](../images/otel-span-rate.png)
