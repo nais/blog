@@ -1,8 +1,8 @@
 ---
 title: OpenTelemetry from 0 to 100
 description: The story of how we adopted OpenTelemetry at NAV
-date: 2024-05-10T09:27:57+02:00
-draft: true
+date: 2024-05-17T19:09:09+02:00
+draft: false
 author: Hans Kristian Flaatten
 tags: [observability, tracing, opentelemetry, tempo, grafana]
 ---
