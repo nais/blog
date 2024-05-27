@@ -5,6 +5,7 @@ date: 2024-05-17T19:09:09+02:00
 draft: false
 author: Hans Kristian Flaatten
 tags: [observability, tracing, opentelemetry, tempo, grafana]
+featuredImage: /blog/images/otel-rappids-and-rivers.png
 ---
 
 This is the story of how we adopted [OpenTelemetry][otel] at the Norwegian Labour and Welfare Administration (NAV). We will cover the journey from the first steps to the first traces in production. We will also share some of the challenges we faced and how we overcame them.
