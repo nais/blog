@@ -125,9 +125,9 @@ It is clear that we need to do more to educate the developers on how to use trac
 
 ## The road to success is paved with challenges
 
-While we have made great progress towards getting OpenTelemetry adopted by our applications and developers, there have been bumps along the road.
+While we have made great progress towards adopting OpenTelemetry by our applications and developers, there have been bumps along the road that we have had to overcome.
 
-### Noisy trace spans
+### Noisy trace spans - the whack-a-mole problem
 
 Almost immediately after we enabled tracing in our ingress controller, we started getting reports from developers that the traces overviews in Grafana were filled with noise. All requests to the application were traced, including health checks, readiness checks, and metrics scraping. This made it hard to find the traces that were interesting and relevant.
 
@@ -161,7 +161,7 @@ filter/drop_noisy_trace_urls:
 
 It is also worth mentioning that we do believe that the long term solution is to educate the developers on how to use the TraceQL query language effectively to find the traces they are interested in instead of playing whack-a-mole with noisy spans.
 
-### Rapid and Rivers
+### Rapid and Rivers - death by a thousand spans
 
 We have embraced an event-driven architecture with Kafka as the backbone for many of our services. Some have even adopted the [Rapids, Rivers and Ponds][rrp] pattern by Fred George where all services will subscribe to all events and filter out the ones they are interested. This makes it hard to trace a request through the system since it can go through a seemingly endless number of services.
 
@@ -174,7 +174,7 @@ From talking with the OpenTelmetry community one possible solution might to use 
 [rrp]: https://fredgeorge.com/2016/09/16/rapid-rivers-and-ponds/
 [otel-span-links]: https://opentelemetry.io/docs/concepts/signals/traces/#span-links
 
-### Node.js applications
+### Node.js applications - the odd one out
 
 While NAV is mainly a Java and Kotlin shop, we do have a few Node.js applications in production, mostly Next.js and Express.
 
@@ -198,7 +198,7 @@ const response = await fetch(someUrl, {
 
  Support for Node.js fetch was added in [auto-instrumentations-node-v0.45.0](https://github.com/open-telemetry/opentelemetry-js-contrib/releases/tag/auto-instrumentations-node-v0.46.0) with the introduction of the `@opentelemetry/instrumentation-undici` package.
 
-### Unwanted log sinks
+### Unwanted logs - the sensitive information problem
 
 One of the main advantages with the agent is correlated logs and traces. The agent understands various logging libraries such as log4j, logback, and slf4j and can automatically add trace information and send them to Grafana Loki.
 
@@ -219,21 +219,17 @@ We have engaged with the OpenTelemetry community to see if there is a way to onl
 
 We have come a long way in a short time with, but there is still a lot of work to be done. It is clear that OpenTelemetry is a powerful tool, but it is no silver bullet. It requires a lot of effort to get right, and it will take time to educate the developers on how to use it effectively.
 
-Going forward, we have a few things on our roadmap:
-
 ### Default Dashboards and Panels
 
 A few teams have started creating custom dashboards and panels in Grafana to visualize their OpenTelemetry data, but not too many. We need to make it easier for all teams to have good quality dashboards, and we are looking into ways to provide templates and examples that teams can use to get started and customize to their needs.
 
-Maybe [Library Panels in Grafana][grafana-library-panels] can help us with that?
+This is by far the most challenging thing with Grafana, you can do anything but it does not come for free or out of the box. Maybe [Library Panels in Grafana][grafana-library-panels] can help us with that?
 
 [grafana-library-panels]: https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/manage-library-panels/
 
 ### Span Metrics
 
-[Span Metrics][tempo-span-metrics] is a feature of Grafana Tempo that allows you to generates metrics from ingested tracing data, including request, error, and duration (RED) metrics.
-
-We believe that span metrics may lower the entry barrier for using [exemplars][grafana-examplars]. An exemplar is a specific trace representative of measurement taken in a given time interval.
+[Span Metrics][tempo-span-metrics] is a feature of Grafana Tempo that allows you to generates metrics from ingested tracing data, including request, error, and duration (RED) metrics. We believe that span metrics may lower the entry barrier for using [exemplars][grafana-examplars]. An exemplar is a specific trace representative of measurement taken in a given time interval.
 
 Before we can enable span metrics, we need to make sure our Prometheus instance is able to handle the additional load. Maybe [Grafana Mimir][grafna-mimir] can help us with that?
 
