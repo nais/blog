@@ -250,7 +250,7 @@ We have started planning training sessions and workshops for the developers to t
 
 Later this year we will host the first ever Public Sector Observability Day where we will invite developers from all over the Norwegian public sector to learn more about observability and how to use OpenTelemetry effectively.
 
-We are super excited about the future of OpenTelemetry at NAV, and we can't wait to see what use cases the developers will solve using this data! :rocket: As you can see from the graph below, we are generating more traces week by week, and we are confident that this is just the beginning.
+We are super excited about the future of OpenTelemetry at NAV, and we can't wait to see what use cases the developers will solve using this data! 🚀 As you can see from the graph below, we are generating more traces week by week, and we are confident that this is just the beginning.
 
 [nav-otel]: https://docs.nais.io/observability/tracing/
 ![Span Rate](/blog/images/otel-span-rate.png)
