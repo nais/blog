@@ -1,30 +1,32 @@
 ---
 title: OpenTelemetry from 0 to 100
-description: The story of how we adopted OpenTelemetry at NAV
+description: The story of how we adopted OpenTelemetry at NAV (Norway's largest government agency).
 date: 2024-05-27T19:09:09+02:00
 draft: false
 author: Hans Kristian Flaatten
-tags: [observability, tracing, opentelemetry, tempo, grafana]
+tags: [observability, opentelemetry, tracing]
 featuredImage: /blog/images/otel-rappids-and-rivers.png
 ---
 
-This is the story of how we adopted [OpenTelemetry][otel] at the Norwegian Labour and Welfare Administration (NAV). We will cover the journey from the first steps to the first traces in production. We will also share some of the challenges we faced and how we overcame them.
+This is the (long) story of how we adopted [OpenTelemetry][otel] at the Norwegian Labour and Welfare Administration (NAV). We will cover the journey from the first commits to real traces in production. We will also share some of the challenges we faced along the way and how we overcame them.
 
 [otel]: https://opentelemetry.io/
 
-At NAV, we have a microservices architecture with thousands of services running in our Kubernetes clusters. We have been teaching our teams to adopt Prometheus metrics and Grafana, but to a large degree they still rely on digging through application log using Elastic and Kibana.
+At NAV, we have a microservices architecture with thousands of services running in our Kubernetes clusters. We have been telling our teams to adopt Prometheus metrics and Grafana from early on, but to a large degree they still rely on digging through application logs in Kibana.
 
-Without proper request tracing, it is hard to get a good overview of how requests flow through the system. This makes it hard to troubleshoot errors in complex value chains and optimize slow requests, this was particularly challenging for our teams that have adopted an event-driven architecture with Kafka. It is like trying to navigate a city without a map.
+Without proper request tracing, it is hard to get a good overview of how requests flow through a system. This makes it hard to troubleshoot errors in long and often complex value chains or optimize slow requests. This was a particular challenge for our teams that have adopted an event-driven architecture with Kafka. It is like trying to navigate a city without a map.
 
-There has been several attempts to shoehorn some form of request tracing using HTTP headers over the years. I have found `Nav-Callid`, `nav-call-id`, `callId`, `X-Correlation-ID`, `x_correlationId`, `correlationId`, `x_correlation-id`, and even `x_korrelasjonsId` (Norwegian for correlationId). There are probably more variations out there that I haven't found yet.
+There has been several attempts to shoehorn some form of request tracing using HTTP headers over the years. I have found `Nav-Callid`, `nav-call-id`, `callId`, `X-Correlation-ID`, `x_correlationId`, `correlationId`, `x_correlation-id`, and even `x_korrelasjonsId` (Norwegian for correlationId). There are probably even more variations out there in the wild as I only had so much time for digging around.
 
 ![Standards](https://imgs.xkcd.com/comics/standards.png)
 
-It seams we are stuck in an endless loop of trying to get everyone to agree on a standard, and then trying to get everyone to implement it correctly. This is where OpenTelemetry comes in. It provides a standard way to define telemetry data from your applications, and it provides libraries for most programming languages to make it easy to implement.
+It seams we are stuck in an endless loop of trying to get everyone to agree on a standard, and then trying to get everyone to implement it correctly... This is where OpenTelemetry comes in! It provides a standard way to define telemetry data from your applications, and it provides libraries and SDKs for all common programming languages (there are even initiatives to make [OpenTelemetry available on mainframes][otel-mainframe-sig]) to make it easy to implement. Maybe there is still hope for us!
+
+[otel-mainframe-sig]: https://openmainframeproject.org/blog/new-opentelemetry-on-mainframe-sig/
 
 ## The first steps
 
-Even though OpenTelemetry does a lot of the heavy lifting for you, it is still a complex system with many moving parts. Did you know that OpenTelemetry is the fastest growing project in the Cloud Native Computing Foundation (CNCF)? It has an even steeper adoption curve than Kubernetes had in the early days!
+Even though OpenTelemetry does a lot of the heavy lifting for you, it is still a complex system with many moving parts. Did you know that OpenTelemetry is the fastest growing project in the Cloud Native Computing Foundation (CNCF)? It has an even steeper adoption curve than Kubernetes had back in the early days!
 
 In order to get started with OpenTelemetry, you need two things:
 
@@ -44,9 +46,9 @@ You can send OpenTelemetry data directly to Tempo, but the recommended way is to
 
 ![OpenTelemetry Collector](/blog/images/otel-collector.svg)
 
-Installing things like this in a Kubernetes cluster is something the NAIS team have done for the better part of ten years, so we had no problem setting up the Collector and connecting it to Tempo in our clusters, we run one Tempo instance for each environment (dev and prod) accessible from a global Grafana instance.
+Installing things like this in a Kubernetes cluster is something the NAIS team have done for the better part of ten years, so we had no problem setting up the Collector and connecting it to Tempo in our clusters. We run one Tempo instance for each environment (dev and prod) accessible from a global Grafana instance.
 
-The hard part was getting the developers to instrument their applications...
+The hard part would be to get the developers to instrument their applications...
 
 [nav-traceql]: https://doc.nais.io/reference/observability/tracing/traceql/
 [nav-tempo]: https://docs.nais.io/how-to-guides/observability/tracing/tempo/
@@ -58,13 +60,13 @@ From the very beginning, we knew that the key to success was to make the develop
 
 With most of our backend services written in Kotlin and Java, we started by testing the [OpenTelemetry Java Agent][otel-java-agent]. A java agent is a small piece of software that runs alongside your application and can modify the bytecode as it is loaded into the JVM. This allows it to automatically instrument your application without any changes to the source code.
 
-To our pleasant surprise, the agent worked out of the box with most of our applications. It was able to correctly correlate incoming and outgoing requests, understand the different frameworks we use, and even capture database queries and async calls to message queues like Kafka. In fact the OpenTelemetry Java agent [supports over 100 different libraries and frameworks][otel-java-agent-support] out of the box!
+To our pleasant surprise, the agent worked out of the box with most of our applications. It was able to correctly correlate incoming and outgoing requests, understand the different frameworks we use, and even capture database queries and async calls to message queues like Kafka despite the nay-sayers who claimed this could not work as well as it was advertised. In fact, the OpenTelemetry Java agent [supports over 100 different libraries and frameworks][otel-java-agent-support] out of the box!
 
 [otel-java-agent-support]: https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/docs/supported-libraries.md
 
-Previously we have been able to install such agents in the node, but with the move to Kubernetes, we had to find a way to get the agent onto the container as there are no shared jvm runtime. In the past we have made pre-built Docker images with the agent installed, but this had a high maintenance cost as we had to keep the images up to date with the latest version of the agent across different base images and major versions.
+Previously we would have been able to install such agents on thPreviously we would have been able to install such agents on the node, but with all of our applications now running on Kubernetes that was no longer an option. We had to find a way to get the agent onto the container as there are no shared jvm runtime to hook into. In the past we have made pre-built Docker images with agents pre-installed, but this had a high maintenance cost as we had to keep the images up to date with the latest version of the agent across different base images and major versions. And not all applications are using the same base image either.
 
-This is where the [OpenTelemetry Operator][otel-operator] comes in. The Operator is a Kubernetes operator that can automatically inject the OpenTelemetry Java Agent (and agents for other programming languages) directly into your application pods. It can also configure the agent to send data to the correct Collector and set up the correct service name and environment for each application since it has access to the Kubernetes API.
+This is where the [OpenTelemetry Operator][otel-operator] comes in. This is a Kubernetes operator that can automatically inject the OpenTelemetry Java Agent (and agents for other programming languages as well) directly into your pod. It can also configure the agent to send data to the correct Collector and set up the correct service name and environment variables for each application since it has access to the Kubernetes API.
 
 [otel-java-agent]: https://opentelemetry.io/docs/languages/java/automatic/
 [otel-operator]: https://opentelemetry.io/docs/operator/
@@ -73,7 +75,7 @@ This is where the [OpenTelemetry Operator][otel-operator] comes in. The Operator
 
 In case you are new to NAV, we have a open source application platform called [nais][nais] that provides everything our application teams need to develop, run and operate their applications. It's main component is [naiserator][naiserator] (a Kubernetes Operator) and the [`nais.yaml`][nais-manifest] that defines how an application should run in our Kubernetes clusters.
 
-It looks something like this:
+A minimal application manifest looks something like this:
 
 ```yaml
 apiVersion: "nais.io/v1alpha1"
@@ -87,7 +89,7 @@ spec:
   ...
 ```
 
-This is a very powerful abstraction that have allowed us to add new features to the platform with as little effort on the developer's part as possible. We added a new field to `nais.yaml` called `observability` that allows the developers to enable tracing for their applications with a single line of code:
+This is a very powerful abstraction that have allowed us to add new features to the platform with as little effort on the developer's part as possible. We added a new field to `nais.yaml` called `observability` that allows the developers to enable tracing for their applications with only four lines of yaml configuration:
 
 ```yaml
 ...
@@ -97,7 +99,7 @@ This is a very powerful abstraction that have allowed us to add new features to 
       runtime: "java"
 ```
 
-When naiserator sees this field, it sets the required OpenTelemetry Operator annotations to get the correct OpenTelemetry configuration and agent according to the runtime. We currently support auto-instrumenting `java`, `nodejs` and `python`. This way, the developers don't have to worry about how to set up tracing in their applications, they just have to enable it in the manifest. This is a huge win for us! :rocket:
+When naiserator sees this field, it sets the required OpenTelemetry Operator annotations to get the correct OpenTelemetry configuration and agent according to the runtime. We currently support auto-instrumenting `java`, `nodejs` and `python`. This way, the developers don't have to worry about how to set up tracing in their applications, they just have to enable it in the manifest. This is a huge win for us! 🎉
 
 For many of our applications, this was all that was needed to get traces flowing. Developers can still add additional spans and attributes to their traces using the OpenTelemetry SDKs directly, or they can choose to disable auto-instrumentation and instrument their applications manually.
 
