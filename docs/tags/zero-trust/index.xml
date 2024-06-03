@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zero-trust on nais blog</title>
+    <link>https://nais.io/blog/tags/zero-trust/</link>
+    <description>Recent content in zero-trust on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Tue, 29 Sep 2020 11:37:43 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/zero-trust/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Zero-trust networking in GCP</title>
+      <link>https://nais.io/blog/posts/zero-trust-networking-in-gcp/</link>
+      <pubDate>Tue, 29 Sep 2020 11:37:43 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/zero-trust-networking-in-gcp/</guid>
+      <description>Background Firewalls and zones have been our primary defense mechanism for years. This model defines a strict perimeter around our applications. The perimiter is designed to keep potential attackers on the outside, but also to be able to control the flow of data out of the perimiter. The challenge with this model in a containerized world, is that our applications has become more distributed, which leaves us with more components and thus additional attack surfaces.</description>
+    </item>
+    
+  </channel>
+</rss>

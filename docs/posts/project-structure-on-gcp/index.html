@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html><head>
+   <meta charset="UTF-8">
+   <meta lang="en">
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+   <meta http-equiv="Content-Security-Policy" content="font-src https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://amplitude.nav.no">
+   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png" />
+   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png" />
+   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png" />
+   <link rel="mask-icon" href="/blog/images/safari-pinned-tab.svg" color="#66cbec" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="/blog/style.css">
+   <title>nais blog</title>
+
+   <script type="text/javascript" src="/blog/amplitude.js"></script><meta property="og:title" content="Project Structure on GCP">
+<meta property="og:description" content="A short explanation of projects in NAV&#39;s GCP setup">
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="https://nais.io/blog/posts/project-structure-on-gcp/">
+<meta property="og:locale" content="no-NO">
+
+
+
+
+    <meta property="og:image" content="https://nais.io/blog/images/team_projects.png">
+<meta property="article:published_time" content="2020-12-01T11:21:27+01:00">
+<meta property="article:modified_time" content="2020-12-01T11:21:27+01:00">
+<meta property="og:updated_time" content="2020-12-01T11:21:27+01:00">
+
+
+<meta property="article:tag" content="gcp">
+<meta property="article:tag" content="nais">
+
+</head>
+<body><header>
+    <div>
+        <a href="https://nais.io/blog">
+            <img alt="The NAIS logo: a hand forming an OK symbol, shaped like a pipe wrench, in rainbow colors" src="/blog/images/logo.png">
+            <h1>nais blog</h1>
+        </a>
+    </div>
+</header>
+<main>
+            <article>
+                <h1>Project Structure on GCP</h1>
+
+                <em>A short explanation of projects in NAV&#39;s GCP setup</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="2020-12-01T11:21:27&#43;01:00">Dec 1, 2020</time>
+                    by Gøran Berntsen
+                    </p>
+										
+                    <nav class="tags">
+                        <ul>
+                            
+                            
+                            <li><a href="https://nais.io/blog/tags/gcp">#gcp</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/nais">#nais</a></li>
+                            
+                        </ul>
+                    </nav>
+										
+                </section>
+
+                <p>In terms of the <a href="https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy">GCP resource hierarchy</a>, NAV is an <strong><em>Organization</em></strong>, each team is assigned two <strong><em>projects</em></strong> (one for dev and one for prod), and the teams can provision <strong><em>resources</em></strong> within these projects. In theory, these resources can be any of the <a href="https://cloud.google.com/docs/overview/cloud-platform-services">services offered by Google Cloud Platform</a>. In practice, some restrictions apply. More on this later.</p>
+<p>The team projects are automatically set up when a team is added to <a href="https://github.com/navikt/teams">teams.yaml</a> (NAV private repository). These projects will be named <em>{teamname}-dev</em> and <em>{teamname}-prod</em>, and owner/administrator roles will be assigned based on the associated Azure AD group. In addition, the team is assigned its own namespace in the nais kubernetes clusters. The namespace is named the same as the team in teams.yaml.</p>
+<p>There are three kubernetes clusters operated by nais on GCP:</p>
+<table>
+<thead>
+<tr>
+<th>cluster</th>
+<th>project</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>prod-gcp</code></td>
+<td><code>nais-prod</code></td>
+</tr>
+<tr>
+<td><code>dev-gcp</code></td>
+<td><code>nais-dev</code></td>
+</tr>
+<tr>
+<td><code>labs-gcp</code></td>
+<td><code>nais-labs</code></td>
+</tr>
+</tbody>
+</table>
+<p>These clusters run in projects managed by the nais team. This means that team members of the product teams will not have privileges for the <em>project</em> the cluster runs in, nor the ability to manage the <em>resources</em> the cluster uses. However, the team is able to manage the <em>kubernetes resources in the team&rsquo;s namespace</em>.</p>
+<p>Resources in the kubernetes clusters are provisioned through <a href="https://doc.nais.io/nais-application/nais.yaml/reference/">nais.yaml</a>. In addition, <a href="https://doc.nais.io/persistence/buckets/">bucket storage</a> and <a href="https://doc.nais.io/persistence/postgres/">postgres databases</a> should also be provisioned through nais.yaml, but these resources will be added to the team&rsquo;s own project(s).</p>
+<p><img src="/blog/images/team_projects.png" alt="teams.yaml automatically provision team projects and namespaces"></p>
+<p>(Note: the team can also provision <a href="https://doc.nais.io/addons/kafka/">Kafka topics through topic.yaml</a> and <a href="https://doc.nais.io/persistence/elastic-search/">Elastic Search through an IaC repo</a>. However, while these resources also reside on GCP, they are operated as SaaS-solutions by the vendor Aiven and run in the Aiven <em>organization</em>. As such, they cannot be directly managed by neither the product team nor the nais team through the Cloud Console.)</p>
+<p>The team can also set up other GCP services in their own project(s). It is important to note that teams have access to enable services that haven&rsquo;t yet been pre-approved by the nais team. Before any new service can be used, however, the commercial and usage terms for that service must be evaluated and approved in cooperation with the Cloud Governance team, and a Risk Assessment must be conducted and accepted by the nais team. The currently approved services are the same ones as listed in <a href="https://doc.nais.io/legal/nais-ros/">Platform Risk assessments</a>.</p>
+<p>On a final note, the team can access billing data for their GCP usage through the <a href="https://datastudio.google.com/u/1/reporting/417b0a1d-b307-4a6d-a699-77a6ab239661/page/mJdmB">per-team GCP billing dashboard</a>. In this dashboard, both resources billed through the team&rsquo;s <em>projects</em> and through the team&rsquo;s <em>namespaces in kubernetes</em> are shown.</p>
+
+
+            </article>
+        </main><footer>
+    <a href="https://nais.io">nais</a> &copy; 2020
+</footer>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html><head>
+   <meta charset="UTF-8">
+   <meta lang="en">
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+   <meta http-equiv="Content-Security-Policy" content="font-src https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://amplitude.nav.no">
+   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png" />
+   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png" />
+   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png" />
+   <link rel="mask-icon" href="/blog/images/safari-pinned-tab.svg" color="#66cbec" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="/blog/style.css">
+   <title>nais blog</title>
+
+   <script type="text/javascript" src="/blog/amplitude.js"></script><meta property="og:title" content="Zero-trust networking in GCP">
+<meta property="og:description" content="A brief introduction to zero-trust networking">
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="https://nais.io/blog/posts/zero-trust-networking-in-gcp/">
+<meta property="og:locale" content="no-NO">
+
+
+
+
+    <meta property="og:image" content="https://nais.io/blog/images/zero-trust-1.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/zero-trust-2.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/zero-trust-3.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/zero-trust-4.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/zero-trust-5.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/zero-trust-6.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/zero-trust-7.png">
+<meta property="article:published_time" content="2020-09-29T11:37:43+02:00">
+<meta property="article:modified_time" content="2020-09-29T11:37:43+02:00">
+<meta property="og:updated_time" content="2020-09-29T11:37:43+02:00">
+
+
+<meta property="article:tag" content="sikkerhet">
+<meta property="article:tag" content="zero-trust">
+
+</head>
+<body><header>
+    <div>
+        <a href="https://nais.io/blog">
+            <img alt="The NAIS logo: a hand forming an OK symbol, shaped like a pipe wrench, in rainbow colors" src="/blog/images/logo.png">
+            <h1>nais blog</h1>
+        </a>
+    </div>
+</header>
+<main>
+            <article>
+                <h1>Zero-trust networking in GCP</h1>
+
+                <em>A brief introduction to zero-trust networking</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="2020-09-29T11:37:43&#43;02:00">Sep 29, 2020</time>
+                    by Frode Sundby
+                    </p>
+										
+                    <nav class="tags">
+                        <ul>
+                            
+                            
+                            <li><a href="https://nais.io/blog/tags/sikkerhet">#sikkerhet</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/zero-trust">#zero-trust</a></li>
+                            
+                        </ul>
+                    </nav>
+										
+                </section>
+
+                <h2 id="background">Background</h2>
+<p>Firewalls and zones have been our primary defense mechanism for years. This model defines a strict perimeter around our applications.
+The perimiter is designed to keep potential attackers on the outside, but also to be able to control the flow of data out of the perimiter.
+<img src="/blog/images/zero-trust-1.png" alt="Firewall"></p>
+<p>The challenge with this model in a containerized world, is that our applications has become more distributed, which leaves us with more components and thus additional attack surfaces.
+<img src="/blog/images/zero-trust-2.png" alt="Firewall"></p>
+<p>Additionally, the attack methods have become more sophisticated, so our safety planning and solutions must be able to address the following: <em>What happens if an attacker is able to breach our perimeter?</em>
+<img src="/blog/images/zero-trust-3.png" alt="Firewall"></p>
+<p>Since an application&rsquo;s architecture is based primarily on an outer defense layer, it would be a relatively simple task
+for an attacker that is already on the inside to compromise other applications within the same perimeter. Most
+applications have implemented further safety mechanisms, but those who rely solely on the perimeter are
+extremely vulnerable.</p>
+<p>This problem has been addressed using network segmentation; applications with the same safety level and affiliation are grouped together behind separate firewalls.
+<img src="/blog/images/zero-trust-4.png" alt="Firewall"></p>
+<p>The challenge remains the same, though; a compromised application could mean a compromised zone.</p>
+<p>The next level using this methodology is micro-segmentation and a zone model, where applications and services are grouped in even smaller and more specific zones, givig a potential attacker an even smaller attack surface.
+<img src="/blog/images/zero-trust-5.png" alt="Micro-segmentation"></p>
+<p>Following this methodology, the inevitable conclusion will be to have a network perimeter around each individual application.
+<img src="/blog/images/zero-trust-6.png" alt="Individual security zones around each node on the network"></p>
+<p>Once each application has its own perimeter, the next thing to address is:</p>
+<ul>
+<li>What if the network itself is compromised?</li>
+<li>Are there attackers on the inside that can listen to or spoof traffic?</li>
+</ul>
+<p>We know this is the case on unsafe networks like the Internet, but we can still transfer sensitive data, like bank transactions, safely thanks to encryption.
+It is no longer a safe assumption that there are no attackers in our own data centers, our private cloud or in the public cloud, so we should encrypt communication even here.
+<img src="/blog/images/zero-trust-7.png" alt="Transport security between each node"></p>
+<p>We need to base our transportation security on authentication and authorization between all services, so that we can be
+cryptographically certain that both the sender and the receiver are who they claim they are. Each endpoint is given a
+cryptographic identity in form of a certificate to prove their identity. This gives us the ability to make policies and
+control service to service communication based on identity.</p>
+<h2 id="implementation">Implementation</h2>
+<h3 id="network-policies">Network policies</h3>
+<p><em>Kubernetes network policy lets us enforce which network traffic is allowed using rules. In essence creating a firewall around each workload</em>
+Kubernetes pods can be treated much like VMs or hosts (they all have unique IP addresses), and the containers within pods very much like processes running within a VM or host (they run in the same network namespace and share an IP address)
+In a team&rsquo;s namespace, the underlying <a href="https://www.projectcalico.org/">network infrastructure</a> will deny all traffic both to and from all pods unless explicit network policies have been applied.
+Given an example architechture where application <code>a</code> needs to communicate with application <code>b</code>,  both appliations  will have to apply network policies to allow this traffic:</p>
+<h4 id="a-allows-utgoing-traffic-to-b">A allows utgoing traffic to B</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: NetworkPolicy
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: networking.k8s.io/v1
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">name</span>: allow-app-a-to-b
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">namespace</span>: default
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">podSelector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">app</span>: a
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">egress</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ff79c6">to</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">podSelector</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">matchLabels</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">app</span>: b
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ff79c6">port</span>: <span style="color:#bd93f9">80</span>
+</span></span></code></pre></div><h4 id="b-allows-incoming-traffic-from-a">B allows incoming traffic from A</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: NetworkPolicy
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: networking.k8s.io/v1
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">name</span>: allow-app-a-to-b
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">namespace</span>: default
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">podSelector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">app</span>: b
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">ingress</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ff79c6">from</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">podSelector</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">matchLabels</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">app</span>: a
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ff79c6">port</span>: <span style="color:#bd93f9">80</span>
+</span></span></code></pre></div><h3 id="istio-authorization-policy">Istio Authorization Policy</h3>
+<p><em>Istio Authorization Policy enables access control on workloads in the mesh and ensures traffic is encrypted using mTLS.</em>
+In the same way that network policies by default denies traffic on the IP layer, authorization policies will deny traffic on the transport layer by default.
+There are no outbound authorization policies, so only application <code>b</code> will have to apply an authorization policy to allow traffic from application <code>a</code>.
+Note, though, that application <code>a</code> will still validate the certificate presented by application <code>b</code> before establishing the connection.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: security.istio.io/v1beta1
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: AuthorizationPolicy
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">name</span>: allow-traffic-from-a
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">namespace</span>: default
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">rules</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ff79c6">from</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">source</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">principals</span>:
+</span></span><span style="display:flex;"><span>        - cluster.local/ns/istio-system/sa/a-service-account
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">to</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">operation</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">paths</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#f1fa8c">&#39;*&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">selector</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">matchLabels</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">app</span>: b
+</span></span></code></pre></div><h2 id="abstraction">Abstraction</h2>
+<p>Admittedly, adding these features leads to added complexity which in turn demands that developers have an unnecessarily deep understanding of infrastructure functionality.
+What developers should really be concerned with, is which applications they want to communicate with, and which applications they want communicating with them. Not the minute details of how.
+Which is why we&rsquo;ve implemented an abstraction in the <a href="https://doc.nais.io/nais-application/access-policy">NAIS application manifest</a>, that allows developers to do exactly that.</p>
+<p>The application spec for application <code>a</code> will generate a network policy allowing traffic from application <code>a</code> to application <code>b</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: <span style="color:#f1fa8c">&#34;nais.io/v1alpha1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: <span style="color:#f1fa8c">&#34;Application&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">name</span>: a
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">accessPolicy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">outbound</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">rules</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#ff79c6">app</span>: b
+</span></span></code></pre></div><p>While the related application spec for application <code>b</code> will create both a network policy allowing inbound traffic from <code>a</code>, and an authorization policy that authorize applicaiton <code>a</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: <span style="color:#f1fa8c">&#34;nais.io/v1alpha1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: <span style="color:#f1fa8c">&#34;Application&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">name</span>: b
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">accessPolicy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">inbound</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">rules</span>:
+</span></span><span style="display:flex;"><span>        - <span style="color:#ff79c6">app</span>: a
+</span></span></code></pre></div>
+
+            </article>
+        </main><footer>
+    <a href="https://nais.io">nais</a> &copy; 2020
+</footer>
+</body>
+</html>

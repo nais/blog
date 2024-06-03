@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>frontend on nais blog</title>
+    <link>https://nais.io/blog/tags/frontend/</link>
+    <description>Recent content in frontend on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Thu, 06 Oct 2022 11:00:00 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Introducing Elm as a frontend contender</title>
+      <link>https://nais.io/blog/posts/elm/</link>
+      <pubDate>Thu, 06 Oct 2022 11:00:00 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/elm/</guid>
+      <description>Preamble In the NAIS feature team, our tasks usually involve writing abstractions for developers. These abstractions usually emerge in the form of API backends, Kubernetes operators or sidecars, command-line tools, and the like. And, rarely, we dawdle in web frontend development, which is largely an unknown domain to us. We don&amp;rsquo;t mind: React is the de facto framework for frontend application development, at least at NAV. And, to use React, the application must be written in Javascript or Typescript.</description>
+    </item>
+    
+  </channel>
+</rss>

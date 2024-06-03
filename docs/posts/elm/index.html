@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html><head>
+   <meta charset="UTF-8">
+   <meta lang="en">
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+   <meta http-equiv="Content-Security-Policy" content="font-src https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://amplitude.nav.no">
+   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png" />
+   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png" />
+   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png" />
+   <link rel="mask-icon" href="/blog/images/safari-pinned-tab.svg" color="#66cbec" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="/blog/style.css">
+   <title>nais blog</title>
+
+   <script type="text/javascript" src="/blog/amplitude.js"></script><meta property="og:title" content="Introducing Elm as a frontend contender">
+<meta property="og:description" content="Replacing React with Elm as our frontend programming language brings risks, rewards, and lots of developer happiness.">
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="https://nais.io/blog/posts/elm/">
+<meta property="og:locale" content="no-NO">
+
+
+
+<meta property="article:published_time" content="2022-10-06T11:00:00+02:00">
+<meta property="article:modified_time" content="2022-10-06T11:00:00+02:00">
+<meta property="og:updated_time" content="2022-10-06T11:00:00+02:00">
+
+
+<meta property="article:tag" content="elm">
+<meta property="article:tag" content="frontend">
+
+</head>
+<body><header>
+    <div>
+        <a href="https://nais.io/blog">
+            <img alt="The NAIS logo: a hand forming an OK symbol, shaped like a pipe wrench, in rainbow colors" src="/blog/images/logo.png">
+            <h1>nais blog</h1>
+        </a>
+    </div>
+</header>
+<main>
+            <article>
+                <h1>Introducing Elm as a frontend contender</h1>
+
+                <em>Replacing React with Elm as our frontend programming language brings risks, rewards, and lots of developer happiness.</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="2022-10-06T11:00:00&#43;02:00">Oct 6, 2022</time>
+                    by Kim Tore Jensen
+                    </p>
+										
+                    <nav class="tags">
+                        <ul>
+                            
+                            
+                            <li><a href="https://nais.io/blog/tags/elm">#elm</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/frontend">#frontend</a></li>
+                            
+                        </ul>
+                    </nav>
+										
+                </section>
+
+                <h2 id="preamble">Preamble</h2>
+<p>In the NAIS feature team, our tasks usually involve writing abstractions for
+developers.  These abstractions usually emerge in the form of API backends,
+Kubernetes operators or sidecars, command-line tools, and the like.  And,
+rarely, we dawdle in web frontend development, which is largely an unknown
+domain to us.  We don&rsquo;t mind: React is the de facto framework for frontend
+application development, at least at NAV.  And, to use React, the application
+must be written in Javascript or Typescript.</p>
+<p>Javascript has some really nice features that makes it easy to mess up your
+application and create bugs.  Many articles have been written on this, there is
+no point writing another one.  There are some extensions such as Typescript
+which addresses some of these issues at the cost of flexibility.  But then
+again, we still have null exceptions. We have the option of ignoring error
+handling.  There are the ambiguous &ldquo;truthy&rdquo; or &ldquo;falsy&rdquo; equality checks, which
+can be mitigated by using the triple equality sign. However, one simple slip-up
+and your application may seem to work fine, until one day it trips over itself
+and reveals a bug.</p>
+<p>The Javascript ecosystem is a huge pain point. Even a small boilerplate React
+application pulls down hundreds of dependencies by default, which is not only a
+security concern, but also uses a huge amount of network traffic and hard drive
+space.</p>
+<p>Our team has avoided doing frontend work because of these reasons. But we still
+need to create some frontends.  Fortunately, there is a solution that addresses
+all of these problems.</p>
+<h2 id="a-short-introduction-to-elm">A short introduction to Elm</h2>
+<p><a href="https://elm-lang.org/">Elm</a> is a pure functional programming language created
+in 2012 by <a href="https://twitter.com/evancz">Evan Czaplicki</a>.  Elm compiles to
+JavaScript and is excellent for websites and web apps. It has a strong emphasis
+on simplicity and quality tooling.  This language has many interesting
+properties, some of which we&rsquo;ll have a brief look at.</p>
+<h3 id="type-system">Type system</h3>
+<p>First of all, the type system is amazing. It enables you to make impossible
+states impossible. What does this mean?  With Elm&rsquo;s union types, you can create
+a data model that simply does not allow for ambiguous state.  Consider the
+following data model:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-elm" data-lang="elm"><span style="display:flex;"><span><span style="color:#ff79c6">type</span> <span style="color:#ff79c6">alias</span> <span style="color:#8be9fd">UserData</span> <span style="color:#50fa7b">=</span> { <span style="color:#8be9fd;font-style:italic">id</span><span style="color:#50fa7b">:</span> <span style="color:#8be9fd">Int</span>, <span style="color:#8be9fd;font-style:italic">name</span><span style="color:#50fa7b">:</span> <span style="color:#8be9fd">String</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">type</span> <span style="color:#8be9fd">User</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">=</span> <span style="color:#8be9fd">Anonymous</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">|</span> <span style="color:#8be9fd">Authenticated</span> <span style="color:#8be9fd">UserData</span>
+</span></span></code></pre></div><p>Either the user is anonymous, or we have an authenticated user with some
+associated data. We can have as many associated values as we want.  It is
+impossible to access the ID and name fields of an anonymous user. We can
+already see that this pattern gives some pretty powerful guarantees.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-elm" data-lang="elm"><span style="display:flex;"><span><span style="color:#ff79c6">type</span> <span style="color:#8be9fd">Msg</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">=</span> <span style="color:#8be9fd">GotUserResponse</span> (<span style="color:#8be9fd">Result</span> <span style="color:#8be9fd">Http</span><span style="color:#50fa7b">.</span><span style="color:#8be9fd">Error</span> <span style="color:#8be9fd">UserData</span>)
+</span></span></code></pre></div><p>The message <code>GotUserResponse</code> has <code>Result</code> as associated data. The result type
+also has associated data, which contains either <code>Ok UserData</code> or <code>Err Http.Error</code>, and only that.  Again, it is impossible to access the user data if
+an error occurs, and vice versa.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-elm" data-lang="elm"><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">userFromResponse</span><span style="color:#50fa7b">:</span> <span style="color:#8be9fd">Msg</span> <span style="color:#50fa7b">-&gt;</span> <span style="color:#8be9fd">User</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">userFromResponse</span> <span style="color:#8be9fd;font-style:italic">msg</span> <span style="color:#50fa7b">=</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">case</span> <span style="color:#8be9fd;font-style:italic">msg</span> <span style="color:#ff79c6">of</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd">GotUserResponse</span> (<span style="color:#8be9fd">Ok</span> <span style="color:#8be9fd;font-style:italic">user</span>) <span style="color:#50fa7b">-&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd">Authenticated</span> <span style="color:#8be9fd;font-style:italic">user</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd">GotUserResponse</span> (<span style="color:#8be9fd">Err</span> <span style="color:#8be9fd;font-style:italic">_</span>) <span style="color:#50fa7b">-&gt;</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#8be9fd">Anonymous</span>
+</span></span></code></pre></div><p>The above function takes the above Msg and returns either an authenticated user
+or an anonymous user.  The Msg is guaranteed to hold the object we need to
+create a User, which in turn <em>must</em> hold that object.  Any error ensures that
+we cannot access any such object. The compiler makes impossible states
+impossible.  This simple yet elegant design choice eliminates many possible
+bugs. So good!</p>
+<p>Check out the following talks by <a href="https://twitter.com/rtfeldman">Richard Feldman</a>
+for an in-depth introduction to Elm types.</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=5CYeZ2kEiOI">From Rails to Elm and Haskell</a></li>
+<li><a href="https://www.youtube.com/watch?v=x1FU3e0sT1I">Make data structures</a></li>
+<li><a href="https://www.youtube.com/watch?v=IcgmSRJHu_8">Making Impossible States Impossible</a></li>
+</ul>
+<h3 id="pure-functional">Pure functional</h3>
+<p>Elm is a pure functional language. This means that all data is immutable; it is
+impossible to modify state once an object has been created.  This fact
+guarantees that all function calls are free of side effects. Any code that
+needs side effects (such as HTTP requests) must be handled explicitly through a
+callback system through the Elm runtime, and cannot be called directly from a
+function.</p>
+<h3 id="compiler-driven-development">Compiler driven development</h3>
+<p>Refactoring an Elm application is quite comfortable. You change your type to
+match the real-world model, and follow the compiler errors through to the other
+end. When you&rsquo;re done, you most probably still have a working application
+again.  It sounds too good, but in our experience we find this to be true most
+of the time.</p>
+<h2 id="introducing-elm-to-the-team">Introducing Elm to the team</h2>
+<p>So far, we established that Elm is arguably the proverbial oasis in the desert
+of frontend programming.  I had already started investigating Elm on my free
+time, so I was quite motivated to introduce it to our technology stack.</p>
+<p>Not everyone on our team shared my opinion, and one of our team&rsquo;s pillars is
+that important technical decisions should be made by a
+<a href="https://en.wikipedia.org/wiki/Quorum">quorum</a>.  That meant addressing our
+team&rsquo;s concerns, evaluating each one, and finally aligning our opinions to form
+a decision.</p>
+<p>Before starting on the concerns, it should be duly noted that one team member
+was more than happy about the prospect of using Elm at work, and that another
+team member supported Elm solely on the fact that <em>it&rsquo;s not Javascript</em>.  Yet
+another member reasoned that we should try it out on the basis that we haven&rsquo;t
+tried it out yet, and we&rsquo;ll likely never know if it&rsquo;s good for us if we don&rsquo;t
+try.</p>
+<h3 id="if-elm-is-so-good-why-isnt-it-more-popular">If Elm is so good, why isn&rsquo;t it more popular?</h3>
+<p>Elm is really not the most popular choice of language. In fact, it&rsquo;s not even
+listed in the <a href="https://insights.stackoverflow.com/survey/2021#most-popular-technologies-language">StackOverflow 2021 developer
+survey</a>.
+That supposedly puts this wonderful language below COBOL in popularity. What
+gives?</p>
+<p>Most blog posts and talks I found on the topic reveals that people experienced
+in Elm usually speaks quite warmly of it.  They praise the type system and joy
+of development, and lament using other languages after befriending Elm.</p>
+<p>However, with the release of Elm 0.19 in 2019, some language features that people depended on
+<a href="https://discourse.elm-lang.org/t/native-code-in-0-19/826">was removed entirely</a>.
+This was quite an unpopular decision amongst the community, and battle ensued.</p>
+<ul>
+<li><a href="https://dev.to/kspeakman/elm-019-broke-us--khn">https://dev.to/kspeakman/elm-019-broke-us--khn</a></li>
+<li><a href="https://www.reddit.com/r/elm/comments/9a0hc6/elm_019_broke_us/">https://www.reddit.com/r/elm/comments/9a0hc6/elm_019_broke_us/</a></li>
+<li><a href="https://lukeplant.me.uk/blog/posts/why-im-leaving-elm/">https://lukeplant.me.uk/blog/posts/why-im-leaving-elm/</a></li>
+</ul>
+<p>There hasn&rsquo;t been a release of Elm since 2019.
+Was this going to be a risk to our project?</p>
+<h3 id="small-community-and-lack-of-elm-jobs">Small community and lack of Elm jobs</h3>
+<p>At NAV, we have plenty of React developers, and a small handful of Elm
+developers.  In the professional world at large, things aren&rsquo;t a whole lot
+better.  The Norwegian train company <a href="https://blogg.bekk.no/using-elm-at-vy-e028b11179eb">Vy uses Elm for large parts of their
+frontend</a>. Barring that, a
+quick search on FINN.no didn&rsquo;t reveal a single Elm oriented job in Norway.  If
+we adopt Elm, what are the chances of finding competent people should the need
+arise?  What happens to maintainability if our Elm programmers leave the team
+or quit?  Will the rest of us need to either learn a technology they aren&rsquo;t
+interested in, or perhaps rewrite the whole thing in React?</p>
+<p>After asking around on our internal Slack channels, I found two NAV developers
+who had been working on an Elm project in one of our development teams.  They
+had been enjoying the fun of working with Elm, easy refactoring, and friendly
+error messages.  However, their stack consisted of many frontend applications,
+and there was a fair bit of context switching between languages, in addition to
+some duplicate work in order to support some shared functionality.</p>
+<p>That team ultimately had differing opinions on Elm, so the project was
+abandoned after those two developers were relocated to a different team.</p>
+<p>The conclusion from one of those Elm developers was that they would recommend
+Elm for low-risk projects that would not have many frontend inter-dependencies.</p>
+<h3 id="accessibility-and-re-use">Accessibility and re-use</h3>
+<p>NAV invested considerable resources in developing <a href="https://aksel.nav.no/">Aksel</a>,
+our in-house collection of tooling and components for frontends. These components implement
+<a href="https://en.wikipedia.org/wiki/Universal_design">universal design</a> and include
+buttons, tables, colors, styles, etc.</p>
+<p>These come in the form of React components and are not directly compatible with Elm.</p>
+<h3 id="making-a-team-decision">Making a team decision</h3>
+<p>After thinking about these challenges, I spoke with each team member
+individually, sharing the information I&rsquo;d gathered, and listening to their
+responses.  Judging from their mostly positive reactions, I decided to
+facilitate a group discussion where we could reach a decision. Almost everyone
+on the team joined the discussion.</p>
+<p>All agreed that we should evaluate Elm, on the condition that this would be a
+time-boxed experiment, using two of our developers during two weeks.
+Afterwards, we would evaluate our results and thoughts, and if we were happy
+with the outcome, we could continue working on the project in Elm, ultimately
+deploying it to production.</p>
+<p>The scope of the project was known already because we had implemented it in
+React earlier.  We established the work group and decided to start on the next
+week.  As a work methodology, we chose pair programming, which is useful when
+learning new languages and concepts.  Also, having all members of the work
+group present means that we can make decisions quickly.</p>
+<h2 id="implementation">Implementation</h2>
+<p>The project we wanted to implement was the frontend for <a href="https://github.com/nais/console">NAIS
+console</a>.  Console is an access control
+software used to set up external services for our software development teams.</p>
+<p>Requirements for the frontend were:</p>
+<ul>
+<li>Be able to log in and out using OAuth2</li>
+<li>Add and remove teams from the database</li>
+<li>Add and remove members from teams</li>
+<li>Add and remove administrators from teams</li>
+<li>Show a team&rsquo;s information and members</li>
+<li>Show the list of teams</li>
+<li>View audit logs</li>
+</ul>
+<p>Our goal was to re-implement everything in Elm, attaining feature parity with
+the already existing React application.</p>
+<h3 id="graphql">GraphQL</h3>
+<p>Our backend exposes a <a href="https://graphql.org">GraphQL</a> endpoint.  GraphQL is a
+bit more complex than REST—instead of getting fixed data from multiple
+endpoints as with REST, GraphQL lets you fetch data from multiple sources in a
+single query, with strongly typed output using a schema.  There is more parsing
+involved with GraphQL, but the benefits are great.</p>
+<p>Fortunately, there is a very nice <a href="https://package.elm-lang.org/packages/dillonkearns/elm-graphql/latest/">Elm GraphQL
+library</a>
+which makes it easy to work with these endpoints in Elm.</p>
+<p>We can generate all the types, queries, and mutations that the API requires.
+The only thing we need to do is start the API server, and run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>elm-graphql http://localhost:3000/query --base Backend --output src
+</span></span></code></pre></div><h3 id="deployment">Deployment</h3>
+<p>Elm is compatible with <a href="https://vitejs.dev">Vite</a>, the next generation frontend
+tooling.  Vite provides a development server with hot module reloading, and
+facilitates production builds.  This provides us with the useful commands <code>npm run dev</code> and <code>npm run build</code>.  We can make a change in one of our Elm source
+files, and the code gets automatically reloaded in the browser, keeping the
+existing state of the application.</p>
+<p>For production builds, we compile the Elm code and bundle it together with our
+static files in a Docker container based on NGINX.  All the compiled Elm code
+runs directly in the browser, so there is no need for a proxy layer in between.
+Server side rendering is not needed, as the code is already extremely fast.</p>
+<p>In the end, we follow our standard procedures for build and deploy: When we
+push the code to Github, the build runs automatically and deploys the Docker
+container to the Kubernetes-based NAIS platform.</p>
+<h2 id="results">Results</h2>
+<h3 id="application-quality">Application quality</h3>
+<p>We are extremely confident that our application will not just crash because we forgot to do a null check.
+The compiler does not allow us to write code that does not handle error cases.
+This can be a bit tedious when developing, but pays itself back manifold when the code runs in production.
+Furthermore, we know that functions cannot have side effects on our state, so
+even though we didn&rsquo;t write any tests for this application, we feel confident that it works as expected.</p>
+<p>Application speed is blazing fast, and the footprint is quite small.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>% npm run build
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">[</span>...<span style="color:#ff79c6">]</span>
+</span></span><span style="display:flex;"><span>dist/index.html                  0.54 KiB
+</span></span><span style="display:flex;"><span>dist/assets/index.68a03c7a.css   2.72 KiB / gzip: 1.02 KiB
+</span></span><span style="display:flex;"><span>dist/assets/index.92dff5fa.js    69.62 KiB / gzip: 22.81 KiB
+</span></span></code></pre></div><h3 id="comparison-with-react">Comparison with React</h3>
+<p>As we had already implemented this frontend in React earlier, I did a quick
+side by side comparison of the two versions, focusing on the dependency count
+and asset sizes—and found the results quite disturbing.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Dependencies</th>
+<th>Dependency size</th>
+<th>Compiled code size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>React</strong></td>
+<td>796</td>
+<td>637 MB</td>
+<td>618 KB</td>
+</tr>
+<tr>
+<td><strong>Elm</strong></td>
+<td>111</td>
+<td>75 MB</td>
+<td>70 KB</td>
+</tr>
+<tr>
+<td><strong>Efficiency</strong></td>
+<td><strong>717%</strong></td>
+<td><strong>849%</strong></td>
+<td><strong>882%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>For our use case, React is quite bloated in comparison to Elm. These numbers
+translate to less bugs, less network traffic, less disk usage, and shorter
+build time.  Last, but not least: loading time in the browser decreases, not
+just due to less network traffic, but also less parsing and evaluation of code.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Working with Elm definitely has its benefits.  The type system really makes it
+easy to accurately model the real-world data and avoid certain kinds of bugs.</p>
+<p>Even though none of us had worked in a functional programming language before,
+we found it easy to get started.  The syntax was a bit obscure in the
+beginning, but quickly became natural. Anecdotally, I&rsquo;ve worked with
+<a href="https://golang.org">Golang</a> professionally for around five years.  The
+simplicity of working with data in Elm really makes me lament how terse Go is.
+Iteration is not really a thing in Elm, we use <em>map</em> and <em>reduce</em> instead. It
+is very refreshing not having to write <code>for</code> loops to transform data, and
+similarly, error checking can usually be done in a single statement instead of
+having to work through it like some checklist.</p>
+<p>We are quite happy with the outcome of our Elm endeavour. Our plan forward is
+to throw away the old React code for this particular project, and keep our Elm
+code running in production. When the time comes to revamp our
+<a href="https://github.com/nais/deploy">NAIS deploy</a>
+<a href="https://github.com/nais/deploy-frontend">frontend</a>, we will definitely
+consider doing it in Elm.</p>
+<p>We hope that this blog post will encourage more users to try Elm for their
+frontend projects, to enjoy the benefits of increased developer satisfaction,
+smaller assets, and less bugs.  Thanks for reading; best regards from the NAIS
+feature team.</p>
+
+
+            </article>
+        </main><footer>
+    <a href="https://nais.io">nais</a> &copy; 2022
+</footer>
+</body>
+</html>

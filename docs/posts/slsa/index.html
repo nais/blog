@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html><head>
+   <meta charset="UTF-8">
+   <meta lang="en">
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+   <meta http-equiv="Content-Security-Policy" content="font-src https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://amplitude.nav.no">
+   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png" />
+   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png" />
+   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png" />
+   <link rel="mask-icon" href="/blog/images/safari-pinned-tab.svg" color="#66cbec" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="/blog/style.css">
+   <title>nais blog</title>
+
+   <script type="text/javascript" src="/blog/amplitude.js"></script><meta property="og:title" content="SLSA">
+<meta property="og:description" content="Spice up your supply chain">
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="https://nais.io/blog/posts/slsa/">
+<meta property="og:locale" content="no-NO">
+
+
+
+
+    <meta property="og:image" content="https://nais.io/blog/images/salsa.webp">
+
+    <meta property="og:image" content="https://nais.io/blog/images/react-hello-world-deps.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/jenkins-security-warnings.png">
+<meta property="article:published_time" content="2022-06-20T22:10:00+02:00">
+<meta property="article:modified_time" content="2022-06-20T22:10:00+02:00">
+<meta property="og:updated_time" content="2022-06-20T22:10:00+02:00">
+
+
+<meta property="article:tag" content="slsa">
+<meta property="article:tag" content="sikkerhet">
+<meta property="article:tag" content="supplychain">
+
+</head>
+<body><header>
+    <div>
+        <a href="https://nais.io/blog">
+            <img alt="The NAIS logo: a hand forming an OK symbol, shaped like a pipe wrench, in rainbow colors" src="/blog/images/logo.png">
+            <h1>nais blog</h1>
+        </a>
+    </div>
+</header>
+<main>
+            <article>
+                <h1>SLSA</h1>
+
+                <em>Spice up your supply chain</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="2022-06-20T22:10:00&#43;02:00">Jun 20, 2022</time>
+                    by Jan-Kåre Solbakken
+                    </p>
+										
+                    <nav class="tags">
+                        <ul>
+                            
+                            
+                            <li><a href="https://nais.io/blog/tags/slsa">#slsa</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/sikkerhet">#sikkerhet</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/supplychain">#supplychain</a></li>
+                            
+                        </ul>
+                    </nav>
+										
+                </section>
+
+                <p><img src="/blog/images/salsa.webp" alt="salsa"></p>
+<p>&ldquo;Software supply chain&rdquo; is a term describing everything that happens to code from the time it leaves the developers fingers until it runs in production. The code needs to be compiled, tested, packaged and deployed, and these steps take place in a variety of systems and use lots of complex third party solutions. Our apps also depend on an increasing number of third party libraries and frameworks that we often know next to nothing about.</p>
+<p><img src="/blog/images/react-hello-world-deps.png" alt="dependencies"></p>
+<p>Every step in the supply chain represents a possible attack vector. If a malicious actor is able to compromise one or more parts of the chain it is trivial to inject any kind of malware into our products. Why use loads of resources trying to circumvent all the security measures in production when you can quietly insert all the backdoors you need beforehand? The steady <a href="https://www.enisa.europa.eu/news/enisa-news/understanding-the-increase-in-supply-chain-security-attacks">rise</a> in supply chain attacks show that more and more threat actors are embracing this way of doing business.</p>
+<p>There are several steps we can take to maintain the integrity of our supply chains. The first and most obvious one is to put as much care into securing our build and development pipelines as we do our production environments. Anyone with a few years experience in this industry has seen far to many unpatched and misconfigured Jenkins servers loaded with crappy plugins that store secrets in plain text. Not that it makes a huge difference anyway since the same secrets are readily available in the company-wide Slack and haven&rsquo;t been rotated in 5 years. 2FA, proper handling of secrets and configuration, regular patching, all that good stuff must also be applied to the dev side of the house.</p>
+<p><img src="/blog/images/jenkins-security-warnings.png" alt="unpatched jenkins"></p>
+<p>Another step is actually knowing what it is that we put into production. When we ask someone to trust our software to handle their personal information and money we should at least be able to tell them what parts our products are made of and how they are put together. The U.S. government has already published an <a href="https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/12/executive-order-on-improving-the-nations-cybersecurity/">Executive Order</a> that require their vendors to produce a &ldquo;SBOM&rdquo;, or &ldquo;software bill of materials&rdquo;, which is a list of components analogous to the list of ingredients on food packaging. Others are likely to follow suit.</p>
+<p>Several initiatives have been started in an attempt to address the issues surrounding supply chain integrity, the most noticeable one being <a href="https://slsa.dev/">Supply chain Levels for Software Artifacts - SLSA</a>. SLSA aims to be vendor neutral and is backed by major players like <a href="https://www.cncf.io/">the Cloud Native Computing Foundation</a> and <a href="https://security.googleblog.com/2021/06/introducing-slsa-end-to-end-framework.html">Google</a> in addition to startups such as <a href="https://www.chainguard.dev/about-us">Chainguard</a>.</p>
+<pre tabindex="0"><code>SLSA is &#34;a security framework, a check-list of standards and controls to 
+prevent tampering, improve integrity, and secure packages and 
+infrastructure in your projects, businesses or enterprises&#34;.
+</code></pre><p>The framework defines four levels of increasing assurance defined by best practices:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Documentation of the build process</td>
+<td>Unsigned provenance</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Tamper resistance of the build service</td>
+<td>Hosted source/build, signed provenance</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Extra resistance to specific threats</td>
+<td>Security controls on host, non-falsifiable provenance</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Highest levels of confidence and trust</td>
+<td>Two-party review + hermetic builds</td>
+</tr>
+</tbody>
+</table>
+<p>Level 4 is not feasible for most organizations unless their software is powering missiles or nuclear reactors. Level 2 or 3, on the other hand, is very much achievable. The Kubernetes project is <a href="https://github.com/kubernetes/enhancements/issues/3027">aiming</a> for level 3-compliance in version 1.25.</p>
+<p>A series of of tools and services to ease the implementations of frameworks like SLSA are also starting to appear. Cryptographic signing and verification is hard to do right, but <a href="https://www.sigstore.dev/">the Sigstore project</a> makes it a whole lot easier with their &ldquo;Cosign&rdquo; tool. Cosign can sign artifacts using ephemeral keys generated on the fly, or you can bring your own keys.</p>
+<p>&ldquo;Det skal være lett å gjøre det rett&rdquo; (doing the right thing should be easy) is at the heart of our mission here at nais. We have therefore started to build some tooling to make it easier for any of our teams that want to dip their toes in salsa. The first iteration of this is a <a href="https://github.com/nais/salsa">GitHub Action</a> (currently in beta) that generates a provenance for the repo, signs it using Cosign and uploads it to the Docker registry. It can also be used to verify previously signed artifacts. The signing is done using our <a href="https://cloud.google.com/security-key-management">Google KMS</a>. In order to create a provenance (which is basically the same as a SBOM) we need to figure out the dependency tree of the app. For that we currently support JVM-stuff (built with Maven or Gradle), JavaScript (built with npm or Yarn), Go (by parsing go.sum) and PHP with Composer (but without checksums). Other platforms may be added later should the need arise.</p>
+<p>Since our builds are done using <a href="https://docs.github.com/en/actions/using-workflows/about-workflows">GitHub Workflows</a> and the provenance is non-falsifiable (the action code and the signing key is controlled by someone other than the ones using the action) we are (semi-)confident that this solution satisfies level 3.</p>
+<p>Now that we have the means to generate and sign provenances, what can we do with them? The short answer is: we don&rsquo;t know yet 😀 The most obvious thing is compliance and building trust in our products. If at some point all of our teams start generating provenances we may introduce an admission hook to deny unsigned stuff in our clusters. We are also toying with the idea of uploading the provenances to some kind of data store so that we will have a complete overview of all the dependencies and the apps that use them. When the next Log4Shell comes along a complete overview of its usage is just a short query away. Another possible outcome is that we decide somewhere down the line that this whole SLSA thing is not useful at all and scrap the whole thing. Only time will tell!</p>
+
+
+            </article>
+        </main><footer>
+    <a href="https://nais.io">nais</a> &copy; 2022
+</footer>
+</body>
+</html>

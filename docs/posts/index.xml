@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on nais blog</title>
+    <link>https://nais.io/blog/posts/</link>
+    <description>Recent content in Posts on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Mon, 27 May 2024 19:09:09 +0200</lastBuildDate><atom:link href="https://nais.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenTelemetry from 0 to 100</title>
+      <link>https://nais.io/blog/posts/otel-from-0-to-100/</link>
+      <pubDate>Mon, 27 May 2024 19:09:09 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/otel-from-0-to-100/</guid>
+      <description>This is the (long) story of how we adopted OpenTelemetry at the Norwegian Labour and Welfare Administration (NAV). We will cover the journey from the first commits to real traces in production. We will also share some of the challenges we faced along the way and how we overcame them.
+At NAV, we have a microservices architecture with thousands of services running in our Kubernetes clusters. We have been telling our teams to adopt Prometheus metrics and Grafana from early on, but to a large degree they still rely on digging through application logs in Kibana.</description>
+    </item>
+    
+    <item>
+      <title>Pentesting in the open</title>
+      <link>https://nais.io/blog/posts/teams-test/</link>
+      <pubDate>Mon, 02 Oct 2023 09:34:04 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/teams-test/</guid>
+      <description>Transparency has always been at the core of our mindset in the nais team. We open source just about all of our code, and use every opportunity to share our thoughts and processes through mediums such as this blog (although the rate of publishing lately doesn&amp;rsquo;t impress anyone&amp;hellip;), conference talks and various collaboration forums.
+Traditionally, penetration tests have been shrouded in a fog of mystery. It is not common practice to be open about the results of such tests, and they often end up in a distant fileshare somewhere never to be seen again.</description>
+    </item>
+    
+    <item>
+      <title>Being NAIS at a distance</title>
+      <link>https://nais.io/blog/posts/hybrid-work/</link>
+      <pubDate>Mon, 31 Oct 2022 18:42:03 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/hybrid-work/</guid>
+      <description>In this post we will share how the NAIS team works and how the pandemic shaped the way we go about our business. This is by no means a recipe for how to do things, merely a summary of the things we have found to work well for us. YMMV. Background When Norway shut down in March 2020, NAV IT (like many others) suddenly found ourselves working from home. Luckily, we had been working systematically on improving our developer experience ever since the &amp;ldquo;reboot&amp;rdquo; of our IT effort a few years earlier.</description>
+    </item>
+    
+    <item>
+      <title>Introducing Elm as a frontend contender</title>
+      <link>https://nais.io/blog/posts/elm/</link>
+      <pubDate>Thu, 06 Oct 2022 11:00:00 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/elm/</guid>
+      <description>Preamble In the NAIS feature team, our tasks usually involve writing abstractions for developers. These abstractions usually emerge in the form of API backends, Kubernetes operators or sidecars, command-line tools, and the like. And, rarely, we dawdle in web frontend development, which is largely an unknown domain to us. We don&amp;rsquo;t mind: React is the de facto framework for frontend application development, at least at NAV. And, to use React, the application must be written in Javascript or Typescript.</description>
+    </item>
+    
+    <item>
+      <title>SLSA</title>
+      <link>https://nais.io/blog/posts/slsa/</link>
+      <pubDate>Mon, 20 Jun 2022 22:10:00 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/slsa/</guid>
+      <description>&amp;ldquo;Software supply chain&amp;rdquo; is a term describing everything that happens to code from the time it leaves the developers fingers until it runs in production. The code needs to be compiled, tested, packaged and deployed, and these steps take place in a variety of systems and use lots of complex third party solutions. Our apps also depend on an increasing number of third party libraries and frameworks that we often know next to nothing about.</description>
+    </item>
+    
+    <item>
+      <title>Enable data teams to deliver high-quality data products</title>
+      <link>https://nais.io/blog/posts/data_mesh_governance/</link>
+      <pubDate>Wed, 11 May 2022 09:27:57 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/data_mesh_governance/</guid>
+      <description>Using data to develop the world`s best welfare system is a bold mission we at the Norwegian Welfare and Labour Administration (NAV) have. Being able to estimate the impact of measures on youth unemployment to avoid social exclusion. Gaining more insight on how we can adjust our communication to different user groups so that we are more certain that the citizens get their benefits. To see how a new feature affects the click-through rate.</description>
+    </item>
+    
+    <item>
+      <title>Do we need an internal technology platform?</title>
+      <link>https://nais.io/blog/posts/internal-technology-platform/</link>
+      <pubDate>Fri, 13 Aug 2021 09:27:57 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/internal-technology-platform/</guid>
+      <description>Not too long ago, one of the major pain points in running a digital operation was infrastructure. The waiting time to get a new server, the e-commerce sites on Black Friday crashing, and the headache of estimating your hardware and license needs for the next 3 years. These issues have diminished with the emergence of hyperscale cloud vendors offering an ever evolving portfolio of managed technical infrastructure and services. The products have amazing breadth, depth and quality, and at the same time, the pricing model is fair as you only pay for what you use.</description>
+    </item>
+    
+    <item>
+      <title>Changing Service Mesh</title>
+      <link>https://nais.io/blog/posts/changing-service-mesh/</link>
+      <pubDate>Tue, 04 May 2021 20:37:13 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/changing-service-mesh/</guid>
+      <description>Why change? With an ambition of making our environments as secure as possible, we jumped on the service-mesh bandwagon in 2018 with Istio 0.7 and have stuck with it since.
+Istio is a large and feature rich system that brings capabilities aplenty. Although there are a plethora of nifty and useful things we could do with Istio, we&amp;rsquo;ve primarily used it for mTLS and authorization policies.
+One might think that having lots of features available but not using them couldn&amp;rsquo;t possibly be a problem.</description>
+    </item>
+    
+    <item>
+      <title>OAuth del 3 (PKCE)</title>
+      <link>https://nais.io/blog/posts/oauth-del3-pkce/</link>
+      <pubDate>Sun, 07 Mar 2021 12:49:37 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/oauth-del3-pkce/</guid>
+      <description>Bakgrunn Dette er del 3 i serien om OAuth og OIDC. Den mest brukte OAuth-flyten, &amp;ldquo;Authorization Code flow&amp;rdquo;, innebærer at client og id provider utveksler hemmeligheter. Klienten må derfor være i stand til å holde på hemmelig informasjon på en trygg måte, i standarden omtales dette som confidential clients. For mobil-apps og &amp;ldquo;single page&amp;rdquo; webapplikasjoner har dette ikke vært gjennomførbart da hemmelighetene må distribueres helt ut til sluttbrukeren som en del av appen.</description>
+    </item>
+    
+    <item>
+      <title>FIDO2</title>
+      <link>https://nais.io/blog/posts/fido2/</link>
+      <pubDate>Mon, 11 Jan 2021 23:58:03 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/fido2/</guid>
+      <description>According to the Verizon 2017 Data Breach Investigations Report more than 80% of all data breaches can be attributed to weak and/or stolen passwords. Despite all of their weaknesses passwords are still the de facto way to authenticate users because no one has come up with a viable alternative. Now, however, there is a new(-ish) kid in town. FIDO2 (more commonly known as WebAuthentication or WebAuthn) is a standard developed by the FIDO (Fast IDentity Online) alliance.</description>
+    </item>
+    
+    <item>
+      <title>Project Structure on GCP</title>
+      <link>https://nais.io/blog/posts/project-structure-on-gcp/</link>
+      <pubDate>Tue, 01 Dec 2020 11:21:27 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/project-structure-on-gcp/</guid>
+      <description>In terms of the GCP resource hierarchy, NAV is an Organization, each team is assigned two projects (one for dev and one for prod), and the teams can provision resources within these projects. In theory, these resources can be any of the services offered by Google Cloud Platform. In practice, some restrictions apply. More on this later.
+The team projects are automatically set up when a team is added to teams.</description>
+    </item>
+    
+    <item>
+      <title>Zero-trust networking in GCP</title>
+      <link>https://nais.io/blog/posts/zero-trust-networking-in-gcp/</link>
+      <pubDate>Tue, 29 Sep 2020 11:37:43 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/zero-trust-networking-in-gcp/</guid>
+      <description>Background Firewalls and zones have been our primary defense mechanism for years. This model defines a strict perimeter around our applications. The perimiter is designed to keep potential attackers on the outside, but also to be able to control the flow of data out of the perimiter. The challenge with this model in a containerized world, is that our applications has become more distributed, which leaves us with more components and thus additional attack surfaces.</description>
+    </item>
+    
+    <item>
+      <title>OAuth del 2 (Token Exchange)</title>
+      <link>https://nais.io/blog/posts/oauth2/</link>
+      <pubDate>Wed, 16 Sep 2020 08:10:01 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/oauth2/</guid>
+      <description>Bakgrunn I NAV er OAuth og OIDC de facto standard for å løse autentisering og autorisering i appene våre. I en løst koblet verden med mikrotjenester og zero trust er det imidlertid flere brikker som må på plass. Hvordan kan man på en trygg måte kalle andre tjenester videre bakover i kjeden og samtidig bevare sluttbrukerkonteksten? Tidligere har man benyttet såkalte &amp;ldquo;systembrukere&amp;rdquo;, dvs brukere som identifiserer systemet/tjenesten som det kalles fra.</description>
+    </item>
+    
+    <item>
+      <title>OAuth del 1</title>
+      <link>https://nais.io/blog/posts/oauth1/</link>
+      <pubDate>Thu, 10 Sep 2020 20:55:53 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/oauth1/</guid>
+      <description>Innledning Dette er del 1 av 3 om OAuth og OIDC, hva det er, hvilke problemer det løser og hvordan vi bruker det i NAV. Denne første delen forsøker å forklare og avmystifisere standardene litt. Del 2 tar for seg den nylig standardiserte Token Exchange-flyten og hvordan vi har løst den med TokenX. Del 3 handler om &amp;ldquo;Proof Key for Code Exchange&amp;rdquo;, a.k.a. PKCE.
+Bakgrunn Håndtering av identiteter og autorisering av brukere er vanskelig å gjøre riktig.</description>
+    </item>
+    
+  </channel>
+</rss>

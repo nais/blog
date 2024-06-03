@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html><head>
+   <meta charset="UTF-8">
+   <meta lang="en">
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+   <meta http-equiv="Content-Security-Policy" content="font-src https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://amplitude.nav.no">
+   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png" />
+   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png" />
+   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png" />
+   <link rel="mask-icon" href="/blog/images/safari-pinned-tab.svg" color="#66cbec" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="/blog/style.css">
+   <title>nais blog</title>
+
+   <script type="text/javascript" src="/blog/amplitude.js"></script><meta property="og:title" content="Being NAIS at a distance">
+<meta property="og:description" content="How we work in a hybrid world">
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="https://nais.io/blog/posts/hybrid-work/">
+<meta property="og:locale" content="no-NO">
+
+
+
+
+    <meta property="og:image" content="https://nais.io/blog/images/hybrid.png">
+<meta property="article:published_time" content="2022-10-31T18:42:03+01:00">
+<meta property="article:modified_time" content="2022-10-31T18:42:03+01:00">
+<meta property="og:updated_time" content="2022-10-31T18:42:03+01:00">
+
+
+<meta property="article:tag" content="remote">
+<meta property="article:tag" content="hybrid">
+
+</head>
+<body><header>
+    <div>
+        <a href="https://nais.io/blog">
+            <img alt="The NAIS logo: a hand forming an OK symbol, shaped like a pipe wrench, in rainbow colors" src="/blog/images/logo.png">
+            <h1>nais blog</h1>
+        </a>
+    </div>
+</header>
+<main>
+            <article>
+                <h1>Being NAIS at a distance</h1>
+
+                <em>How we work in a hybrid world</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="2022-10-31T18:42:03&#43;01:00">Oct 31, 2022</time>
+                    by Jan-Kåre Solbakken
+                    </p>
+										
+                    <nav class="tags">
+                        <ul>
+                            
+                            
+                            <li><a href="https://nais.io/blog/tags/remote">#remote</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/hybrid">#hybrid</a></li>
+                            
+                        </ul>
+                    </nav>
+										
+                </section>
+
+                <p><img src="/blog/images/hybrid.png" alt="hybrid"></p>
+<pre tabindex="0"><code>In this post we will share how the NAIS team works and how the pandemic shaped the way we go about our business. This is by no means a recipe for how to do things, merely a summary of the things we have found to work well for us. YMMV.
+</code></pre><h2 id="background">Background</h2>
+<p>When Norway shut down in March 2020, NAV IT (like many others) suddenly found ourselves working from home. Luckily, we had been working systematically on improving our developer experience ever since the &ldquo;reboot&rdquo; of our IT effort a few years earlier. We were already well on our way to move our code and infrastructure to the cloud, and as a result of this we were able to create <a href="https://www.kode24.no/kodenytt/slik-koda-nav-ny-dagpenge-losning-pa-tre-dager/72331871">solutions</a> to aid those that were hit by the pandemic in record time.</p>
+<p>As society slowly started opening up again, NAV IT found ourselves facing a difficult question: where do we go from here? Remote work had served us well. Some of us looked forward to returning to the office, while others had no desire to go back to commuting and asphalt style vending machine coffee. After a bit of back and forth and some legal gymnastics our management gave the teams the authority to figure this out for themselves. Some teams returned to the office, but most of them (including us at NAIS) ended up with a hybrid solution. Now that the technical and legal hurdles had been overcome, we also started recruiting people living in other parts of the country.</p>
+<h2 id="the-nais-way">The NAIS way</h2>
+<p>The most important thing for a hybrid team is to avoid it splitting into two groups, those at the office and those at home. Our way of countering this is to center everything we do around a Zoom room affectionally known as &ldquo;the Froom lobby&rdquo; (named after Frode, the original owner of the room). This room is open for everyone 24/7, and everyone on the team has access to the host key. The first person to show up in the morning creates breakout rooms (as Zoom forgets them overnight and doesn&rsquo;t have an API to automate their creation), and names them according to a theme of their choosing. As our team mates emerge from slumber they join the Froom for their morning coffee and chit-chat.</p>
+<p>Next, people team up in the breakout rooms to get on with their tasks. We practice pair or mob programming as much as possible, so a breakout room will typically host anything from 2 to 4 or 5 people. There are two main benefits to this approach. First, when a task is completed it is already peer reviewed and can go straight to <code>main</code> and into production. No extra pull requests or reviews required. Second, the knowledge of whatever the group was working on is distributed and thus avoiding unnecessary knowledge gaps.</p>
+<p>If someone is working solo on a task they choose if they want to do so in the lobby (with a high probability of interruptions) or if they want to withdraw to a breakout room. If extra peace and quiet is required a couple of the rooms are marked with &ldquo;Do Not Disturb&rdquo;. Anyone in these rooms can enjoy some well deserved tranquility confident that they will not be disturbed unless something really important is happening.</p>
+<p>As previously mentioned the Froom is open to all. You just need the link. If we need to talk to someone from outside the team we invite them in, or if someone wants to talk to us they can just drop in at any time. Even though Slack is our main form of communication with the rest of the organization, having the Froom significantly lowers the barrier for those that wish to talk to us &ldquo;face to face&rdquo;.</p>
+<p>The biggest challenge we have encountered during this transition is the audio and video equipment at the office along with its layout. If three or four people in an open environment are working in different breakout rooms the ambient noise can become unbearable unless they wear noise cancelling headphones. Oftentimes you will see people escaping into meeting rooms to avoid this. When we have common meetings for all our team members the best solution we have found is to gather around a single laptop and use a Jabra conference room microphone. It&rsquo;s not ideal, but it kind of works.</p>
+<p>So, this is how we have chosen to do things. How does your team handle being hybrid? Did we miss anything important in this post? Does your team have a setup that actually works at the office? Give us a holler, we are always willing to share.</p>
+
+
+            </article>
+        </main><footer>
+    <a href="https://nais.io">nais</a> &copy; 2022
+</footer>
+</body>
+</html>

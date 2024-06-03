@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html><head>
+   <meta charset="UTF-8">
+   <meta lang="en">
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+   <meta http-equiv="Content-Security-Policy" content="font-src https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://amplitude.nav.no">
+   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png" />
+   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png" />
+   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png" />
+   <link rel="mask-icon" href="/blog/images/safari-pinned-tab.svg" color="#66cbec" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="/blog/style.css">
+   <title>nais blog</title>
+
+   <script type="text/javascript" src="/blog/amplitude.js"></script><meta property="og:title" content="Changing Service Mesh">
+<meta property="og:description" content="How we swapped Istio with Linkerd with hardly any downtime">
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="https://nais.io/blog/posts/changing-service-mesh/">
+<meta property="og:locale" content="no-NO">
+
+
+
+
+    <meta property="og:image" content="https://nais.io/blog/images/service-mesh-experience.jpg">
+
+    <meta property="og:image" content="https://nais.io/blog/images/changing-service-mesh-1.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/changing-service-mesh-2.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/changing-service-mesh-3.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/changing-service-mesh-4.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/changing-service-mesh-5.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/changing-service-mesh-6.png">
+<meta property="article:published_time" content="2021-05-04T20:37:13+02:00">
+<meta property="article:modified_time" content="2021-05-04T20:37:13+02:00">
+<meta property="og:updated_time" content="2021-05-04T20:37:13+02:00">
+
+
+<meta property="article:tag" content="istio">
+<meta property="article:tag" content="linkerd">
+<meta property="article:tag" content="loadbalancing">
+
+</head>
+<body><header>
+    <div>
+        <a href="https://nais.io/blog">
+            <img alt="The NAIS logo: a hand forming an OK symbol, shaped like a pipe wrench, in rainbow colors" src="/blog/images/logo.png">
+            <h1>nais blog</h1>
+        </a>
+    </div>
+</header>
+<main>
+            <article>
+                <h1>Changing Service Mesh</h1>
+
+                <em>How we swapped Istio with Linkerd with hardly any downtime</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="2021-05-04T20:37:13&#43;02:00">May 4, 2021</time>
+                    by Frode Sundby
+                    </p>
+										
+                    <nav class="tags">
+                        <ul>
+                            
+                            
+                            <li><a href="https://nais.io/blog/tags/istio">#istio</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/linkerd">#linkerd</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/loadbalancing">#LoadBalancing</a></li>
+                            
+                        </ul>
+                    </nav>
+										
+                </section>
+
+                <h2 id="why-change">Why change?</h2>
+<p>With an ambition of making our environments as secure as possible, we jumped on the service-mesh bandwagon in 2018 with Istio 0.7 and have stuck with it since.</p>
+<p>Istio is a large and feature rich system that brings capabilities aplenty.
+Although there are a plethora of nifty and useful things we could do with Istio, we&rsquo;ve primarily used it for mTLS and authorization policies.</p>
+<p>One might think that having lots of features available but not using them couldn&rsquo;t possibly be a problem.
+However, all these extra capabilities comes with a cost - namely complexity; and we&rsquo;ve felt encumbered by this complexity every time when configuring, maintaining or troubleshooting in our clusters.
+Our suspicions were that since we hardly used any of the capabilities, we could probably make do with a much simpler alternative.
+So, and after yet another <em>&ldquo;Oh&hellip; This problem was caused by Istio!&rdquo;</em>-moment, we decided the time was ripe to consider the alternatives out there.</p>
+<p>We looked to the grand ol&rsquo; Internet for alternatives and fixed our gaze on the rising star Linkerd 2.
+Having honed in on our preferred candidate, we decided to take it for a quick spin in a cluster and found our suspicions to be accurate.</p>
+<p>Rarely has a meme depicted a feeling more strongly
+<img src="/blog/images/service-mesh-experience.jpg" alt="service-mesh-experiance"></p>
+<p>Even though we&rsquo;d invested a lot of time and built in quite a bit of Istio into our platform, we knew we had to make the change.</p>
+<h2 id="how-did-we-do-it">How did we do it?</h2>
+<h3 id="original-architecture">Original architecture:</h3>
+<p>Let&rsquo;s first have a quick look at what we were dealing with:</p>
+<p>The first thing an end user encountered was our Google LoadBalancer configured by an IstioOperator.
+The traffic was then forwarded to the Istio Ingressgateway, who in turn sent it along via an mTLS connection to the application.
+Before the Ingressgateway could reach the application, both NetworkPolicies and AuthorizationPolicies were required to allow the traffic.
+We used an <a href="https://github.com/nais/naiserator">operator</a> to configure these policies when an application was deployed.</p>
+<p><img src="/blog/images/changing-service-mesh-1.png" alt="changing-service-mesh"></p>
+<h3 id="new-loadbalancers-and-ingress-controllers">New LoadBalancers and ingress controllers</h3>
+<p>Since our LoadBalancers were configured by (and sent traffic to) Istio, we had to change the way we configured them.
+Separating LoadBalancing from mesh is a healthy separation of concern that will give us greater flexibility in the future as well.
+We also had to swap out Istio Ingressgateway with an Ingress Controller - we opted for NGINX.</p>
+<p>We started by creating IP-addresses and Cloud Armor security policies for our new LoadBalancers with <a href="https://www.terraform.io/">Terraform</a>.</p>
+<p>The loadbalancers themselves were created by an Ingress object:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: networking.k8s.io/v1beta1
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: Ingress
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">annotations</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">networking.gke.io/v1beta1.FrontendConfig</span>: &lt;tls-config&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">kubernetes.io/ingress.global-static-ip-name</span>: &lt;global-ip-name&gt; 
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">kubernetes.io/ingress.allow-http</span>: <span style="color:#f1fa8c">&#34;false&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">name</span>: &lt;loadbalancer-name&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">namespace</span>: &lt;ingress-controller-namespace&gt;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">backend</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">serviceName</span>: &lt;ingress-controller-service&gt;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">servicePort</span>: <span style="color:#bd93f9">443</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">tls</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">secretName</span>: &lt;kubernetes-secret-with-certificates&gt;
+</span></span></code></pre></div><p>We tied the Cloud Armor security policy to the Loadbalancer with a <code>BackendConfig</code> on the Ingress Controller&rsquo;s service:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: v1
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: Service
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">annotations</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">cloud.google.com/app-protocols</span>: <span style="color:#f1fa8c">&#39;{&#34;https&#34;: &#34;HTTP2&#34;}&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">cloud.google.com/backend-config</span>: <span style="color:#f1fa8c">&#39;{&#34;default&#34;: &#34;&lt;backendconfig-name&gt;&#34;}&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">cloud.google.com/neg</span>: <span style="color:#f1fa8c">&#39;{&#34;ingress&#34;: true}&#39;</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>---
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: cloud.google.com/v1
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: BackendConfig
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">name</span>: &lt;backendconfig-name&gt;
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">securityPolicy</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">name</span>: &lt;security-policy-name&gt;
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></div><p>Alrighty. We&rsquo;d now gotten ourselves a brand new set of independantly configured LoadBalancers and a shiny new Ingress Controller.
+<img src="/blog/images/changing-service-mesh-2.png" alt="changing-service-mesh"></p>
+<p>However - if we&rsquo;d started shipping traffic to the new components at this stage, things would start breaking as there were no ingresses in the cluster - only VirtualServices.
+To avoid downtime, we created an interim ingress that forwarded all traffic to the Istio IngressGateway:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: networking.k8s.io/v1beta1
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: Ingress
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">rules</span>:
+</span></span><span style="display:flex;"><span>  - <span style="color:#ff79c6">host</span>: <span style="color:#f1fa8c">&#39;&lt;domain-name&gt;&#39;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">http</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">paths</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ff79c6">backend</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">serviceName</span>: &lt;istio-ingressgateway-service&gt;
+</span></span><span style="display:flex;"><span>          <span style="color:#ff79c6">servicePort</span>: <span style="color:#bd93f9">443</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">path</span>: /
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></div><p><img src="/blog/images/changing-service-mesh-3.png" alt="changing-service-mesh">
+With this ingress in place, we could reach all the existing VirtualServices exposed by the Istio Ingressgateway via the new Loadbalancers and Nginx.
+And we could point our DNS records to the new rig without anyone noticing a thing.</p>
+<h3 id="migrating-workloads-from-istio-to-linkerd">Migrating workloads from Istio to Linkerd</h3>
+<p>Once LoadBalancing  and ingress traffic were closed chapters, we changed our attention to migrating workloads from Istio to Linkerd.
+When moving a workload to a new service-mesh, there&rsquo;s a bit more to it than swapping out the sidecar with a new namespace annotation.
+Our primary concerns were:</p>
+<ul>
+<li>The new sidecar would require NetworkPolicies to allow traffic to and from linkerd.</li>
+<li>The application&rsquo;s VirtualService would have to be transformed into an Ingress.</li>
+<li>Applications that used <a href="https://github.com/redboxllc/scuttle">scuttle</a> to wait for the Istio sidecar to be ready had to be disabled.</li>
+<li>We couldn&rsquo;t possibly migrate all workloads simultaneously due to scale.</li>
+<li>Applications have to communicate, but they can&rsquo;t when they&rsquo;re in different service-meshes.</li>
+</ul>
+<p>Since applications have a tendency of communicating with eachother, and communication between different service-meshes was a bit of a bother, we decided to migrate workloads based on who they were communicating with to avoid causing trouble.
+Using the NetworkPolicies to map out who were communicating with whom, we found a suitable order to migrate workloads in.</p>
+<p>We then gave this list to our <a href="https://github.com/nais/naiserator">operator</a>, who in turn removed Istio resources, updated NetworkPolicies, created Ingresses and restarted workloads.
+Slowly but surely our linkerd dashboard was starting to populate, and the only downtime was during the seconds it took for the first Linkerd pod to be ready.
+One thing we didn&rsquo;t take into concideration (but should have), was that some applications shared a hostname.
+When an ingress was created for a shared hostname, Nginx would stop forwarding requests for these hosts to Istio Ingressgateway, resulting in non-migrated applications not getting any traffic.
+Realizing this, we started migrating applications on the same hostname simultaneously too.</p>
+<p><img src="/blog/images/changing-service-mesh-4.png" alt="changing-service-mesh">
+And within a couple of hours, all workloads were migrated and we had ourselves a brand spanking new service-mesh in production.
+And then they all lived happily ever after&hellip;</p>
+<p>Except that we had to clean up Istio&rsquo;s mess.</p>
+<h3 id="cleaning-up">Cleaning up</h3>
+<p>What was left after the party was a fully operational Istio control plane, a whole bunch of Istio CRD&rsquo;s and a completely unused set of LoadBalancers. In addition we had to clean up everything related to Istio in a whole lot of pipelines and components</p>
+<p><img src="/blog/images/changing-service-mesh-5.png" alt="changing-service-mesh">
+<img src="/blog/images/changing-service-mesh-6.png" alt="changing-service-mesh"></p>
+<p>It has to be said - there is a certain satisfaction in cleaning up after a party that has been going on for too long.</p>
+
+
+            </article>
+        </main><footer>
+    <a href="https://nais.io">nais</a> &copy; 2021
+</footer>
+</body>
+</html>
