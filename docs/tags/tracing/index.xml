@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tracing on nais blog</title>
+    <link>https://nais.io/blog/tags/tracing/</link>
+    <description>Recent content in tracing on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Mon, 27 May 2024 19:09:09 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/tracing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenTelemetry from 0 to 100</title>
+      <link>https://nais.io/blog/posts/otel-from-0-to-100/</link>
+      <pubDate>Mon, 27 May 2024 19:09:09 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/otel-from-0-to-100/</guid>
+      <description>This is the (long) story of how we adopted OpenTelemetry at the Norwegian Labour and Welfare Administration (NAV). We will cover the journey from the first commits to real traces in production. We will also share some of the challenges we faced along the way and how we overcame them.
+At NAV, we have a microservices architecture with thousands of services running in our Kubernetes clusters. We have been telling our teams to adopt Prometheus metrics and Grafana from early on, but to a large degree they still rely on digging through application logs in Kibana.</description>
+    </item>
+    
+  </channel>
+</rss>

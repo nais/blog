@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>istio on nais blog</title>
+    <link>https://nais.io/blog/tags/istio/</link>
+    <description>Recent content in istio on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Tue, 04 May 2021 20:37:13 +0200</lastBuildDate><atom:link href="https://nais.io/blog/tags/istio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Changing Service Mesh</title>
+      <link>https://nais.io/blog/posts/changing-service-mesh/</link>
+      <pubDate>Tue, 04 May 2021 20:37:13 +0200</pubDate>
+      
+      <guid>https://nais.io/blog/posts/changing-service-mesh/</guid>
+      <description>Why change? With an ambition of making our environments as secure as possible, we jumped on the service-mesh bandwagon in 2018 with Istio 0.7 and have stuck with it since.
+Istio is a large and feature rich system that brings capabilities aplenty. Although there are a plethora of nifty and useful things we could do with Istio, we&amp;rsquo;ve primarily used it for mTLS and authorization policies.
+One might think that having lots of features available but not using them couldn&amp;rsquo;t possibly be a problem.</description>
+    </item>
+    
+  </channel>
+</rss>

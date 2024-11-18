@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html><head>
+   <meta charset="UTF-8">
+   <meta lang="en">
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+   <meta http-equiv="Content-Security-Policy" content="font-src https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://amplitude.nav.no">
+   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png" />
+   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png" />
+   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png" />
+   <link rel="mask-icon" href="/blog/images/safari-pinned-tab.svg" color="#66cbec" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="/blog/style.css">
+   <title>nais blog</title>
+
+   <script type="text/javascript" src="/blog/amplitude.js"></script><meta property="og:title" content="OAuth del 3 (PKCE)">
+<meta property="og:description" content="OAuth Proof Key for Code Exchange (PKCE)">
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="https://nais.io/blog/posts/oauth-del3-pkce/">
+<meta property="og:locale" content="no-NO">
+
+
+
+
+    <meta property="og:image" content="https://nais.io/blog/images/oauth2.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/auth_code.png">
+<meta property="article:published_time" content="2021-03-07T12:49:37+01:00">
+<meta property="article:modified_time" content="2021-03-07T12:49:37+01:00">
+<meta property="og:updated_time" content="2021-03-07T12:49:37+01:00">
+
+
+<meta property="article:tag" content="oauth">
+<meta property="article:tag" content="oidc">
+<meta property="article:tag" content="sikkerhet">
+
+</head>
+<body><header>
+    <div>
+        <a href="https://nais.io/blog">
+            <img alt="The NAIS logo: a hand forming an OK symbol, shaped like a pipe wrench, in rainbow colors" src="/blog/images/logo.png">
+            <h1>nais blog</h1>
+        </a>
+    </div>
+</header>
+<main>
+            <article>
+                <h1>OAuth del 3 (PKCE)</h1>
+
+                <em>OAuth Proof Key for Code Exchange (PKCE)</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="2021-03-07T12:49:37&#43;01:00">Mar 7, 2021</time>
+                    by Jan-Kåre Solbakken
+                    </p>
+										
+                    <nav class="tags">
+                        <ul>
+                            
+                            
+                            <li><a href="https://nais.io/blog/tags/oauth">#oauth</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/oidc">#oidc</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/sikkerhet">#sikkerhet</a></li>
+                            
+                        </ul>
+                    </nav>
+										
+                </section>
+
+                <p><img src="/blog/images/oauth2.png" alt="OAuth2"></p>
+<h2 id="bakgrunn">Bakgrunn</h2>
+<p>Dette er del 3 i serien om OAuth og OIDC. Den mest brukte OAuth-flyten, &ldquo;Authorization Code flow&rdquo;, innebærer at <code>client</code> og <code>id provider</code> utveksler hemmeligheter. Klienten må derfor være i stand til å holde på hemmelig informasjon på en trygg måte, i standarden omtales dette som <code>confidential clients</code>. For mobil-apps og &ldquo;single page&rdquo; webapplikasjoner har dette ikke vært gjennomførbart da hemmelighetene må distribueres helt ut til sluttbrukeren som en del av appen.</p>
+<p>I <a href="/blog/posts/oauth1">del 1</a> ble standarden og terminologien gjennomgått, ta en titt på den hvis du trenger en innføring eller oppfriskning.</p>
+<p>Authorization Code flow har også en svakhet som kalles &ldquo;authorization code injection&rdquo;. Et slikt angrep er komplisert å gjennomføre og krever at mange ting skal klaffe samtidig, men er ingen umulighet. Dersom noen som har stjålet din <code>client_id</code> og <code>client_secret</code> klarer å fange opp en authorization code kan de gjøre et token-kall på dine vegne, og dermed utgi seg for den aktuelle sluttbrukeren. Hvordan klarer man så å fange opp en authorization code? Callbacks gjøres jo kun til (forhåpentligvis) forhåndsgodkjente URLer over HTTPS? Vel, ikke alltid. En måte er å utnytte custom &ldquo;URL schemes&rdquo; på telefoner. En telefon-app vil typisk registrere callback URLs av type <code>myapp://something</code>, dette gjør at kallene rutes til denne appen. Hvis en angriper får deg til å installere en app som registrerer seg som lytter på myapp-URLs vil denne appen også få tilsendt callbackene som inneholder koden.</p>
+<h2 id="pkce">PKCE</h2>
+<p>For å bøte på disse svakhetene har det blitt laget et tillegg til OAuth-standarden. Tillegget beskriver teknikken &ldquo;Proof Key for Code Exchange&rdquo; som forkortes &ldquo;PKCE&rdquo; og uttales &ldquo;pixie&rdquo;.</p>
+<p>Authorization Code flow ser ut som vist i figuren (se [del 1]<a href="/blog/posts/oauth1">del 1</a> for detaljer).</p>
+<p><img src="/blog/images/auth_code.png" alt="authorization code flow"></p>
+<p>PKCE legger på følgende tillegg:</p>
+<ul>
+<li>Klienten genererer en tilfeldig verdi som kalles <code>code_verifier</code>. Denne brukes til å generere en <code>code_challenge</code> vha en forhåndsavtalt metode. Challengen og <code>code_challenge_method</code> legges som ekstra parametre på det initielle <code>/auth</code>-kallet til id-provideren.</li>
+<li>Id-provider svarer som vanlig, men tar vare på <code>code_challenge</code> og <code>code_challenge_method</code>.</li>
+<li>Klienten sender <code>authorization_code</code> som vanlig med i <code>/token</code>-kallet, men legger i tillegg på den samme <code>code_verifier</code> som ble generert i punkt 1.</li>
+<li>Id-provider bruker <code>code_verifier</code> til å generere en <code>code_challenge</code> på samme måte som klienten gjorde. Hvis de to code challengene ikke er like avvises forespørselen.</li>
+</ul>
+<p>Et auth-kall vi da kunne se ut som følger:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>GET /auth?
+</span></span><span style="display:flex;"><span>     <span style="color:#8be9fd;font-style:italic">response_type</span><span style="color:#ff79c6">=</span>code&amp;
+</span></span><span style="display:flex;"><span>     <span style="color:#8be9fd;font-style:italic">client_id</span><span style="color:#ff79c6">=</span>myclient&amp;
+</span></span><span style="display:flex;"><span>     <span style="color:#8be9fd;font-style:italic">redirect_url</span><span style="color:#ff79c6">=</span>myapp://callback&amp;
+</span></span><span style="display:flex;"><span>     <span style="color:#8be9fd;font-style:italic">scope</span><span style="color:#ff79c6">=</span>whatever&amp;
+</span></span><span style="display:flex;"><span>     <span style="color:#8be9fd;font-style:italic">state</span><span style="color:#ff79c6">=</span>123&amp;
+</span></span><span style="display:flex;"><span>     <span style="color:#8be9fd;font-style:italic">code_challenge</span><span style="color:#ff79c6">=</span>elUXu5zy4QT2f92GRaUq23autAeNDf4DQPaycR0ek_o
+</span></span></code></pre></div><p>Angripere som kjenner din <code>client_id</code> og <code>client_secret</code> vil dermed ikke kunne gjøre token-kall fordi de ikke kjenner verifieren som ble generert og brukt i punkt 1. Selv om de er i stand til å observere både requesten til og responsen fra <code>/auth</code>-endepunktet vil de ikke være i stand til å rekonstruere code challengen.</p>
+<p>Standarden definerer to ulike metoder å lage code challenges med: <code>plain</code> og <code>S256</code>. Plain vil si at code_verifier og code_challenge er samme verdi. For S256 lages code_challenge etter følgende oppskrift:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>base64UrlEncode(sha256(ascii(code_verifier)))
+</span></span></code></pre></div><p>Plain challenges har jo begrenset nytteverdi, så klientene er pålagt å bruke S256 med mindre særlige begrensninger i ressurser eller annet gjør at de ikke er i stand til det. Siden sikkerheten er basert på at code verifieren ikke kan brute forces er det viktig at den er tilfeldig nok (standarden foreslår en entropi på minimum 256 bit). For å holde implementasjonen enkel (og fordi entropien er sterk i utgangspunktet) kreves det ikke salting.</p>
+<p>PKCE er støttet i flere biblioteker for flere språk, deriblant <a href="https://connect2id.com/products/nimbus-oauth-openid-connect-sdk/examples/oauth/pkce">Java/Kotlin</a>, <a href="https://github.com/ory/fosite">Go</a> og <a href="https://github.com/panva/node-openid-client">JavaScript</a>.</p>
+<h2 id="videre-lesningfordypning">Videre lesning/fordypning</h2>
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc7636">RFC 7636</a> (Proof Key for Code Exchange by OAuth Public Clients)</li>
+<li>OAuth-delen av <a href="https://portswigger.net/web-security/oauth">PortSwigger Web Security Academy</a></li>
+<li><a href="https://www.youtube.com/watch?v=1ot45WwQWJE">Eksempel</a> på code injection-angrep</li>
+</ul>
+
+
+            </article>
+        </main><footer>
+    <a href="https://nais.io">nais</a> &copy; 2021
+</footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>remote on nais blog</title>
+    <link>https://nais.io/blog/tags/remote/</link>
+    <description>Recent content in remote on nais blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>no-NO</language>
+    <lastBuildDate>Mon, 31 Oct 2022 18:42:03 +0100</lastBuildDate><atom:link href="https://nais.io/blog/tags/remote/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Being NAIS at a distance</title>
+      <link>https://nais.io/blog/posts/hybrid-work/</link>
+      <pubDate>Mon, 31 Oct 2022 18:42:03 +0100</pubDate>
+      
+      <guid>https://nais.io/blog/posts/hybrid-work/</guid>
+      <description>In this post we will share how the NAIS team works and how the pandemic shaped the way we go about our business. This is by no means a recipe for how to do things, merely a summary of the things we have found to work well for us. YMMV. Background When Norway shut down in March 2020, NAV IT (like many others) suddenly found ourselves working from home. Luckily, we had been working systematically on improving our developer experience ever since the &amp;ldquo;reboot&amp;rdquo; of our IT effort a few years earlier.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html><head>
+   <meta charset="UTF-8">
+   <meta lang="en">
+   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+   <meta http-equiv="Content-Security-Policy" content="font-src https://fonts.googleapis.com https://fonts.gstatic.com; connect-src 'self' https://fonts.googleapis.com https://amplitude.nav.no">
+   <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon.png" />
+   <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32.png" />
+   <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16.png" />
+   <link rel="mask-icon" href="/blog/images/safari-pinned-tab.svg" color="#66cbec" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet">
+   <link rel="stylesheet" href="/blog/style.css">
+   <title>nais blog</title>
+
+   <script type="text/javascript" src="/blog/amplitude.js"></script><meta property="og:title" content="OpenTelemetry from 0 to 100">
+<meta property="og:description" content="The story of how we adopted OpenTelemetry at NAV (Norway&#39;s largest government agency).">
+<meta property="og:type" content="article">
+
+<meta property="og:url" content="https://nais.io/blog/posts/otel-from-0-to-100/">
+<meta property="og:locale" content="no-NO">
+
+
+  <meta property="og:image" content="https://nais.io/blog/images/otel-rappids-and-rivers.png">
+
+
+
+    <meta property="og:image" content="https://imgs.xkcd.com/comics/standards.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/otel-tempo.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/otel-collector.svg">
+
+    <meta property="og:image" content="https://nais.io/blog/images/otel-adoption.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/otel-client-to-backend.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/otel-noisy-spans.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/otel-rappids-and-rivers.png">
+
+    <meta property="og:image" content="https://nais.io/blog/images/otel-span-rate.png">
+<meta property="article:published_time" content="2024-05-27T19:09:09+02:00">
+<meta property="article:modified_time" content="2024-05-27T19:09:09+02:00">
+<meta property="og:updated_time" content="2024-05-27T19:09:09+02:00">
+
+
+<meta property="article:tag" content="observability">
+<meta property="article:tag" content="opentelemetry">
+<meta property="article:tag" content="tracing">
+
+</head>
+<body><header>
+    <div>
+        <a href="https://nais.io/blog">
+            <img alt="The NAIS logo: a hand forming an OK symbol, shaped like a pipe wrench, in rainbow colors" src="/blog/images/logo.png">
+            <h1>nais blog</h1>
+        </a>
+    </div>
+</header>
+<main>
+            <article>
+                <h1>OpenTelemetry from 0 to 100</h1>
+
+                <em>The story of how we adopted OpenTelemetry at NAV (Norway&#39;s largest government agency).</em>
+
+                <section class="meta">
+                    <p>
+                    Published
+                    <time datetime="2024-05-27T19:09:09&#43;02:00">May 27, 2024</time>
+                    by Hans Kristian Flaatten
+                    </p>
+										
+                    <nav class="tags">
+                        <ul>
+                            
+                            
+                            <li><a href="https://nais.io/blog/tags/observability">#observability</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/opentelemetry">#opentelemetry</a></li>
+                            
+                            <li><a href="https://nais.io/blog/tags/tracing">#tracing</a></li>
+                            
+                        </ul>
+                    </nav>
+										
+                </section>
+
+                <p>This is the (long) story of how we adopted <a href="https://opentelemetry.io/">OpenTelemetry</a> at the Norwegian Labour and Welfare Administration (NAV). We will cover the journey from the first commits to real traces in production. We will also share some of the challenges we faced along the way and how we overcame them.</p>
+<p>At NAV, we have a microservices architecture with thousands of services running in our Kubernetes clusters. We have been telling our teams to adopt Prometheus metrics and Grafana from early on, but to a large degree they still rely on digging through application logs in Kibana.</p>
+<p>Without proper request tracing, it is hard to get a good overview of how requests flow through a system. This makes it hard to troubleshoot errors in long and often complex value chains or optimize slow requests. This was a particular challenge for our teams that have adopted an event-driven architecture with Kafka. It is like trying to navigate a city without a map.</p>
+<p>There has been several attempts to shoehorn some form of request tracing using HTTP headers over the years. I have found <code>Nav-Callid</code>, <code>nav-call-id</code>, <code>callId</code>, <code>X-Correlation-ID</code>, <code>x_correlationId</code>, <code>correlationId</code>, <code>x_correlation-id</code>, and even <code>x_korrelasjonsId</code> (Norwegian for correlationId). There are probably even more variations out there in the wild as I only had so much time for digging around.</p>
+<p><img src="https://imgs.xkcd.com/comics/standards.png" alt="Standards"></p>
+<p>It seams we are stuck in an endless loop of trying to get everyone to agree on a standard, and then trying to get everyone to implement it correctly&hellip; This is where OpenTelemetry comes in! It provides a standard way to define telemetry data from your applications, and it provides libraries and SDKs for all common programming languages (there are even initiatives to make <a href="https://openmainframeproject.org/blog/new-opentelemetry-on-mainframe-sig/">OpenTelemetry available on mainframes</a>) to make it easy to implement. Maybe there is still hope for us!</p>
+<h2 id="the-first-steps">The first steps</h2>
+<p>Even though OpenTelemetry does a lot of the heavy lifting for you, it is still a complex system with many moving parts. Did you know that OpenTelemetry is the fastest growing project in the Cloud Native Computing Foundation (CNCF)? It has an even steeper adoption curve than Kubernetes had back in the early days!</p>
+<p>In order to get started with OpenTelemetry, you need two things:</p>
+<ol>
+<li>A place to store (and visualize) the telemetry data</li>
+<li>Convincing your developers that it is worth their time to instrument their applications</li>
+</ol>
+<p>Doesn&rsquo;t sound too hard, right? Let&rsquo;s start with the storage backend.</p>
+<p>OpenTelemetry is a vendor-neutral project, so you can choose any storage backend you like. The most popular choices are Jaeger, Zipkin, and Tempo. We chose <a href="https://grafana.com/oss/tempo/">Grafana Tempo</a> because it is a scalable, cost-effective, and open source solution that integrates seamlessly with Grafana that we already use for metrics and dashboards.</p>
+<p><img src="/blog/images/otel-tempo.png" alt="Grafana Tempo"></p>
+<p>We have written extensively about how to get started with Grafana Tempo in our <a href="https://docs.nais.io/how-to-guides/observability/tracing/tempo/">documentation</a> as well as a reference guide for the query language used in Tempo called <a href="https://doc.nais.io/reference/observability/tracing/traceql/">TraceQL</a>.</p>
+<p>You can send OpenTelemetry data directly to Tempo, but the recommended way is to use an <a href="https://opentelemetry.io/docs/collector/">OpenTelemetry Collector</a>. The Collector can receive data from multiple sources, process it, and send it to multiple destinations. This makes it easy to add new sources or destinations without changing your application configuration.</p>
+<p><img src="/blog/images/otel-collector.svg" alt="OpenTelemetry Collector"></p>
+<p>Installing things like this in a Kubernetes cluster is something the NAIS team have done for the better part of ten years, so we had no problem setting up the Collector and connecting it to Tempo in our clusters. We run one Tempo instance for each environment (dev and prod) accessible from a global Grafana instance.</p>
+<p>The hard part would be to get the developers to instrument their applications&hellip;</p>
+<h2 id="instrumenting-the-applications">Instrumenting the applications</h2>
+<p>From the very beginning, we knew that the key to success was to make the developers understand the value and benefit of good observability and make it as easy as possible for the developers to instrument their applications. With over 1.600 applications in production, we couldn&rsquo;t afford to spend weeks or months on each one. A solution that <em>required</em> manual configuration for each application was a non-starter.</p>
+<p>With most of our backend services written in Kotlin and Java, we started by testing the <a href="https://opentelemetry.io/docs/languages/java/automatic/">OpenTelemetry Java Agent</a>. A java agent is a small piece of software that runs alongside your application and can modify the bytecode as it is loaded into the JVM. This allows it to automatically instrument your application without any changes to the source code.</p>
+<p>To our pleasant surprise, the agent worked out of the box with most of our applications. It was able to correctly correlate incoming and outgoing requests, understand the different frameworks we use, and even capture database queries and async calls to message queues like Kafka despite the nay-sayers who claimed this could not work as well as it was advertised. In fact, the OpenTelemetry Java agent <a href="https://github.com/open-telemetry/opentelemetry-java-instrumentation/blob/main/docs/supported-libraries.md">supports over 100 different libraries and frameworks</a> out of the box!</p>
+<p>Previously we would have been able to install such agents on the node, but with all of our applications now running on Kubernetes that was no longer an option. We had to find a way to get the agent onto the container as there are no shared jvm runtime to hook into. In the past we have made pre-built Docker images with agents pre-installed, but this had a high maintenance cost as we had to keep the images up to date with the latest version of the agent across different base images and major versions. And not all applications are using the same base image either.</p>
+<p>This is where the <a href="https://opentelemetry.io/docs/operator/">OpenTelemetry Operator</a> comes in. This is a Kubernetes operator that can automatically inject the OpenTelemetry Java Agent (and agents for other programming languages as well) directly into your pod. It can also configure the agent to send data to the correct Collector and set up the correct service name and environment variables for each application since it has access to the Kubernetes API.</p>
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>In case you are new to NAV, we have a open source application platform called <a href="https://nais.io">nais</a> that provides everything our application teams need to develop, run and operate their applications. It&rsquo;s main component is <a href="https://github.com/nais/naiserator">naiserator</a> (a Kubernetes Operator) and the <a href="https://doc.nais.io/reference/application-example"><code>nais.yaml</code></a> that defines how an application should run in our Kubernetes clusters.</p>
+<p>A minimal application manifest looks something like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">apiVersion</span>: <span style="color:#f1fa8c">&#34;nais.io/v1alpha1&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">kind</span>: <span style="color:#f1fa8c">&#34;Application&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">metadata</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">name</span>: <span style="color:#f1fa8c">&#34;my-application&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">namespace</span>: <span style="color:#f1fa8c">&#34;my-team&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">image</span>: <span style="color:#f1fa8c">&#34;navikt/my-application:abc123&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">replicas</span>: <span style="color:#bd93f9">2</span>
+</span></span><span style="display:flex;"><span>  ...
+</span></span></code></pre></div><p>This is a very powerful abstraction that have allowed us to add new features to the platform with as little effort on the developer&rsquo;s part as possible. We added a new field to <code>nais.yaml</code> called <code>observability</code> that allows the developers to enable tracing for their applications with only four lines of yaml configuration:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">observability</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">autoInstrument</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">enabled</span>: <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">runtime</span>: <span style="color:#f1fa8c">&#34;java&#34;</span>
+</span></span></code></pre></div><p>When naiserator sees this field, it sets the required OpenTelemetry Operator annotations to get the correct OpenTelemetry configuration and agent according to the runtime. We currently support auto-instrumenting <code>java</code>, <code>nodejs</code> and <code>python</code>. This way, the developers don&rsquo;t have to worry about how to set up tracing in their applications, they just have to enable it in the manifest. This is a huge win for us! 🎉</p>
+<p>For many of our applications, this was all that was needed to get traces flowing. Developers can still add additional spans and attributes to their traces using the OpenTelemetry SDKs directly, or they can choose to disable auto-instrumentation and instrument their applications manually.</p>
+<p>We also enabled tracing in our ingress controller so that we could see the full request path from the client to the backend service. Since we are using the Ingress Nginx controller, this was just a matter of enabling the <a href="https://kubernetes.github.io/ingress-nginx/user-guide/third-party-addons/opentelemetry/">OpenTelemetry configuration</a> in the Helm chart to get traces for all incoming requests.</p>
+<h2 id="rise-and-fall-of-adoption">Rise and fall of adoption</h2>
+<p>We got a lot of positive feedback from the developers when we launched the auto-instrumentation feature. They were happy to see traces in Grafana and Tempo, and they could finally get a good overview of how requests flowed through their applications. We even saw a few teams that started using traces to troubleshoot errors and optimize slow requests.</p>
+<p><img src="/blog/images/otel-adoption.png" alt="Adoption of OpenTelemetry in NAV"></p>
+<p>It is absolutely amazing to see the full request path from the client to the backend service in Grafana Tempo using the <a href="https://github.com/grafana/faro-web-sdk/">Grafana Faro Web SDK</a>. This is insight that we have never had before, and it is a game changer for our developers, especially those working with frontend development.</p>
+<p><img src="/blog/images/otel-client-to-backend.png" alt="Client to Backend Tracing"></p>
+<p>But as time went on, we noticed that the adoption rate some times dropped. Some teams disabled tracing because it consumed more resources, others disabled it because they didn&rsquo;t see the value in it. We also saw that some teams had trouble understanding the traces and how to use them effectively.</p>
+<p>It is clear that we need to do more to educate the developers on how to use traces effectively, but more on that later.</p>
+<h2 id="the-road-to-success-is-paved-with-challenges">The road to success is paved with challenges</h2>
+<p>While we have made great progress towards adopting OpenTelemetry by our applications and developers, there have been bumps along the road that we have had to overcome.</p>
+<h3 id="noisy-trace-spans---the-whack-a-mole-problem">Noisy trace spans - the whack-a-mole problem</h3>
+<p>Almost immediately after we enabled tracing in our ingress controller, we started getting reports from developers that the traces overviews in Grafana were filled with noise. All requests to the application were traced, including health checks, readiness checks, and metrics scraping. This made it hard to find the traces that were interesting and relevant.</p>
+<p>The solution was to filter out the noise. We added a filter to the OpenTelemetry Collector that would drop traces for certain paths or status codes. This reduced the noise significantly and made it easier to find the traces that were relevant.</p>
+<p><img src="/blog/images/otel-noisy-spans.png" alt="Noisy traces"></p>
+<p>This is a common problem as indicated by the comments in <a href="https://github.com/open-telemetry/opentelemetry-java-instrumentation/issues/1060#issuecomment-1948302640">opentelemetry-java-instrumentation#1060</a> where multiple users have requested the ability to filter out certain spans.</p>
+<p>While there are more advanced ways to filter out noise, like using tail sampling, we found that a simple filter was enough for our needs. The only downside is that it might leave some orphaned spans that are not part of a trace.</p>
+<p>The filter is defined in the common OpenTelemetry Collector and we do recognize that it might not be a scalable solution in the log run. We are looking into ways to make it easier for the developers to define their own filters in the future.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">filter/drop_noisy_trace_urls</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">error_mode</span>: ignore
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">traces</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">span</span>:
+</span></span><span style="display:flex;"><span>      - |<span style="color:#f1fa8c">
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        (attributes[&#34;http.method&#34;] == &#34;GET&#34; or attributes[&#34;http.request.method&#34;] == &#34;GET&#34;) and (
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">          attributes[&#34;http.route&#34;] == &#34;/favicon.ico&#34; or attributes[&#34;http.target&#34;] == &#34;/favicon.ico&#34; or attributes[&#34;url.path&#34;] == &#34;/favicon.ico&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">          or IsMatch(attributes[&#34;http.route&#34;], &#34;.*[iI]s_?[rR]eady&#34;)    or IsMatch(attributes[&#34;http.target&#34;], &#34;.*[iI]s_?[rR]eady&#34;)       or IsMatch(attributes[&#34;url.path&#34;], &#34;.*[iI]s[rR]eady&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">          or IsMatch(attributes[&#34;http.route&#34;], &#34;.*[iI]s_?[aA]live&#34;)    or IsMatch(attributes[&#34;http.target&#34;], &#34;.*[iI]s_?[aA]live&#34;)       or IsMatch(attributes[&#34;url.path&#34;], &#34;.*[iI]s[aA]live&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">          or IsMatch(attributes[&#34;http.route&#34;], &#34;.*prometheus&#34;)         or IsMatch(attributes[&#34;http.target&#34;], &#34;.*prometheus&#34;)          or IsMatch(attributes[&#34;url.path&#34;], &#34;.*prometheus&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">          or IsMatch(attributes[&#34;http.route&#34;], &#34;.*metrics&#34;)            or IsMatch(attributes[&#34;http.target&#34;], &#34;.*metrics&#34;)             or IsMatch(attributes[&#34;url.path&#34;], &#34;.*metrics&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">          or IsMatch(attributes[&#34;http.route&#34;], &#34;.*actuator.*&#34;)         or IsMatch(attributes[&#34;http.target&#34;], &#34;.*actuator.*&#34;)          or IsMatch(attributes[&#34;url.path&#34;], &#34;.*actuator.*&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">          or IsMatch(attributes[&#34;http.route&#34;], &#34;.*internal/health.*&#34;)  or IsMatch(attributes[&#34;http.target&#34;], &#34;.*internal/health.*&#34;)   or IsMatch(attributes[&#34;url.path&#34;], &#34;.*internal/health.*&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">          or IsMatch(attributes[&#34;http.route&#34;], &#34;.*internal/status.*&#34;)  or IsMatch(attributes[&#34;http.target&#34;], &#34;.*internal/status.*&#34;)   or IsMatch(attributes[&#34;url.path&#34;], &#34;.*internal/status.*&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">        )</span>        
+</span></span></code></pre></div><p>It is also worth mentioning that we do believe that the long term solution is to educate the developers on how to use the TraceQL query language effectively to find the traces they are interested in instead of playing whack-a-mole with noisy spans.</p>
+<h3 id="rapid-and-rivers---death-by-a-thousand-spans">Rapid and Rivers - death by a thousand spans</h3>
+<p>We have embraced an event-driven architecture with Kafka as the backbone for many of our services. Some have even adopted the <a href="https://fredgeorge.com/2016/09/16/rapid-rivers-and-ponds/">Rapids, Rivers and Ponds</a> pattern by Fred George where all services will subscribe to all events and filter out the ones they are interested. This makes it hard to trace a request through the system since it can go through a seemingly endless number of services.</p>
+<p><img src="/blog/images/otel-rappids-and-rivers.png" alt="Rapids and Rivers"></p>
+<p>The main challenge that we have faced is that the default span trace limit in Grafana Tempo of how large a single trace can be and we have had to increase it to 40 MB to be able to see the full trace for some of our requests (and even then it is sometimes not enough). This is a problem that we are still working on solving, but it is not an easy one.</p>
+<p>From talking with the OpenTelmetry community one possible solution might to use <a href="https://opentelemetry.io/docs/concepts/signals/traces/#span-links">span links</a>, but we are unsure how well this will work in practice, and if will be able to visualize them in Grafana Tempo in a meaningful way (ref. <a href="https://github.com/grafana/grafana/issues/63531">grafana/tempo#63531</a>).</p>
+<h3 id="nodejs-applications---the-odd-one-out">Node.js applications - the odd one out</h3>
+<p>While NAV is mainly a Java and Kotlin shop, we do have a few Node.js applications in production, mostly Next.js and Express.</p>
+<p>First out, while Next.js is supposed to have OpenTelemetry support out of the box, we found that it does not appear to be working in standalone mode (ref. <a href="https://github.com/vercel/next.js/issues/49897">vercel/next.js#49897</a>).</p>
+<p>So we had to turn to auto-instrumentation here as well. However,due to the way we lock down our containers in Kubernetes, we got some strange errors instrumenting the application due to different ownership of the files in the container. This had to be fixed before we could continue (ref. <a href="https://github.com/open-telemetry/opentelemetry-operator/issues/2655">opentelemetry-operator#2655</a>)</p>
+<p>Finally we got the Node.js applications up and running with OpenTelemetry, only to find out that some outgoing requests from Node.js applications were not being traced as the <code>traceparent</code> header was not being propagated. As a workaround we had to add the <code>traceparent</code> header manually to the outgoing requests like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#ff79c6">const</span> response <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">await</span> fetch(someUrl, {
+</span></span><span style="display:flex;"><span>  headers<span style="color:#ff79c6">:</span> {
+</span></span><span style="display:flex;"><span>    get traceparent() {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">return</span> getTraceparentHeader();
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#39;Content-Type&#39;</span><span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#39;application/json&#39;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  ...
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>Support for Node.js fetch was added in <a href="https://github.com/open-telemetry/opentelemetry-js-contrib/releases/tag/auto-instrumentations-node-v0.46.0">auto-instrumentations-node-v0.45.0</a> with the introduction of the <code>@opentelemetry/instrumentation-undici</code> package.</p>
+<h3 id="unwanted-logs---the-sensitive-information-problem">Unwanted logs - the sensitive information problem</h3>
+<p>One of the main advantages with the agent is correlated logs and traces. The agent understands various logging libraries such as log4j, logback, and slf4j and can automatically add trace information and send them to Grafana Loki.</p>
+<p>We turned this feature on for all applications, unaware that the agent would intercept all log sinks, not only those targeted for stdout/stderr as some applications were logging sensitive information like social security numbers and personal information to a specific log file.</p>
+<p>Applications must now opt-in to the log interception feature by adding the following environment variable to their deployment:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ff79c6">spec</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">env</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#ff79c6">name</span>: OTEL_LOGS_EXPORTER
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">value</span>: otlp
+</span></span></code></pre></div><p>We have engaged with the OpenTelemetry community to see if there is a way to only intercept logs that are targeted for stdout/stderr, but as of now, this is the only way to disable the log interception feature.</p>
+<h2 id="the-future-of-opentelemetry-at-nav">The future of OpenTelemetry at NAV</h2>
+<p>We have come a long way in a short time with, but there is still a lot of work to be done. It is clear that OpenTelemetry is a powerful tool, but it is no silver bullet. It requires a lot of effort to get right, and it will take time to educate the developers on how to use it effectively.</p>
+<h3 id="default-dashboards-and-panels">Default Dashboards and Panels</h3>
+<p>A few teams have started creating custom dashboards and panels in Grafana to visualize their OpenTelemetry data, but not too many. We need to make it easier for all teams to have good quality dashboards, and we are looking into ways to provide templates and examples that teams can use to get started and customize to their needs.</p>
+<p>This is by far the most challenging thing with Grafana, you can do anything but it does not come for free or out of the box. Maybe <a href="https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/manage-library-panels/">Library Panels in Grafana</a> can help us with that?</p>
+<h3 id="span-metrics">Span Metrics</h3>
+<p><a href="https://grafana.com/docs/tempo/latest/metrics-generator/span_metrics/">Span Metrics</a> is a feature of Grafana Tempo that allows you to generates metrics from ingested tracing data, including request, error, and duration (RED) metrics. We believe that span metrics may lower the entry barrier for using <a href="https://grafana.com/docs/grafana/latest/basics/exemplars/">exemplars</a>. An exemplar is a specific trace representative of measurement taken in a given time interval.</p>
+<p>Before we can enable span metrics, we need to make sure our Prometheus instance is able to handle the additional load. Maybe <a href="https://grafana.com/docs/mimir/latest/">Grafana Mimir</a> can help us with that?</p>
+<h3 id="correlation-with-logs-and-metrics">Correlation with logs and metrics</h3>
+<p>We have seen some of the potential of correlating logs and traces, but this is not something that has been widely adopted yet. Logs is collected as stdout/stderr and metrics are scraped by Prometheus which makes it hard to correlate logs and metrics with traces since they are treated independently.</p>
+<p>Rather, sending traces, logs, and metrics through the OpenTelemetry SDKs and the OpenTelemetry Collector would automatically correlate them and get the full benefit of what OpenTelemetry has to offer.</p>
+<h3 id="training-and-workshops">Training and Workshops</h3>
+<p>We have started planning training sessions and workshops for the developers to teach them how to use OpenTelemetry effectively. We have also created a <a href="https://docs.nais.io/observability/tracing/">documentation site</a> with guides, tutorials, and examples that developers can use to learn more about OpenTelemetry.</p>
+<p>Later this year we will host the first ever Public Sector Observability Day where we will invite developers from all over the Norwegian public sector to learn more about observability and how to use OpenTelemetry effectively.</p>
+<p>We are super excited about the future of OpenTelemetry at NAV, and we can&rsquo;t wait to see what use cases the developers will solve using this data! 🚀 As you can see from the graph below, we are generating more traces week by week, and we are confident that this is just the beginning.</p>
+<p><img src="/blog/images/otel-span-rate.png" alt="Span Rate"></p>
+
+
+            </article>
+        </main><footer>
+    <a href="https://nais.io">nais</a> &copy; 2024
+</footer>
+</body>
+</html>
