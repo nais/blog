@@ -1,11 +1,12 @@
-# nais-blog
+# Archived repository
 
-Archived repository
-The content has been mmerged with nais.io and the content moved to to nais.github.io repository
+The content has been merged with nais.io and the content moved to to nais.github.io repository
+
+## nais-blog
 
 Blog for the [NAIS](https://nais.io) team @ [NAV](https://nav.no).
 
-## 🛠 Add content
+### 🛠 Add content
 
 * Install [Hugo static site generator](https://gohugo.io/) with your preferred package manager.
 * Start the development server by running `hugo serve`.
@@ -13,11 +14,11 @@ Blog for the [NAIS](https://nais.io) team @ [NAV](https://nav.no).
 * Edit your content, inspecting it as you go.
 * To publish, set the `draft` parameter in your content file to `false` and push your changes to the `main` branch, either directly or through a pull request.
 
-## ⚖️ License
+### ⚖️ License
 
 Licensed under the [MIT License](LICENSE)
 
-## 👥 Contact
+### 👥 Contact
 
 This project is currently maintained by the organisation [@nais](https://github.com/nais).
 
