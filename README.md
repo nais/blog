@@ -1,5 +1,8 @@
 # nais-blog
 
+Archived repository
+The content has been mmerged with nais.io and the content moved to to nais.github.io repository
+
 Blog for the [NAIS](https://nais.io) team @ [NAV](https://nav.no).
 
 ## 🛠 Add content
